@@ -41,13 +41,13 @@
         @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
         /* --- LOGIN SPLIT SCREEN STYLING --- */
-        .login-image-side {
-            /* URL Gambar latar belakang baru (Pemandangan Sekolah - Freepik ID 4867015) */
-            background: url('https://img.freepik.com/free-vector/school-building-scene_1308-32058.jpg') no-repeat center center;
-            background-size: cover;
-            position: relative;
-            background-color: var(--primary); /* Warna dasar jika gambar sedang dimuat */
-        }
+        /* Gunakan ini jika ingin memakai file gambar yang ada di folder proyek Anda */
+.login-image-side {
+    background: url('./latar-belakang-baru.png') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    background-color: var(--primary);
+}
 
         /* --- STYLING ID CARD B2 --- */
         .preview-wrapper { background: #555; padding: 20px; border-radius: 8px; overflow-x: auto; display: flex; flex-direction: column; align-items: center; gap: 20px; }
