@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Kartu PSAJ</title>
+    <title>Aplikasi Kartu Ujian PSAJ</title>
     <!-- CSS & Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Tambahan JSZip untuk menangani file ZIP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
         :root {
             --primary: #0f4c81; 
@@ -250,6 +252,7 @@
                             <h5 class="fw-bold mb-0">Daftar Peserta/Siswa</h5>
                             <div class="d-flex gap-2">
                                 <input type="file" id="fileImportSiswa" class="d-none" accept=".xlsx, .xls" onchange="uploadExcel(this)">
+                                <input type="file" id="fileImportZip" class="d-none" accept=".zip" onchange="importZipFoto(this)">
                                 <div class="btn-group">
                                     <button class="btn btn-success btn-sm" onclick="document.getElementById('fileImportSiswa').click()">
                                         <i class="fa-solid fa-file-excel"></i> Import Excel
@@ -259,11 +262,12 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
                                         <li><a class="dropdown-item small py-2" href="#" onclick="downloadTemplateExcel()"><i class="fa-solid fa-download me-2"></i> Download Template</a></li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li><a class="dropdown-item small py-2 text-danger" href="#" onclick="resetSiswaData()"><i class="fa-solid fa-trash-can me-2"></i> Reset Data Siswa</a></li>
                                     </ul>
                                 </div>
-                                <button class="btn btn-danger btn-sm" onclick="resetSiswaData()"><i class="fa-solid fa-trash-can"></i> Reset Data</button>
+                                <!-- Tombol Baru: Import ZIP Foto -->
+                                <button class="btn btn-info btn-sm text-white" onclick="document.getElementById('fileImportZip').click()">
+                                    <i class="fa-solid fa-file-archive"></i> Import ZIP Foto
+                                </button>
                                 <button class="btn btn-primary btn-sm" onclick="openModalSiswa()"><i class="fa-solid fa-plus"></i> Tambah Siswa</button>
                             </div>
                         </div>
@@ -810,9 +814,9 @@
             XLSX.writeFile(wb, "Template_Data_Siswa.xlsx");
         };
 
-        // HELPER UNTUK KONVERSI TANGGAL EXCEL (SERIAL NUMBER) KE DD/MM/YYYY
+        // HELPER UNTUK KONVERSI TANGGAL EXCEL
         function formatExcelDate(serial) {
-            if (isNaN(serial)) return serial; // Jika bukan angka (sudah teks), biarkan saja
+            if (isNaN(serial)) return serial; 
             var date = new Date(Math.round((serial - 25569) * 86400 * 1000));
             var day = ("0" + date.getDate()).slice(-2);
             var month = ("0" + (date.getMonth() + 1)).slice(-2);
@@ -828,7 +832,6 @@
                 var workbook = XLSX.read(data, {type:'array'});
                 var jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], {header:1});
                 
-                // Proses konversi tanggal di kolom index ke-5 (Tanggal Lahir)
                 for(var i=1; i<jsonData.length; i++) {
                     var r = jsonData[i];
                     if(r[5] && typeof r[5] === 'number') {
@@ -852,38 +855,68 @@
             reader.readAsArrayBuffer(input.files[0]);
         };
 
-        // FUNGSI RESET DATA SISWA
-        window.resetSiswaData = function() {
-            Swal.fire({
-                title: 'Reset Semua Data Siswa?',
-                text: "Data yang sudah dihapus tidak dapat dikembalikan!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Hapus Semua!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    if (typeof google !== 'undefined') {
-                        showFullPageLoading('Mereset data...');
-                        gasRun('resetAllSiswa', sessionToken).then(function(res) {
-                            hideFullPageLoading();
-                            if (res.success) {
-                                dbSiswa = [];
-                                renderSiswa();
-                                Swal.fire('Berhasil', 'Semua data siswa telah dihapus', 'success');
-                            } else {
-                                Swal.fire('Gagal', res.message, 'error');
-                            }
+        /* --- FITUR BARU: AUTO UPLOAD FOTO DARI ZIP (BERDASARKAN NISN) --- */
+        window.importZipFoto = function(input) {
+            if (!input.files[0]) return;
+            var file = input.files[0];
+            var zip = new JSZip();
+            
+            showFullPageLoading("Mengekstrak Foto...");
+
+            zip.loadAsync(file).then(function(contents) {
+                var promises = [];
+                var matchedCount = 0;
+                var filesInZip = Object.keys(contents.files);
+
+                filesInZip.forEach(function(filename) {
+                    var fileObj = contents.files[filename];
+                    // Hanya proses file (bukan folder) dan pastikan itu gambar
+                    if (!fileObj.dir && (/\.(jpe?g|png|gif|bmp)$/i).test(filename)) {
+                        
+                        // Nama file (tanpa folder dan ekstensi) dianggap sebagai NISN
+                        var pureName = filename.split('/').pop().split('.')[0];
+                        
+                        // Cari siswa di database lokal (dbSiswa) yang NISN nya cocok
+                        var studentIdx = dbSiswa.findIndex(function(s) { 
+                            return String(s.nisn).trim() === String(pureName).trim(); 
                         });
-                    } else {
-                        dbSiswa = [];
-                        localStorage.setItem('dbSiswa', JSON.stringify(dbSiswa));
-                        renderSiswa();
-                        Swal.fire('Berhasil', 'Data simulasi telah direset', 'success');
+
+                        if (studentIdx !== -1) {
+                            var p = fileObj.async("base64").then(function(base64Data) {
+                                var mime = "image/" + filename.split('.').pop().toLowerCase();
+                                if(mime === "image/jpg") mime = "image/jpeg";
+                                
+                                dbSiswa[studentIdx].foto = "data:" + mime + ";base64," + base64Data;
+                                matchedCount++;
+                            });
+                            promises.push(p);
+                        }
                     }
-                }
+                });
+
+                Promise.all(promises).then(function() {
+                    hideFullPageLoading();
+                    if (matchedCount > 0) {
+                        // Simpan perubahan ke server (jika di GAS) atau local
+                        if (typeof google !== 'undefined') {
+                            // Untuk performa, kirim seluruh data siswa yang terupdate
+                            gasRun('saveMultipleSiswa', sessionToken, dbSiswa).then(function(res) {
+                                Swal.fire('Berhasil', matchedCount + ' foto berhasil dicocokkan & disimpan', 'success');
+                                fetchSiswa(true);
+                            });
+                        } else {
+                            localStorage.setItem('dbSiswa', JSON.stringify(dbSiswa));
+                            renderSiswa();
+                            Swal.fire('Berhasil (Simulasi)', matchedCount + ' foto berhasil dicocokkan', 'success');
+                        }
+                    } else {
+                        Swal.fire('Info', 'Tidak ada foto yang cocok dengan NISN siswa yang terdaftar', 'info');
+                    }
+                    input.value = ""; // reset input
+                });
+            }).catch(function(err) {
+                hideFullPageLoading();
+                Swal.fire('Error', 'Gagal membaca file ZIP: ' + err.message, 'error');
             });
         };
 
