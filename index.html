@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Kartu Ujian</title>
+    <title>Aplikasi Kartu Ujian PSAJ</title>
     <!-- CSS & Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -252,6 +252,18 @@
         .table-exam th { font-weight: bold; background: #e0e0e0; }
         .th-title { background: #bfbfbf !important; font-weight: bold; padding: 2px !important; border: 1px solid #000; text-align: center; font-size: 7pt; }
 
+        /* --- PERAPIHAN TABEL JADWAL PADA KARTU --- */
+        .card-right { min-width: 0; }
+        .table-exam { table-layout: fixed; width: 100%; }
+        .table-exam th, .table-exam td { padding: 1.5px 2px; line-height: 1.2; vertical-align: middle; font-size: 6pt; white-space: nowrap; overflow: hidden; text-overflow: clip; }
+        .table-exam .col-hari { line-height: 1.3; }
+        .table-exam td { height: 3.5mm; }
+        .table-exam .col-no { font-size: 6.5pt; }
+        .table-exam .col-hari { font-style: italic; }
+        .table-exam .mapel-long { font-size: 5pt; }
+        .table-exam .col-waktu { font-size: 5.8pt; }
+        .table-exam .col-mapel { text-align: center; }
+
         /* --- MODEL KARTU TANPA FOTO --- */
         .kartu-b2.tanpa-foto .left-bio { font-size: 7.5pt; margin-top: 6px; }
         .kartu-b2.tanpa-foto .bio-row { margin-bottom: 4px; }
@@ -351,7 +363,7 @@
     <!-- MAIN APP -->
     <div id="mainApp" class="wrapper d-none">
         <nav class="sidebar shadow-sm">
-            <div class="brand"><span class="brand-mark"><i class="fas fa-id-badge"></i></span><div><div class="brand-name">ID Card App</div><div class="brand-sub">Kartu Ujian</div></div></div>
+            <div class="brand"><span class="brand-mark"><i class="fas fa-id-badge"></i></span><div><div class="brand-name">ID Card App</div><div class="brand-sub">Kartu Ujian PSAJ</div></div></div>
             <div class="flex-grow-1">
                 <p class="nav-label">Menu utama</p>
                 <div class="nav-item-custom nav-link active mb-1 rounded" onclick="showPage('dashboard', this)">
@@ -939,6 +951,29 @@
             renderCetak();
         };
 
+        /* Perkecil huruf otomatis bila teks lebih panjang dari kolomnya, supaya tetap satu baris & tidak menimpa */
+        function fitJadwal() {
+            var tables = document.querySelectorAll('#cetakContainer .table-exam');
+            if (!tables.length) return;
+            var sel = 'td, th:not(.th-title)';
+            var first = tables[0].querySelectorAll(sel);
+            var sizes = [];
+            for (var i = 0; i < first.length; i++) {
+                var el = first[i];
+                el.style.fontSize = '';
+                var size = parseFloat(window.getComputedStyle(el).fontSize) || 8;
+                var min = size * 0.55, shrunk = false, guard = 0;
+                while (el.scrollWidth > el.clientWidth + 0.5 && size > min && guard < 40) {
+                    size -= 0.2; el.style.fontSize = size + 'px'; shrunk = true; guard++;
+                }
+                sizes.push(shrunk ? size : null);
+            }
+            for (var t = 1; t < tables.length; t++) {
+                var cs = tables[t].querySelectorAll(sel);
+                for (var k = 0; k < cs.length; k++) { if (sizes[k]) cs[k].style.fontSize = sizes[k] + 'px'; }
+            }
+        }
+
         function renderCetak() {
             var c = document.getElementById('cetakContainer');
             if(!dbSiswa || dbSiswa.length === 0) { c.innerHTML = '<div class="alert alert-warning">Data Siswa Kosong.</div>'; return; }
@@ -949,23 +984,31 @@
             var stempelHtml = s.stempel ? '<img class="stempel-img" src="'+escapeHTML(s.stempel)+'">' : '';
             var ttdHtml = s.ttd ? '<img class="ttd-img" src="'+escapeHTML(s.ttd)+'">' : '';
 
+            var groups = [];
+            dbJadwal.forEach(function(jd) {
+                var punyaHari = jd.hari && String(jd.hari).trim() !== '';
+                if (punyaHari || groups.length === 0) groups.push({ hari: String(jd.hari || '').replace(/,\s*$/, '').trim(), tgl: String(jd.tahun || '').trim(), rows: [] });
+                var g = groups[groups.length - 1];
+                if (!g.tgl && jd.tahun) g.tgl = String(jd.tahun).trim();
+                g.rows.push(jd);
+            });
+            while (groups.length < 6) groups.push({ hari: '', tgl: '', rows: [] });
+
             var jadwalHtml = '';
-            var curNo = 1;
-            var lastTahun = '';
-            for(var i=0; i<dbJadwal.length; i++) {
-                var jd = dbJadwal[i];
-                if (jd.tahun && jd.tahun.trim() !== '') lastTahun = jd.tahun;
-                jadwalHtml += '<tr>';
-                if (jd.hari && jd.hari.trim() !== '') {
-                    var rowspan = 1;
-                    for(var j=i+1; j<dbJadwal.length; j++) { if(!dbJadwal[j].hari) rowspan++; else break; }
-                    jadwalHtml += '<td rowspan="'+rowspan+'">'+curNo+'</td>';
-                    var teksHariTgl = escapeHTML(jd.hari) + '<br><span style="white-space:nowrap;">' + escapeHTML(jd.tahun || lastTahun) + '</span>';
-                    jadwalHtml += '<td rowspan="'+rowspan+'" style="font-size:6.5pt; white-space:nowrap;">'+teksHariTgl+'</td>';
-                    curNo++;
+            groups.forEach(function(g, gi) {
+                var n = Math.max(2, g.rows.length);
+                for (var r = 0; r < n; r++) {
+                    var jd = g.rows[r] || {};
+                    var mp = jd.mapel ? String(jd.mapel) : '';
+                    var teksHT = (r === 0) ? g.hari : ((r === 1) ? g.tgl : '');
+                    jadwalHtml += '<tr>';
+                    if (r === 0) jadwalHtml += '<td rowspan="' + n + '" class="col-no">' + (gi + 1) + '</td>';
+                    jadwalHtml += '<td class="col-hari">' + escapeHTML(teksHT) + '</td>' +
+                        '<td class="col-waktu"><i>' + escapeHTML(jd.pukul || '').replace(/\s*[-\u2013]\s*/g, ' - ') + '</i></td>' +
+                        '<td class="col-mapel' + (mp.length > 14 ? ' mapel-long' : '') + '"><i>' + escapeHTML(mp) + '</i></td></tr>';
                 }
-                jadwalHtml += '<td style="white-space:nowrap;"><i>'+escapeHTML(jd.pukul)+'</i></td><td style="text-align:center!important;"><i>'+escapeHTML(jd.mapel)+'</i></td></tr>';
-            }
+            });
+
 
             var html = '';
             for(var p=0; p<Math.ceil(dbSiswa.length / 3); p++) {
@@ -987,11 +1030,12 @@
                         '<div class="bio-row"><div class="bio-label">NISN</div><div class="bio-colon">:</div><div class="bio-value">'+escapeHTML(siswa.nisn)+'</div></div>' +
                         '<div class="bio-row"><div class="bio-label">Kelas</div><div class="bio-colon">:</div><div class="bio-value">'+escapeHTML(siswa.kelas)+'</div></div>' + noteHtml + '</div>' +
                         '<div class="left-bottom">'+photoBlock+'<div class="sign-box"><div>'+escapeHTML(s.tempat_tgl_ttd)+'</div><div>Kepala Sekolah</div><div class="sign-area">'+stempelHtml+ttdHtml+'</div><div class="sign-name">'+escapeHTML(s.nama_kepsek)+'</div><div class="sign-nip">NIP '+escapeHTML(s.nip_kepsek)+'</div></div></div></div>' +
-                        '<div class="card-right"><div class="right-header"><div class="rh-title">'+escapeHTML(s.nama)+'</div><div class="rh-subtitle">Jadwal Ujian</div></div><div class="right-table"><table class="table-exam"><thead><tr><th colspan="4" class="th-title">JADWAL</th></tr><tr><th style="width:6%">No</th><th style="width:34%">Hari, Tgl</th><th style="width:26%">Waktu</th><th style="width:34%">Mapel</th></tr></thead><tbody>'+jadwalHtml+'</tbody></table></div></div></div>';
+                        '<div class="card-right"><div class="right-header"><div class="rh-title">'+escapeHTML(s.nama)+'</div><div class="rh-subtitle">Kartu ini dibawa selama ujian</div></div><div class="right-table"><table class="table-exam"><thead><tr><th colspan="4" class="th-title">JADWAL UJIAN</th></tr><tr><th style="width:8%">No</th><th style="width:31%">Hari, Tanggal</th><th style="width:27%">Pukul</th><th style="width:34%">Mata Pelajaran</th></tr></thead><tbody>'+jadwalHtml+'</tbody></table></div></div></div>';
                 }
                 html += '</div>';
             }
             c.innerHTML = html;
+            fitJadwal();
         }
 
         window.downloadTemplateExcel = function() {
