@@ -4,21 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Kartu Ujian PSAJ</title>
+    <title>Aplikasi Kartu Ujian</title>
     <!-- CSS & Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <style>
         :root {
-            --primary: #0f4c81;
-            --secondary: #ff9f43;
-            --accent: #00d2d3;
-            --bg-app: #f4f7f9;
+            --primary: #22408f;
+            --secondary: #f2a93b;
+            --accent: #19a58f;
+            --bg-app: #eef1f7;
+            --ink: #0d1730;
+            --indigo: #22408f;
+            --jade: #19a58f;
+            --amber: #f2a93b;
+            --line: #dde3ee;
+            --muted: #6a7488;
         }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-app); overflow-x: hidden; }
+        body { font-family: 'Plus Jakarta Sans', 'Segoe UI', Tahoma, Verdana, sans-serif; background-color: var(--bg-app); color: #1c2438; overflow-x: hidden; }
 
         /* Layout Sidebar & Main */
         .wrapper { display: flex; width: 100%; align-items: stretch; }
@@ -46,6 +55,121 @@
             background-size: cover;
             position: relative;
             background-color: var(--primary);
+        }
+
+        /* ================= TEMA ELEGAN ================= */
+        h1, h2, h3, h4, h5, h6 { letter-spacing: -0.01em; }
+        a { color: var(--indigo); }
+        :focus-visible { outline: 2px solid var(--jade); outline-offset: 2px; }
+
+        /* Sidebar */
+        .sidebar { min-width: 264px; max-width: 264px; padding: 22px 16px; background: linear-gradient(175deg, #0d1730 0%, #14285a 100%); position: sticky; top: 0; height: 100vh; min-height: 0; overflow-y: auto; box-shadow: 8px 0 30px -18px rgba(13,23,48,.6); }
+        .brand { display: flex; align-items: center; gap: 12px; padding: 4px 8px 20px; margin-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,.1); }
+        .brand-mark { width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg, var(--jade), #2f7de1); display: grid; place-items: center; font-size: 1.1rem; color: #fff; box-shadow: 0 8px 18px -8px rgba(25,165,143,.8); }
+        .brand-name { font-weight: 800; font-size: 1.05rem; line-height: 1.1; }
+        .brand-sub { font-size: .72rem; color: rgba(255,255,255,.55); }
+        .nav-label { font-size: .75rem; color: rgba(255,255,255,.45); padding: 0 12px; margin-bottom: 8px; }
+        .sidebar .nav-link { display: flex; align-items: center; gap: 4px; border-left: 0; border-radius: 12px !important; padding: 12px 14px; margin-bottom: 4px !important; font-weight: 500; color: rgba(255,255,255,.72); }
+        .sidebar .nav-link:hover { background: rgba(255,255,255,.07); color: #fff; border-left: 0; }
+        .sidebar .nav-link.active { background: rgba(255,255,255,.11); color: #fff; border-left: 0; box-shadow: inset 3px 0 0 var(--jade); font-weight: 600; }
+        .sidebar .nav-link.active i { color: var(--jade); }
+        .user-chip { display: flex; align-items: center; padding: 10px 12px; border-radius: 14px; margin-bottom: 10px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.08); }
+        .sidebar .btn-outline-light { border-color: rgba(255,255,255,.25); border-radius: 10px; }
+        .sidebar .btn-outline-light:hover { background: #fff; color: var(--ink); }
+
+        /* Konten */
+        .main-content { padding: 26px 34px; min-width: 0; }
+        .topbar { background: #fff !important; border: 1px solid var(--line); border-radius: 16px !important; box-shadow: 0 6px 24px -14px rgba(13,23,48,.25) !important; }
+        #pageTitle { font-weight: 800; color: var(--ink) !important; }
+        .page-sub { color: var(--muted); font-size: .82rem; }
+        .card { border: 1px solid var(--line) !important; border-radius: 16px !important; box-shadow: 0 10px 30px -20px rgba(13,23,48,.35) !important; }
+        h5.text-primary { color: var(--indigo) !important; border-color: var(--line) !important; font-weight: 700; }
+
+        /* Tombol */
+        .btn { border-radius: 10px; font-weight: 600; transition: transform .15s, box-shadow .15s, background .15s; }
+        .btn:active { transform: translateY(1px); }
+        .btn-primary { background: linear-gradient(135deg, #2c4fa8, #1b3277) !important; border: 0 !important; box-shadow: 0 8px 18px -10px rgba(34,64,143,.9); }
+        .btn-primary:hover { background: linear-gradient(135deg, #3558b8, #22408f) !important; }
+        .btn-success { background: #159a7e !important; border-color: #159a7e !important; }
+        .btn-info { background: #2a7fb8 !important; border-color: #2a7fb8 !important; }
+        .btn-warning { background: var(--amber) !important; border-color: var(--amber) !important; color: #3a2606 !important; box-shadow: 0 8px 18px -10px rgba(242,169,59,.9); }
+        .btn-danger { background: #c23a4b !important; border-color: #c23a4b !important; }
+        .btn-outline-primary { color: var(--indigo); border-color: var(--indigo); }
+        .btn-outline-primary:hover { background: rgba(34,64,143,.08); color: var(--indigo); }
+        .btn-check:checked + .btn-outline-primary { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+        .btn-light { background: #f3f5fa; border-color: var(--line) !important; }
+
+        /* Form */
+        .form-control, .form-select { border-radius: 10px; border: 1px solid var(--line); padding: 10px 12px; background-color: #fbfcfe; }
+        .form-control:focus, .form-select:focus { border-color: var(--jade); box-shadow: 0 0 0 .22rem rgba(25,165,143,.16); background-color: #fff; }
+        .form-label, label.small { font-weight: 600; color: #46506a !important; }
+
+        /* Tabel */
+        .table { --bs-table-hover-bg: #f4f7fc; }
+        .table thead th { background: #f3f6fb !important; color: #46506a; font-weight: 700; font-size: .82rem; border-bottom: 1px solid var(--line); white-space: nowrap; }
+        .table td { border-color: #edf0f6; }
+        .table img { border-radius: 6px; }
+
+        /* Modal */
+        .modal-content { border-radius: 20px !important; box-shadow: 0 30px 80px -30px rgba(13,23,48,.6); }
+        .modal-header { background: #f3f6fb !important; border-bottom: 1px solid var(--line) !important; }
+        .modal-title { font-weight: 800; color: var(--ink); }
+
+        /* Dashboard */
+        .hero-banner { position: relative; overflow: hidden; border-radius: 20px; padding: 30px 34px; color: #fff; background: linear-gradient(120deg, #0d1730 0%, #1b3277 70%, #1f5fa8 100%); box-shadow: 0 22px 40px -26px rgba(13,23,48,.8); }
+        .hero-banner::before, .hero-banner::after { content: ""; position: absolute; border: 1.5px solid rgba(255,255,255,.14); border-radius: 18px; width: 230px; height: 146px; right: 60px; top: -30px; transform: rotate(10deg); }
+        .hero-banner::after { right: 20px; top: 24px; transform: rotate(-6deg); border-color: rgba(25,165,143,.5); }
+        .hero-banner > * { position: relative; z-index: 1; }
+        .hero-date { color: rgba(255,255,255,.65); }
+        .hero-banner h2 { font-weight: 800; margin: 4px 0 6px; font-size: 1.7rem; }
+        .hero-banner p { color: rgba(255,255,255,.75); max-width: 46ch; margin-bottom: 18px; }
+        .stat-card { display: flex; align-items: center; gap: 16px; padding: 20px 22px; background: #fff; border: 1px solid var(--line); border-radius: 16px; height: 100%; }
+        .stat-icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; font-size: 1.2rem; flex-shrink: 0; }
+        .stat-icon.i-indigo { background: #e4eafb; color: var(--indigo); }
+        .stat-icon.i-jade { background: #dbf4ef; color: #0f8070; }
+        .stat-icon.i-amber { background: #fdefd6; color: #a8680c; }
+        .stat-value { font-size: 1.7rem; font-weight: 800; line-height: 1.1; color: var(--ink); }
+        .stat-label { color: var(--muted); font-size: .85rem; }
+        .quick-tile { display: flex; align-items: center; gap: 14px; padding: 18px 20px; background: #fff; border: 1px solid var(--line); border-radius: 14px; cursor: pointer; height: 100%; transition: border-color .15s, box-shadow .15s, transform .15s; }
+        .quick-tile:hover { border-color: var(--jade); box-shadow: 0 14px 28px -20px rgba(13,23,48,.6); transform: translateY(-2px); }
+        .quick-tile i.qt-icon { font-size: 1.15rem; color: var(--indigo); width: 24px; text-align: center; }
+        .quick-tile strong { display: block; color: var(--ink); }
+        .quick-tile span { font-size: .8rem; color: var(--muted); }
+
+        /* Login */
+        .login-hero { position: relative; overflow: hidden; flex-direction: column; justify-content: space-between; padding: 48px 56px; color: #fff; background: linear-gradient(155deg, rgba(13,23,48,.94), rgba(27,50,119,.9) 70%, rgba(31,95,168,.85)), url('./latar-belakang-baru.png') center/cover no-repeat, #0d1730; }
+        .hero-brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.1rem; }
+        .hero-copy { max-width: 470px; position: relative; z-index: 2; }
+        .hero-copy h1 { font-size: 2.7rem; font-weight: 800; line-height: 1.12; margin-bottom: 16px; }
+        .hero-copy p { color: rgba(255,255,255,.75); font-size: 1.02rem; line-height: 1.6; }
+        .hero-points { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 10px; }
+        .hero-points li { color: rgba(255,255,255,.88); }
+        .hero-points i { color: var(--jade); margin-right: 10px; }
+        .hero-foot { color: rgba(255,255,255,.5); position: relative; z-index: 2; }
+        .mini-stack { position: absolute; right: -40px; bottom: 90px; width: 330px; height: 220px; z-index: 1; }
+        .mini-card { position: absolute; inset: 0; background: #fff; border-radius: 18px; padding: 16px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.6); transform: rotate(-7deg); }
+        .mini-card.back { background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.3); box-shadow: none; transform: rotate(5deg) translate(26px, -14px); }
+        .mc-top { display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid #e6e9f2; }
+        .mc-logo { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, var(--jade), #2f7de1); }
+        .mc-top div, .mc-lines { display: grid; gap: 6px; flex: 1; }
+        .mini-card i { display: block; height: 7px; border-radius: 4px; background: #dfe4f0; }
+        .mc-top i:first-child { width: 70%; background: #b9c3dc; }
+        .mc-body { display: flex; gap: 14px; margin-top: 14px; }
+        .mc-photo { width: 62px; height: 80px; border-radius: 8px; background: linear-gradient(160deg, #e4eafb, #c8d4f3); }
+        .mc-lines i:nth-child(1) { width: 90%; background: #b9c3dc; } .mc-lines i:nth-child(2) { width: 75%; } .mc-lines i:nth-child(3) { width: 55%; }
+        .login-panel { background: #fff; }
+        .login-card { width: 100%; max-width: 390px; padding: 24px; }
+        .login-card h3 { font-weight: 800; color: var(--ink); }
+        .login-card .input-group-text { background: #fbfcfe; border: 1px solid var(--line); border-right: 0; border-radius: 10px 0 0 10px; color: var(--muted); }
+        .login-card .input-group .form-control { border-left: 0; border-radius: 0 10px 10px 0; }
+
+        /* Preview cetak */
+        .preview-wrapper { background: linear-gradient(160deg, #1a2540, #2b3a5c); border-radius: 16px; }
+
+        @media (max-width: 991px) {
+            .wrapper { flex-direction: column; }
+            .sidebar { position: static; height: auto; min-width: 100%; max-width: 100%; }
+            .main-content { padding: 16px; }
         }
 
         /* --- STYLING ID CARD B2 --- */
@@ -173,24 +297,48 @@
     <!-- LOGIN PAGE -->
     <div id="loginPage" class="container-fluid vh-100 p-0">
         <div class="row g-0 h-100">
-            <div class="col-lg-7 col-md-6 d-none d-md-block login-image-side"></div>
-            <div class="col-lg-5 col-md-6 d-flex align-items-center justify-content-center bg-white shadow-lg">
-                <div style="width: 100%; max-width: 400px; padding: 20px;">
-                    <div class="text-center mb-5">
-                        <i class="fas fa-id-badge fa-3x mb-3" style="color: var(--primary);"></i>
-                        <h3 class="fw-bold" style="color: var(--primary);">Login App</h3>
-                        <p class="text-muted">Kartu Ujian Generator B2</p>
+            <div class="col-lg-7 col-md-6 d-none d-md-flex login-hero">
+                <div class="hero-brand"><span class="brand-mark"><i class="fas fa-id-badge"></i></span><span>ID Card App</span></div>
+                <div class="hero-copy">
+                    <h1>Kartu ujian siap cetak dalam hitungan menit.</h1>
+                    <p>Susun data peserta, jadwal, dan kop sekolah di satu tempat, lalu cetak langsung ke kertas A4.</p>
+                    <ul class="hero-points">
+                        <li><i class="fa-solid fa-circle-check"></i>Impor peserta dari file Excel</li>
+                        <li><i class="fa-solid fa-circle-check"></i>Foto cocok otomatis lewat NISN</li>
+                        <li><i class="fa-solid fa-circle-check"></i>Tiga kartu per lembar, dengan atau tanpa foto</li>
+                    </ul>
+                </div>
+                <small class="hero-foot">Hak Cipta &copy; 2026 Rohiman Supriyadi</small>
+                <div class="mini-stack" aria-hidden="true">
+                    <div class="mini-card back"></div>
+                    <div class="mini-card">
+                        <div class="mc-top"><span class="mc-logo"></span><div><i></i><i></i></div></div>
+                        <div class="mc-body"><span class="mc-photo"></span><div class="mc-lines"><i></i><i></i><i></i></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-6 d-flex align-items-center justify-content-center login-panel shadow-lg">
+                <div class="login-card">
+                    <div class="mb-4">
+                        <h3 class="mb-1">Masuk ke akun Anda</h3>
+                        <p class="text-muted mb-0">Generator kartu ujian B2</p>
                     </div>
                     <form id="loginForm" onsubmit="event.preventDefault(); handleLogin();">
+                        <div class="mb-3">
+                            <label class="form-label small">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                                <input type="text" id="username" class="form-control form-control-lg" placeholder="Masukkan username" required>
+                            </div>
+                        </div>
                         <div class="mb-4">
-                            <label class="form-label small fw-bold text-muted">Username</label>
-                            <input type="text" id="username" class="form-control form-control-lg bg-light border-0" placeholder="Masukkan username" required>
+                            <label class="form-label small">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                                <input type="password" id="password" class="form-control form-control-lg" placeholder="Masukkan password" required>
+                            </div>
                         </div>
-                        <div class="mb-5">
-                            <label class="form-label small fw-bold text-muted">Password</label>
-                            <input type="password" id="password" class="form-control form-control-lg bg-light border-0" placeholder="Masukkan password" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold" style="background: var(--primary); border:none; font-size: 1.1rem; border-radius: 8px;">MASUK</button>
+                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold" style="font-size: 1.05rem;">Masuk</button>
                     </form>
                     <div class="text-center mt-5">
                         <small class="text-muted">Hak Cipta &copy; 2026 Rohiman Supriyadi</small>
@@ -203,11 +351,9 @@
     <!-- MAIN APP -->
     <div id="mainApp" class="wrapper d-none">
         <nav class="sidebar shadow-sm">
-            <div class="text-center border-bottom border-secondary mb-3 pb-3">
-                <h5 class="fw-bold mb-0 text-uppercase"><i class="fas fa-id-badge"></i> ID Card App</h5>
-            </div>
+            <div class="brand"><span class="brand-mark"><i class="fas fa-id-badge"></i></span><div><div class="brand-name">ID Card App</div><div class="brand-sub">Kartu Ujian</div></div></div>
             <div class="flex-grow-1">
-                <p class="text-white-50 small mb-2 px-3">MENU UTAMA</p>
+                <p class="nav-label">Menu utama</p>
                 <div class="nav-item-custom nav-link active mb-1 rounded" onclick="showPage('dashboard', this)">
                     <i class="fa-solid fa-chart-pie"></i> Dashboard
                 </div>
@@ -225,7 +371,7 @@
                 </div>
             </div>
             <div class="mt-auto w-100 pt-3">
-                <div class="d-flex align-items-center p-2 rounded mb-2" style="background: rgba(255,255,255,0.15);">
+                <div class="user-chip">
                     <div class="me-3"><i class="fa-solid fa-circle-user fa-2x"></i></div>
                     <div style="overflow: hidden;">
                         <h6 class="mb-0 fw-bold text-truncate" id="displayUser" style="font-size:0.9rem;">User</h6>
@@ -238,7 +384,7 @@
 
         <div class="main-content">
             <div class="topbar d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded shadow-sm">
-                <h4 class="mb-0 fw-bold text-dark" id="pageTitle">Dashboard</h4>
+                <div><h4 class="mb-0" id="pageTitle">Dashboard</h4><div class="page-sub" id="pageSub">Ringkasan data kartu ujian</div></div>
                 <button class="btn btn-danger btn-sm px-3 fw-bold shadow-sm" onclick="logout()"><i class="fa-solid fa-power-off"></i> Keluar</button>
             </div>
 
@@ -593,6 +739,8 @@
 
             var titles = { 'dashboard':'Dashboard', 'sekolah':'Data Sekolah', 'siswa':'Data Siswa', 'jadwal':'Jadwal Ujian', 'cetak':'Cetak Kartu Ujian' };
             document.getElementById('pageTitle').innerText = titles[pageName];
+            var subs = { 'dashboard':'Ringkasan data kartu ujian', 'sekolah':'Kop, judul kartu, dan tanda tangan', 'siswa':'Kelola peserta dan foto', 'jadwal':'Atur mata pelajaran dan waktu ujian', 'cetak':'Pratinjau dan cetak ke PDF' };
+            var subEl = document.getElementById('pageSub'); if (subEl) subEl.innerText = subs[pageName] || '';
 
             document.querySelectorAll('.nav-item-custom').forEach(function(n) { n.classList.remove('active'); });
             if (navEl) navEl.classList.add('active');
@@ -681,10 +829,21 @@
         }
 
         function renderDashboard() {
+            var nama = (currentUser && currentUser.fullname) ? escapeHTML(currentUser.fullname) : 'Pengguna';
+            var jam = new Date().getHours();
+            var sapa = jam < 11 ? 'Selamat pagi' : (jam < 15 ? 'Selamat siang' : (jam < 18 ? 'Selamat sore' : 'Selamat malam'));
+            var tgl = new Date().toLocaleDateString('id-ID', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+            var modeTeks = (modeKartu === 'tanpa') ? 'Tanpa foto' : 'Dengan foto';
             var html =
-                '<div class="col-md-4 mb-3"><div class="card bg-primary text-white border-0 shadow-sm"><div class="card-body"><h6 class="text-white-50">Total Siswa</h6><h2 class="mb-0">' + dbSiswa.length + '</h2></div></div></div>' +
-                '<div class="col-md-4 mb-3"><div class="card bg-success text-white border-0 shadow-sm"><div class="card-body"><h6 class="text-white-50">Jadwal Ujian</h6><h2 class="mb-0">' + dbJadwal.length + ' Mapel</h2></div></div></div>' +
-                '<div class="col-md-4 mb-3"><div class="card bg-info text-white border-0 shadow-sm cursor-pointer" onclick="showPage(\'cetak\')"><div class="card-body d-flex align-items-center justify-content-between"><div><h6 class="text-white-50">Aksi</h6><h4 class="mb-0">Cetak Kartu</h4></div><i class="fa-solid fa-print fa-2x opacity-50"></i></div></div></div>';
+                '<div class="col-12 mb-4"><div class="hero-banner"><small class="hero-date">' + tgl + '</small><h2>' + sapa + ', ' + nama + '</h2><p>Kelola data peserta dan jadwal, lalu cetak kartu ujian langsung dari sini.</p><button class="btn btn-warning" onclick="showPage(\'cetak\')"><i class="fa-solid fa-print me-2"></i>Cetak kartu</button></div></div>' +
+                '<div class="col-md-4 mb-3"><div class="stat-card"><div class="stat-icon i-indigo"><i class="fa-solid fa-users"></i></div><div><div class="stat-value">' + dbSiswa.length + '</div><div class="stat-label">Total siswa</div></div></div></div>' +
+                '<div class="col-md-4 mb-3"><div class="stat-card"><div class="stat-icon i-jade"><i class="fa-solid fa-calendar-check"></i></div><div><div class="stat-value">' + dbJadwal.length + '</div><div class="stat-label">Mata pelajaran terjadwal</div></div></div></div>' +
+                '<div class="col-md-4 mb-3"><div class="stat-card"><div class="stat-icon i-amber"><i class="fa-solid fa-id-card"></i></div><div><div class="stat-value" style="font-size:1.2rem;">' + modeTeks + '</div><div class="stat-label">Model kartu aktif</div></div></div></div>' +
+                '<div class="col-12 mt-2 mb-2"><h6 class="fw-bold mb-0">Akses cepat</h6></div>' +
+                '<div class="col-md-6 col-xl-3 mb-3"><div class="quick-tile" onclick="showPage(\'sekolah\')"><i class="fa-solid fa-school qt-icon"></i><div><strong>Data sekolah</strong><span>Kop dan tanda tangan</span></div></div></div>' +
+                '<div class="col-md-6 col-xl-3 mb-3"><div class="quick-tile" onclick="showPage(\'siswa\')"><i class="fa-solid fa-users qt-icon"></i><div><strong>Data siswa</strong><span>Impor Excel dan foto</span></div></div></div>' +
+                '<div class="col-md-6 col-xl-3 mb-3"><div class="quick-tile" onclick="showPage(\'jadwal\')"><i class="fa-solid fa-calendar-alt qt-icon"></i><div><strong>Jadwal ujian</strong><span>Mapel dan waktu</span></div></div></div>' +
+                '<div class="col-md-6 col-xl-3 mb-3"><div class="quick-tile" onclick="showPage(\'cetak\')"><i class="fa-solid fa-print qt-icon"></i><div><strong>Cetak kartu</strong><span>Pratinjau A4</span></div></div></div>';
             document.getElementById('dashboardContainer').innerHTML = html;
         }
 
