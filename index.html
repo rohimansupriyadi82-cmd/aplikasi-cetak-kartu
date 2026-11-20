@@ -255,9 +255,9 @@
         /* --- PERAPIHAN TABEL JADWAL PADA KARTU --- */
         .card-right { min-width: 0; }
         .table-exam { table-layout: fixed; width: 100%; }
-        .table-exam th, .table-exam td { padding: 1.5px 2px; line-height: 1.2; vertical-align: middle; font-size: 6pt; white-space: nowrap; overflow: hidden; text-overflow: clip; }
+        .table-exam th, .table-exam td { padding: var(--padv, 1.5px) 1.5px; line-height: 1.2; vertical-align: middle; font-size: 6pt; white-space: nowrap; overflow: hidden; text-overflow: clip; }
         .table-exam .col-hari { line-height: 1.3; }
-        .table-exam td { height: 3.5mm; }
+        .table-exam td { height: var(--rowh, 3.5mm); }
         .table-exam .col-no { font-size: 6.5pt; }
         .table-exam .col-hari { font-style: italic; }
         .table-exam .mapel-long { font-size: 5pt; }
@@ -972,6 +972,16 @@
                 var cs = tables[t].querySelectorAll(sel);
                 for (var k = 0; k < cs.length; k++) { if (sizes[k]) cs[k].style.fontSize = sizes[k] + 'px'; }
             }
+            /* Jika baris jadwal banyak, rapatkan tinggi baris agar tabel tetap muat di dalam kartu */
+            var steps = [['3.5mm', '1.5px'], ['3.2mm', '1px'], ['2.9mm', '0.6px'], ['2.7mm', '0.2px']];
+            var card = tables[0].closest('.card-right');
+            for (var s = 0; s < steps.length; s++) {
+                for (var tb = 0; tb < tables.length; tb++) {
+                    tables[tb].style.setProperty('--rowh', steps[s][0]);
+                    tables[tb].style.setProperty('--padv', steps[s][1]);
+                }
+                if (!card || card.scrollHeight <= card.clientHeight + 1) break;
+            }
         }
 
         function renderCetak() {
@@ -992,15 +1002,14 @@
                 if (!g.tgl && jd.tahun) g.tgl = String(jd.tahun).trim();
                 g.rows.push(jd);
             });
-            while (groups.length < 6) groups.push({ hari: '', tgl: '', rows: [] });
 
             var jadwalHtml = '';
             groups.forEach(function(g, gi) {
-                var n = Math.max(2, g.rows.length);
+                var n = Math.max(1, g.rows.length);
                 for (var r = 0; r < n; r++) {
                     var jd = g.rows[r] || {};
                     var mp = jd.mapel ? String(jd.mapel) : '';
-                    var teksHT = (r === 0) ? g.hari : ((r === 1) ? g.tgl : '');
+                    var teksHT = (n === 1) ? ((g.hari && g.tgl) ? (g.hari + ', ' + g.tgl) : (g.hari || g.tgl)) : ((r === 0) ? g.hari : ((r === 1) ? g.tgl : ''));
                     jadwalHtml += '<tr>';
                     if (r === 0) jadwalHtml += '<td rowspan="' + n + '" class="col-no">' + (gi + 1) + '</td>';
                     jadwalHtml += '<td class="col-hari">' + escapeHTML(teksHT) + '</td>' +
@@ -1030,7 +1039,7 @@
                         '<div class="bio-row"><div class="bio-label">NISN</div><div class="bio-colon">:</div><div class="bio-value">'+escapeHTML(siswa.nisn)+'</div></div>' +
                         '<div class="bio-row"><div class="bio-label">Kelas</div><div class="bio-colon">:</div><div class="bio-value">'+escapeHTML(siswa.kelas)+'</div></div>' + noteHtml + '</div>' +
                         '<div class="left-bottom">'+photoBlock+'<div class="sign-box"><div>'+escapeHTML(s.tempat_tgl_ttd)+'</div><div>Kepala Sekolah</div><div class="sign-area">'+stempelHtml+ttdHtml+'</div><div class="sign-name">'+escapeHTML(s.nama_kepsek)+'</div><div class="sign-nip">NIP '+escapeHTML(s.nip_kepsek)+'</div></div></div></div>' +
-                        '<div class="card-right"><div class="right-header"><div class="rh-title">'+escapeHTML(s.nama)+'</div><div class="rh-subtitle">Kartu ini dibawa selama ujian</div></div><div class="right-table"><table class="table-exam"><thead><tr><th colspan="4" class="th-title">JADWAL UJIAN</th></tr><tr><th style="width:8%">No</th><th style="width:31%">Hari, Tanggal</th><th style="width:27%">Pukul</th><th style="width:34%">Mata Pelajaran</th></tr></thead><tbody>'+jadwalHtml+'</tbody></table></div></div></div>';
+                        '<div class="card-right"><div class="right-header"><div class="rh-title">'+escapeHTML(s.nama)+'</div><div class="rh-subtitle">Kartu ini dibawa selama ujian</div></div><div class="right-table"><table class="table-exam"><colgroup><col style="width:8%"><col style="width:37%"><col style="width:25%"><col style="width:30%"></colgroup><thead><tr><th colspan="4" class="th-title">JADWAL UJIAN</th></tr><tr><th style="width:8%">No</th><th style="width:37%">Hari, Tanggal</th><th style="width:25%">Pukul</th><th style="width:30%">Mata Pelajaran</th></tr></thead><tbody>'+jadwalHtml+'</tbody></table></div></div></div>';
                 }
                 html += '</div>';
             }
