@@ -585,11 +585,26 @@
                     </div>
                 </div>
 
+                <!-- MENU DAFTAR PANITIA YANG DITAMBAHKAN FITUR IMPORT -->
                 <div class="card border-0 shadow-sm rounded-4">
                     <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                             <h5 class="fw-bold text-primary mb-0">Daftar Susunan Panitia</h5>
-                            <button class="btn btn-success btn-sm" onclick="openModalPanitia()"><i class="fa-solid fa-plus"></i> Tambah Panitia</button>
+                            <div class="d-flex gap-2">
+                                <input type="file" id="fileImportPanitia" class="d-none" accept=".xlsx, .xls" onchange="uploadExcelPanitia(this)">
+                                <div class="btn-group">
+                                    <button class="btn btn-success btn-sm" onclick="document.getElementById('fileImportPanitia').click()">
+                                        <i class="fa-solid fa-file-excel"></i> Import Excel
+                                    </button>
+                                    <button class="btn btn-success btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="visually-hidden">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                                        <li><a class="dropdown-item small py-2" href="#" onclick="downloadTemplatePanitia()"><i class="fa-solid fa-download me-2"></i> Download Template</a></li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-primary btn-sm" onclick="openModalPanitia()"><i class="fa-solid fa-plus"></i> Tambah Panitia</button>
+                            </div>
                         </div>
                         <div class="table-responsive" id="panitiaContainer"></div>
                     </div>
@@ -724,7 +739,7 @@
         </div>
     </div>
 
-    <!-- MODAL TAMBAH PANITIA (BARU) -->
+    <!-- MODAL TAMBAH PANITIA -->
     <div class="modal fade" id="modalPanitia" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content rounded-4 border-0">
@@ -780,7 +795,7 @@
         var isSiswaLoaded = false;
         var isJadwalLoaded = false;
 
-        /* DATA SK & PANITIA (BARU) */
+        /* DATA SK & PANITIA */
         var dbSK = {};
         var dbPanitia = [];
         var isSKLoaded = false;
@@ -1004,7 +1019,6 @@
                         renderCetakSK();
                     }, 500);
                 } else {
-                    // Logic google script integration for SK if needed
                     gasRun('getSKData', sessionToken).then(function(res) {
                         if (res.success) {
                             dbSK = res.sk || {}; dbPanitia = res.panitia || [];
@@ -1068,7 +1082,6 @@
                     isSKLoaded = true; renderSKPage();
                 }, 500);
             } else {
-                // Implementasi GAS getSKData jika diperlukan
                 isSKLoaded = true; renderSKPage(); 
             }
         }
@@ -1172,7 +1185,6 @@
             c.innerHTML = html + '</tbody></table>';
         }
 
-        /* --- SINKRONISASI DAN SETTING TAMPILAN KARTU --- */
         function syncModeUI() {
             var elFoto = document.getElementById(modeKartu === 'tanpa' ? 'modeTanpa' : 'modeFoto');
             if (elFoto) elFoto.checked = true;
@@ -1195,7 +1207,6 @@
             renderCetak();
         };
 
-        /* Perkecil huruf otomatis bila teks lebih panjang dari kolomnya */
         function fitJadwal() {
             var tables = document.querySelectorAll('#cetakContainer .table-exam');
             if (!tables.length) return;
@@ -1216,7 +1227,6 @@
                 var cs = tables[t].querySelectorAll(sel);
                 for (var k = 0; k < cs.length; k++) { if (sizes[k]) cs[k].style.fontSize = sizes[k] + 'px'; }
             }
-            /* Rapatkan baris tabel jadwal jika diperlukan */
             var steps = [['3.5mm', '1.5px'], ['3.2mm', '1px'], ['2.9mm', '0.6px'], ['2.7mm', '0.2px']];
             var card = tables[0].closest('.card-right');
             for (var s = 0; s < steps.length; s++) {
@@ -1236,7 +1246,6 @@
             var noFoto = (modeKartu === 'tanpa');
             var noJadwal = (modeJadwal === 'tanpa_jadwal');
             
-            /* Penyesuaian jumlah kartu per halaman. Jika tanpa jadwal = bisa cetak 6 lembar (2 kolom) */
             var cardsPerPage = noJadwal ? 6 : 3;
             
             var logoHtml = s.logo ? '<img src="'+escapeHTML(s.logo)+'">' : '';
@@ -1390,6 +1399,82 @@
             else { localStorage.setItem('dbPanitia', JSON.stringify(dbPanitia)); renderPanitiaTable(); }
         };
 
+        /* ======================================================== 
+           FUNGSI IMPORT EXCEL PANITIA (FITUR BARU)
+           ======================================================== */
+        window.downloadTemplatePanitia = function() {
+            if (typeof XLSX === 'undefined') {
+                Swal.fire('Error', 'Library Excel belum termuat, mohon refresh halaman.', 'error');
+                return;
+            }
+            var ws_data = [
+                ["Nama Lengkap & Gelar", "NIP (Isi \"-\" jika tidak ada)", "Jabatan Dinas / Sekolah", "Jabatan dalam Panitia"],
+                ["Rohiman Supriyadi, S.Pd", "19800101 200501 1 001", "Kepala Sekolah", "Penanggung Jawab"],
+                ["Budi Santoso, S.Pd", "19820202 200604 1 002", "Wakasek Kurikulum", "Ketua"],
+                ["Siti Aminah, S.Pd", "-", "Guru", "Sekretaris"]
+            ];
+            var ws = XLSX.utils.aoa_to_sheet(ws_data);
+            ws['!cols'] = [{wch: 35}, {wch: 25}, {wch: 25}, {wch: 25}];
+            var wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Template Panitia");
+            XLSX.writeFile(wb, "Template_Import_Panitia.xlsx");
+        };
+
+        window.uploadExcelPanitia = function(input) {
+            if (typeof XLSX === 'undefined') {
+                Swal.fire('Error', 'Library Excel belum termuat', 'error');
+                return;
+            }
+            var file = input.files[0];
+            if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var data = new Uint8Array(e.target.result);
+                var workbook = XLSX.read(data, {type: 'array'});
+                var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                var jsonData = XLSX.utils.sheet_to_json(firstSheet, {header: 1});
+
+                if (jsonData.length <= 1) {
+                    Swal.fire('Error', 'Data Excel kosong atau format tidak sesuai.', 'error');
+                    input.value = '';
+                    return;
+                }
+
+                var newPanitia = [];
+                for (var i = 1; i < jsonData.length; i++) {
+                    var row = jsonData[i];
+                    // Skip baris kosong
+                    if (!row || row.length === 0 || (!row[0] && !row[1])) continue;
+                    
+                    newPanitia.push({
+                        id: Date.now() + i,
+                        nama: row[0] ? String(row[0]).trim() : "",
+                        nip: row[1] ? String(row[1]).trim() : "-",
+                        jabatan_dinas: row[2] ? String(row[2]).trim() : "-",
+                        jabatan_panitia: row[3] ? String(row[3]).trim() : "-"
+                    });
+                }
+
+                if (newPanitia.length > 0) {
+                    dbPanitia = dbPanitia.concat(newPanitia);
+                    if (typeof google !== 'undefined') {
+                        // Loop simpan satu per satu ke database Google Sheets jika GAS terhubung
+                        newPanitia.forEach(function(p) {
+                            gasRun('savePanitia', sessionToken, p);
+                        });
+                    } else {
+                        // Simpan ke local storage jika mode preview
+                        localStorage.setItem('dbPanitia', JSON.stringify(dbPanitia));
+                    }
+                    renderPanitiaTable();
+                    Swal.fire('Berhasil', newPanitia.length + ' data kepanitiaan berhasil diimpor.', 'success');
+                }
+                input.value = ''; // Reset input agar bisa upload file yang sama lagi
+            };
+            reader.readAsArrayBuffer(file);
+        };
+        /* ======================================================== */
+
         window.renderCetakSK = function() {
             var logoHtml = dbSK.logo ? '<img src="'+escapeHTML(dbSK.logo)+'" class="sk-logo">' : '';
             var nipText = dbSK.nip_kepsek && dbSK.nip_kepsek !== '-' ? 'NIP. ' + escapeHTML(dbSK.nip_kepsek) : '';
@@ -1451,300 +1536,84 @@
                     '</tr>' +
                     '<tr>' +
                         '<td class="sk-col-1"><br>Memperhatikan</td><td class="sk-col-2"><br>:</td>' +
-                        '<td class="sk-col-3"><br>Hasil Rapat Dinas Dewan Guru dan Staf Tata Usaha pada tanggal '+tglDitetapkan+' tentang Persiapan Pelaksanaan Sumatif Akhir Semester Tahun Pelajaran 2026/2027.</td>' +
+                        '<td class="sk-col-3"><br>Hasil Keputusan Rapat Dewan Guru dan Komite Sekolah pada tanggal '+tglDitetapkan+'.</td>' +
                     '</tr>' +
                 '</table>' +
-                '<div style="text-align:center; font-weight:bold; margin: 10mm 0 5mm 0; font-size:12pt;">MEMUTUSKAN:</div>' +
+                
+                '<div class="sk-title" style="margin-top:5mm; margin-bottom:5mm;">MEMUTUSKAN:</div>' +
+                
                 '<table class="sk-body-table">' +
                     '<tr>' +
                         '<td class="sk-col-1">Menetapkan</td><td class="sk-col-2">:</td>' +
-                        '<td class="sk-col-3">KEPUTUSAN KEPALA SEKOLAH TENTANG PEMBENTUKAN PANITIA SUMATIF AKHIR SEMESTER TAHUN PELAJARAN 2026/2027.</td>' +
+                        '<td class="sk-col-3"></td>' +
                     '</tr>' +
                     '<tr>' +
-                        '<td class="sk-col-1"><br>KESATU</td><td class="sk-col-2"><br>:</td>' +
-                        '<td class="sk-col-3"><br>Membentuk Panitia Sumatif Akhir Semester (SAS) Tahun Pelajaran 2026/2027 dengan susunan kepanitiaan sebagaimana tercantum dalam Lampiran I yang merupakan bagian tidak terpisahkan dari keputusan ini.</td>' +
+                        '<td class="sk-col-1">PERTAMA</td><td class="sk-col-2">:</td>' +
+                        '<td class="sk-col-3">Membentuk Susunan Panitia Sumatif Akhir Semester sebagaimana tercantum dalam lampiran keputusan ini;</td>' +
                     '</tr>' +
                     '<tr>' +
-                        '<td class="sk-col-1"><br>KEDUA</td><td class="sk-col-2"><br>:</td>' +
-                        '<td class="sk-col-3"><br>Panitia sebagaimana dimaksud pada Diktum KESATU bertugas menyusun perencanaan, melaksanakan, melakukan evaluasi, serta menyusun laporan seluruh rangkaian kegiatan Sumatif Akhir Semester sesuai dengan pedoman dan peraturan perundang-undangan yang berlaku.</td>' +
+                        '<td class="sk-col-1">KEDUA</td><td class="sk-col-2">:</td>' +
+                        '<td class="sk-col-3">Menugaskan kepada panitia sebagaimana dimaksud pada butir PERTAMA untuk melaksanakan tugas sesuai dengan kewajibannya;</td>' +
                     '</tr>' +
                     '<tr>' +
-                        '<td class="sk-col-1"><br>KETIGA</td><td class="sk-col-2"><br>:</td>' +
-                        '<td class="sk-col-3"><br>Segala biaya yang timbul akibat diterbitkannya Keputusan ini dibebankan pada Anggaran Pendapatan dan Belanja Sekolah (APBS) / Rencana Kegiatan dan Anggaran Sekolah (RKAS) Tahun Anggaran yang relevan.</td>' +
+                        '<td class="sk-col-1">KETIGA</td><td class="sk-col-2">:</td>' +
+                        '<td class="sk-col-3">Segala biaya yang timbul akibat pelaksanaan keputusan ini dibebankan pada anggaran yang sesuai;</td>' +
                     '</tr>' +
                     '<tr>' +
-                        '<td class="sk-col-1"><br>KEEMPAT</td><td class="sk-col-2"><br>:</td>' +
-                        '<td class="sk-col-3"><br>Apabila di kemudian hari terdapat kekeliruan dalam keputusan ini, akan diadakan perbaikan dan penyesuaian sebagaimana mestinya.</td>' +
-                    '</tr>' +
-                    '<tr>' +
-                        '<td class="sk-col-1"><br>KELIMA</td><td class="sk-col-2"><br>:</td>' +
-                        '<td class="sk-col-3"><br>Keputusan ini mulai berlaku sejak tanggal ditetapkan.</td>' +
+                        '<td class="sk-col-1">KEEMPAT</td><td class="sk-col-2">:</td>' +
+                        '<td class="sk-col-3">Keputusan ini mulai berlaku pada tanggal ditetapkan dengan ketentuan akan diperbaiki sebagaimana mestinya apabila terdapat kekeliruan.</td>' +
                     '</tr>' +
                 '</table>' +
+                
                 '<div class="sk-ttd-container">' +
                     '<div class="sk-ttd-box">' +
-                        '<table>' +
-                            '<tr><td style="width:30mm;">Ditetapkan di</td><td>: '+tempatDitetapkan+'</td></tr>' +
-                            '<tr><td style="border-bottom:1px solid #000; padding-bottom:5px;">Pada tanggal</td><td style="border-bottom:1px solid #000; padding-bottom:5px;">: '+tglDitetapkan+'</td></tr>' +
-                        '</table>' +
-                        '<div style="margin-top:5px;">Kepala Sekolah,</div>' +
-                        '<div style="height: 25mm;"></div>' +
-                        '<div style="font-weight:bold; text-decoration:underline;">'+escapeHTML(dbSK.nama_kepsek || '................................')+'</div>' +
-                        '<div>'+nipText+'</div>' +
+                        'Ditetapkan di : '+tempatDitetapkan+'<br>' +
+                        'Pada Tanggal : '+tglDitetapkan+'<br>' +
+                        'Kepala Sekolah,<br><br><br><br><br>' +
+                        '<strong>'+escapeHTML(dbSK.nama_kepsek || '..........................')+'</strong><br>' + nipText +
                     '</div>' +
                 '</div>' +
             '</div>' +
 
             '<!-- HALAMAN 2 : LAMPIRAN -->' +
-            '<div class="page-f4">' +
+            '<div class="page-f4" style="page-break-before: always;">' +
                 '<div class="sk-lampiran-header">' +
                     '<table>' +
-                        '<tr><td style="width:25mm;">LAMPIRAN</td><td>:</td><td>KEPUTUSAN KEPALA '+escapeHTML(dbSK.sekolah || 'SEKOLAH')+'</td></tr>' +
-                        '<tr><td>NOMOR</td><td>:</td><td>'+escapeHTML(dbSK.nomor || '......................')+'</td></tr>' +
-                        '<tr><td>TANGGAL</td><td>:</td><td>'+tglDitetapkan+'</td></tr>' +
-                        '<tr><td>TENTANG</td><td>:</td><td>PEMBENTUKAN PANITIA SUMATIF AKHIR SEMESTER</td></tr>' +
+                        '<tr><td>Lampiran Keputusan Kepala</td><td>: '+escapeHTML(dbSK.sekolah || '')+'</td></tr>' +
+                        '<tr><td>Nomor</td><td>: '+escapeHTML(dbSK.nomor || '')+'</td></tr>' +
+                        '<tr><td>Tanggal</td><td>: '+tglDitetapkan+'</td></tr>' +
                     '</table>' +
                 '</div>' +
+                
                 '<div class="lampiran-title">' +
-                    'SUSUNAN PANITIA SUMATIF AKHIR SEMESTER (SAS)<br>' +
-                    'TAHUN PELAJARAN 2026/2027' +
+                    'SUSUNAN KEPANITIAAN SUMATIF AKHIR SEMESTER (SAS)<br>' +
+                    'TAHUN PELAJARAN 2026/2027<br>' +
+                    escapeHTML(dbSK.sekolah || '') +
                 '</div>' +
+                
                 '<table class="table-panitia">' +
-                    '<thead>' +
-                        '<tr>' +
-                            '<th style="width: 5%;">NO</th>' +
-                            '<th style="width: 35%;">NAMA / NIP</th>' +
-                            '<th style="width: 30%;">JABATAN DINAS</th>' +
-                            '<th style="width: 30%;">JABATAN PANITIA</th>' +
-                        '</tr>' +
-                    '</thead>' +
-                    '<tbody>' +
-                        tablePanitiaHtml +
-                    '</tbody>' +
+                    '<thead><tr><th style="width:5%;">No</th><th style="width:35%;">Nama Lengkap & Gelar / NIP</th><th style="width:30%;">Jabatan Dinas / Sekolah</th><th style="width:30%;">Jabatan dalam Panitia</th></tr></thead>' +
+                    '<tbody>' + tablePanitiaHtml + '</tbody>' +
                 '</table>' +
+                
                 '<div class="sk-ttd-container">' +
                     '<div class="sk-ttd-box">' +
-                        '<div style="margin-top:5px;">Kepala Sekolah,</div>' +
-                        '<div style="height: 25mm;"></div>' +
-                        '<div style="font-weight:bold; text-decoration:underline;">'+escapeHTML(dbSK.nama_kepsek || '................................')+'</div>' +
-                        '<div>'+nipText+'</div>' +
+                        'Kepala Sekolah,<br><br><br><br><br>' +
+                        '<strong>'+escapeHTML(dbSK.nama_kepsek || '..........................')+'</strong><br>' + nipText +
                     '</div>' +
                 '</div>' +
             '</div>';
-            
+
             document.getElementById('cetakSKContainer').innerHTML = html;
         };
 
-        window.downloadTemplateExcel = function() {
-            var ws_data = [
-                ["Nomor Peserta", "NISN", "Nama Peserta", "Jenis Kelamin (L/P)", "Tempat Lahir", "Tanggal Lahir", "Kelas"],
-                ["2602126401", "3130369278", "Aditia Ramadan", "L", "Bekasi", "11/07/2013", "6"]
-            ];
-            var ws = XLSX.utils.aoa_to_sheet(ws_data);
-            var wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Siswa");
-            XLSX.writeFile(wb, "Template_Data_Siswa.xlsx");
-        };
+        // Tunggu dokumen termuat semua untuk inisiasi event/page
+        document.addEventListener('DOMContentLoaded', function() {
+            var inputFoto = document.getElementById('sFotoFile');
+            if(inputFoto) inputFoto.addEventListener('change', function(e) { handleFotoUpload(this); });
+            checkLoginState();
+        });
 
-        // HELPER UNTUK KONVERSI TANGGAL EXCEL
-        function formatExcelDate(serial) {
-            if (isNaN(serial)) return serial;
-            var date = new Date(Math.round((serial - 25569) * 86400 * 1000));
-            var day = ("0" + date.getDate()).slice(-2);
-            var month = ("0" + (date.getMonth() + 1)).slice(-2);
-            var year = date.getFullYear();
-            return day + "/" + month + "/" + year;
-        }
-
-        window.uploadExcel = function(input) {
-            if(!input.files[0]) return;
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var data = new Uint8Array(e.target.result);
-                var workbook = XLSX.read(data, {type:'array'});
-                var jsonData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], {header:1});
-
-                for(var i=1; i<jsonData.length; i++) {
-                    var r = jsonData[i];
-                    if(r[5] && typeof r[5] === 'number') {
-                        jsonData[i][5] = formatExcelDate(r[5]);
-                    }
-                }
-
-                if (typeof google !== 'undefined') {
-                    gasRun('importSiswaExcel', sessionToken, JSON.stringify(jsonData)).then(function(res) {
-                        if (res.success) { Swal.fire('Berhasil', res.count+' data diimpor', 'success'); fetchSiswa(true); }
-                    });
-                } else {
-                    for(var i=1; i<jsonData.length; i++) {
-                        var r = jsonData[i];
-                        if(r[2]) dbSiswa.push({ id:Date.now()+i, no_peserta:r[0], nisn:r[1], nama:r[2], jk:r[3], tempat_lahir:r[4], tgl_lahir:r[5], kelas:r[6], foto:'' });
-                    }
-                    localStorage.setItem('dbSiswa', JSON.stringify(dbSiswa));
-                    renderSiswa();
-                }
-            };
-            reader.readAsArrayBuffer(input.files[0]);
-        };
-
-        /* --- AUTO UPLOAD FOTO DARI ZIP (BERDASARKAN NISN) --- */
-        window.importZipFoto = function(input) {
-            if (!input.files[0]) return;
-            var file = input.files[0];
-            var zip = new JSZip();
-
-            showFullPageLoading("Mengekstrak Foto...");
-
-            zip.loadAsync(file).then(function(contents) {
-                var promises = [];
-                var matchedCount = 0;
-                var filesInZip = Object.keys(contents.files);
-
-                filesInZip.forEach(function(filename) {
-                    var fileObj = contents.files[filename];
-                    if (!fileObj.dir && (/\.(jpe?g|png|gif|bmp)$/i).test(filename)) {
-
-                        var pureName = filename.split('/').pop().split('.')[0];
-
-                        var studentIdx = dbSiswa.findIndex(function(s) {
-                            return String(s.nisn).trim() === String(pureName).trim();
-                        });
-
-                        if (studentIdx !== -1) {
-                            var p = fileObj.async("base64").then(function(base64Data) {
-                                var mime = "image/" + filename.split('.').pop().toLowerCase();
-                                if(mime === "image/jpg") mime = "image/jpeg";
-
-                                dbSiswa[studentIdx].foto = "data:" + mime + ";base64," + base64Data;
-                                matchedCount++;
-                            });
-                            promises.push(p);
-                        }
-                    }
-                });
-
-                Promise.all(promises).then(function() {
-                    hideFullPageLoading();
-                    if (matchedCount > 0) {
-                        if (typeof google !== 'undefined') {
-                            gasRun('saveMultipleSiswa', sessionToken, dbSiswa).then(function(res) {
-                                Swal.fire('Berhasil', matchedCount + ' foto berhasil dicocokkan & disimpan', 'success');
-                                fetchSiswa(true);
-                            });
-                        } else {
-                            localStorage.setItem('dbSiswa', JSON.stringify(dbSiswa));
-                            renderSiswa();
-                            Swal.fire('Berhasil (Simulasi)', matchedCount + ' foto berhasil dicocokkan', 'success');
-                        }
-                    } else {
-                        Swal.fire('Info', 'Tidak ada foto yang cocok dengan NISN siswa yang terdaftar', 'info');
-                    }
-                    input.value = "";
-                });
-            }).catch(function(err) {
-                hideFullPageLoading();
-                Swal.fire('Error', 'Gagal membaca file ZIP: ' + err.message, 'error');
-            });
-        };
-
-        window.saveSekolah = function() {
-            var payload = { instansi:document.getElementById('kInstansi').value, dinas:document.getElementById('kDinas').value, nama:document.getElementById('kNama').value, kecamatan:document.getElementById('kKecamatan').value, alamat:document.getElementById('kAlamat').value, kegiatan:document.getElementById('kJudul2').value, judul1:document.getElementById('kJudul1').value, judul2:document.getElementById('kJudul2').value, judul3:document.getElementById('kJudul3').value, tempat_tgl_ttd:document.getElementById('kTTDText').value, nama_kepsek:document.getElementById('kKepsek').value, nip_kepsek:document.getElementById('kNip').value, logo:document.getElementById('kLogo').value, stempel:document.getElementById('kStempel').value, ttd:document.getElementById('kTTD').value };
-            dbSekolah = payload;
-            if(typeof google !== 'undefined') gasRun('saveSekolah', sessionToken, payload).then(function(res){ Swal.fire('Tersimpan', '', 'success'); });
-            else { localStorage.setItem('dbSekolah', JSON.stringify(dbSekolah)); Swal.fire('Tersimpan', '(Simulasi)', 'success'); }
-        };
-
-        window.openModalSiswa = function() {
-            document.getElementById('formSiswa').reset();
-            document.getElementById('siswaId').value = '';
-            document.getElementById('sFotoBase64').value = '';
-            document.getElementById('previewFotoContainer').classList.add('d-none');
-            new bootstrap.Modal(document.getElementById('modalSiswa')).show();
-        };
-
-        window.editSiswa = function(id) {
-            var item = dbSiswa.find(function(x){return x.id == id});
-            if(!item) return;
-            document.getElementById('siswaId').value = item.id;
-            document.getElementById('sNoPeserta').value = item.no_peserta || '';
-            document.getElementById('sNISN').value = item.nisn;
-            document.getElementById('sNama').value = item.nama;
-            document.getElementById('sJK').value = item.jk || '';
-            document.getElementById('sTempatLahir').value = item.tempat_lahir || '';
-            document.getElementById('sTglLahir').value = item.tgl_lahir || '';
-            document.getElementById('sKelas').value = item.kelas;
-            document.getElementById('sFotoBase64').value = item.foto || '';
-            if(item.foto) { document.getElementById('previewFoto').src = item.foto; document.getElementById('previewFotoContainer').classList.remove('d-none'); }
-            new bootstrap.Modal(document.getElementById('modalSiswa')).show();
-        };
-
-        window.handleFotoUpload = function(input) {
-            if (input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('sFotoBase64').value = e.target.result;
-                    document.getElementById('previewFoto').src = e.target.result;
-                    document.getElementById('previewFotoContainer').classList.remove('d-none');
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        };
-
-        window.saveSiswa = function() {
-            var payload = {
-                id: document.getElementById('siswaId').value,
-                no_peserta: document.getElementById('sNoPeserta').value,
-                nisn: document.getElementById('sNISN').value,
-                nama: document.getElementById('sNama').value,
-                jk: document.getElementById('sJK').value,
-                tempat_lahir: document.getElementById('sTempatLahir').value,
-                tgl_lahir: document.getElementById('sTglLahir').value,
-                kelas: document.getElementById('sKelas').value,
-                foto: document.getElementById('sFotoBase64').value
-            };
-            if(payload.id) {
-                var idx = dbSiswa.findIndex(function(x){return x.id == payload.id});
-                dbSiswa[idx] = payload;
-            } else {
-                payload.id = Date.now();
-                dbSiswa.push(payload);
-            }
-            if(typeof google !== 'undefined') gasRun('saveSiswa', sessionToken, payload).then(function(){ fetchSiswa(true); });
-            else { localStorage.setItem('dbSiswa', JSON.stringify(dbSiswa)); renderSiswa(); }
-            bootstrap.Modal.getInstance(document.getElementById('modalSiswa')).hide();
-        };
-
-        window.hapusSiswa = function(id) {
-            Swal.fire({title:'Hapus Siswa?', icon:'warning', showCancelButton:true}).then(function(res){
-                if(res.isConfirmed) {
-                    dbSiswa = dbSiswa.filter(function(x){return x.id != id});
-                    if(typeof google !== 'undefined') gasRun('deleteSiswa', sessionToken, id).then(function(){ fetchSiswa(true); });
-                    else { localStorage.setItem('dbSiswa', JSON.stringify(dbSiswa)); renderSiswa(); }
-                }
-            });
-        };
-
-        window.openModalJadwal = function() {
-            document.getElementById('formJadwal').reset();
-            document.getElementById('jId').value = '';
-            new bootstrap.Modal(document.getElementById('modalJadwal')).show();
-        };
-
-        window.saveJadwal = function() {
-            var payload = { id:Date.now(), hari:document.getElementById('jHari').value, tahun:document.getElementById('jTahun').value, pukul:document.getElementById('jPukul').value, mapel:document.getElementById('jMapel').value };
-            dbJadwal.push(payload);
-            if(typeof google !== 'undefined') gasRun('saveJadwal', sessionToken, payload).then(function(){ fetchJadwal(true); });
-            else { localStorage.setItem('dbJadwal', JSON.stringify(dbJadwal)); renderJadwal(); }
-            bootstrap.Modal.getInstance(document.getElementById('modalJadwal')).hide();
-        };
-
-        window.hapusJadwal = function(id) {
-            dbJadwal = dbJadwal.filter(function(x){return x.id != id});
-            if(typeof google !== 'undefined') gasRun('deleteJadwal', sessionToken, id).then(function(){ fetchJadwal(true); });
-            else { localStorage.setItem('dbJadwal', JSON.stringify(dbJadwal)); renderJadwal(); }
-        };
-
-        document.addEventListener('DOMContentLoaded', function() { syncModeUI(); checkLoginState(); });
     })();
     </script>
 </body>
