@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Kartu Ujian PSAJ</title>
+    <title>Aplikasi Kartu Ujian & SK Panitia</title>
     <!-- CSS & Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -63,17 +63,17 @@
         :focus-visible { outline: 2px solid var(--jade); outline-offset: 2px; }
 
         /* Sidebar */
-        .sidebar { min-width: 264px; max-width: 264px; padding: 22px 16px; background: linear-gradient(175deg, #0d1730 0%, #14285a 100%); position: sticky; top: 0; height: 100vh; min-height: 0; overflow-y: auto; box-shadow: 8px 0 30px -18px rgba(13,23,48,.6); }
+        .sidebar { min-width: 264px; max-width: 264px; padding: 22px 16px; background: linear-gradient(175deg, #0d1730 0%, #14285a 100%); position: sticky; top: 0; height: 100vh; min-height: 0; overflow-y: auto; box-shadow: 8px 0 30px -18px rgba(13,23,48,.6); z-index: 1000;}
         .brand { display: flex; align-items: center; gap: 12px; padding: 4px 8px 20px; margin-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,.1); }
         .brand-mark { width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg, var(--jade), #2f7de1); display: grid; place-items: center; font-size: 1.1rem; color: #fff; box-shadow: 0 8px 18px -8px rgba(25,165,143,.8); }
-        .brand-name { font-weight: 800; font-size: 1.05rem; line-height: 1.1; }
+        .brand-name { font-weight: 800; font-size: 1.05rem; line-height: 1.1; color: white;}
         .brand-sub { font-size: .72rem; color: rgba(255,255,255,.55); }
         .nav-label { font-size: .75rem; color: rgba(255,255,255,.45); padding: 0 12px; margin-bottom: 8px; }
         .sidebar .nav-link { display: flex; align-items: center; gap: 4px; border-left: 0; border-radius: 12px !important; padding: 12px 14px; margin-bottom: 4px !important; font-weight: 500; color: rgba(255,255,255,.72); }
         .sidebar .nav-link:hover { background: rgba(255,255,255,.07); color: #fff; border-left: 0; }
         .sidebar .nav-link.active { background: rgba(255,255,255,.11); color: #fff; border-left: 0; box-shadow: inset 3px 0 0 var(--jade); font-weight: 600; }
         .sidebar .nav-link.active i { color: var(--jade); }
-        .user-chip { display: flex; align-items: center; padding: 10px 12px; border-radius: 14px; margin-bottom: 10px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.08); }
+        .user-chip { display: flex; align-items: center; padding: 10px 12px; border-radius: 14px; margin-bottom: 10px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.08); color: white;}
         .sidebar .btn-outline-light { border-color: rgba(255,255,255,.25); border-radius: 10px; }
         .sidebar .btn-outline-light:hover { background: #fff; color: var(--ink); }
 
@@ -164,7 +164,7 @@
         .login-card .input-group .form-control { border-left: 0; border-radius: 0 10px 10px 0; }
 
         /* Preview cetak */
-        .preview-wrapper { background: linear-gradient(160deg, #1a2540, #2b3a5c); border-radius: 16px; }
+        .preview-wrapper { background: linear-gradient(160deg, #1a2540, #2b3a5c); border-radius: 16px; padding: 20px; overflow-x: auto; display: flex; flex-direction: column; align-items: center; gap: 20px; }
 
         @media (max-width: 991px) {
             .wrapper { flex-direction: column; }
@@ -173,8 +173,6 @@
         }
 
         /* --- STYLING ID CARD B2 --- */
-        .preview-wrapper { background: #555; padding: 20px; border-radius: 8px; overflow-x: auto; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-        
         .page-a4 {
             width: 210mm; min-height: 297mm; background: white;
             box-shadow: 0 0 20px rgba(0,0,0,0.3); display: flex; flex-direction: row; flex-wrap: wrap;
@@ -277,29 +275,49 @@
         .kartu-b2.tanpa-jadwal { width: 9cm; }
         .kartu-b2.tanpa-jadwal .card-left { width: 100%; border-right: none; }
 
+        /* ================= STYLING CETAK SK (F4 / FOLIO) ================= */
+        .page-f4 { width: 215mm; min-height: 330mm; background: white; box-shadow: 0 0 20px rgba(0,0,0,0.3); padding: 20mm 20mm 20mm 20mm; margin: 0 auto; font-family: 'Times New Roman', Times, serif; color: #000; box-sizing: border-box; position: relative; }
+        .sk-header-container { display: flex; align-items: center; border-bottom: 4px solid #000; padding-bottom: 2px; margin-bottom: 2px; position: relative; }
+        .sk-header-container::after { content: ''; position: absolute; left: 0; right: 0; bottom: -3px; border-bottom: 1px solid #000; }
+        .sk-logo { width: 25mm; height: 28mm; object-fit: contain; margin-right: 4mm; }
+        .sk-kop-text { flex-grow: 1; text-align: center; line-height: 1.1; }
+        .sk-kop-1 { font-size: 14pt; }
+        .sk-kop-2 { font-size: 16pt; font-weight: bold; }
+        .sk-kop-3 { font-size: 26pt; font-weight: bold; font-family: Impact, 'Arial Black', sans-serif; transform: scaleY(1.1); margin: 2px 0; }
+        .sk-kop-4 { font-size: 14pt; }
+        .sk-kop-5 { font-size: 11pt; }
+        .sk-kop-6 { font-size: 11pt; color: blue; font-weight: bold; }
+        
+        .sk-title { text-align: center; font-weight: bold; font-size: 12pt; line-height: 1.3; margin-top: 15mm; margin-bottom: 10mm; }
+        .sk-body-table { width: 100%; font-size: 12pt; line-height: 1.5; vertical-align: top; }
+        .sk-body-table td { padding: 2px; vertical-align: top; text-align: justify; }
+        .sk-col-1 { width: 28%; font-weight: bold; }
+        .sk-col-2 { width: 3%; text-align: center; }
+        .sk-col-3 { width: 69%; }
+        
+        .sk-ttd-container { width: 100%; display: flex; justify-content: flex-end; margin-top: 15mm; }
+        .sk-ttd-box { width: 70mm; font-size: 12pt; line-height: 1.5; }
+        
+        /* SK Lampiran Table */
+        .sk-lampiran-header { font-size: 12pt; line-height: 1.5; margin-bottom: 10mm; }
+        .sk-lampiran-header table { width: auto; font-size: 12pt; }
+        .sk-lampiran-header td { padding: 1px 5px 1px 0; vertical-align: top; }
+        .lampiran-title { text-align: center; font-weight: bold; font-size: 12pt; margin-bottom: 5mm; }
+        .table-panitia { width: 100%; border-collapse: collapse; font-size: 12pt; margin-bottom: 20mm; }
+        .table-panitia th, .table-panitia td { border: 1px solid #000; padding: 6px 8px; vertical-align: top; }
+        .table-panitia th { font-weight: bold; text-align: center; }
+
         @media print {
             body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .sidebar, .topbar, .btn-print-action, #previewLoginInfo, .modal, .sweet-alert { display: none !important; }
             .wrapper { display: block !important; }
             .main-content { padding: 0 !important; margin: 0 !important; width: 100% !important; }
             .preview-wrapper { background: white; padding: 0; border: none; overflow: visible; display: block; }
-
-            .page-a4 {
-                width: 210mm;
-                height: 297mm;
-                box-shadow: none;
-                padding: 15mm 10mm;
-                margin: 0 auto;
-                page-break-after: always;
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                align-content: flex-start;
-                gap: 10mm;
-            }
+            
+            .page-a4 { width: 210mm; height: 297mm; box-shadow: none; padding: 15mm 10mm; margin: 0 auto; page-break-after: always; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 10mm; }
+            .page-f4 { width: 215mm; min-height: 330mm; box-shadow: none; padding: 20mm 20mm 20mm 20mm; margin: 0 auto; page-break-after: always; }
             .kartu-b2 { border: 1px solid #000; page-break-inside: avoid; }
-            @page { size: A4 portrait; margin: 0; }
+            @page { size: portrait; margin: 0; }
         }
     </style>
 </head>
@@ -317,14 +335,15 @@
     <div id="loginPage" class="container-fluid vh-100 p-0">
         <div class="row g-0 h-100">
             <div class="col-lg-7 col-md-6 d-none d-md-flex login-hero">
-                <div class="hero-brand"><span class="brand-mark"><i class="fas fa-id-badge"></i></span><span>ID Card App</span></div>
+                <div class="hero-brand"><span class="brand-mark"><i class="fas fa-id-badge"></i></span><span>ID Card & SK App</span></div>
                 <div class="hero-copy">
                     <h1>Kartu ujian siap cetak dalam hitungan menit.</h1>
-                    <p>Susun data peserta, jadwal, dan kop sekolah di satu tempat, lalu cetak langsung ke kertas A4.</p>
+                    <p>Susun data peserta, jadwal, dan kop sekolah di satu tempat, lalu cetak langsung ke kertas A4. Lengkap dengan fitur cetak SK Kepanitiaan.</p>
                     <ul class="hero-points">
                         <li><i class="fa-solid fa-circle-check"></i>Impor peserta dari file Excel</li>
                         <li><i class="fa-solid fa-circle-check"></i>Foto cocok otomatis lewat NISN</li>
                         <li><i class="fa-solid fa-circle-check"></i>Pengaturan desain kartu fleksibel</li>
+                        <li><i class="fa-solid fa-circle-check"></i>Cetak Surat Keputusan (SK) Panitia</li>
                     </ul>
                 </div>
                 <small class="hero-foot">Hak Cipta &copy; 2026 Rohiman Supriyadi</small>
@@ -340,7 +359,7 @@
                 <div class="login-card">
                     <div class="mb-4">
                         <h3 class="mb-1">Masuk ke akun Anda</h3>
-                        <p class="text-muted mb-0">Generator kartu ujian B2</p>
+                        <p class="text-muted mb-0">Generator kartu ujian B2 & SK</p>
                     </div>
                     <form id="loginForm" onsubmit="event.preventDefault(); handleLogin();">
                         <div class="mb-3">
@@ -370,7 +389,7 @@
     <!-- MAIN APP -->
     <div id="mainApp" class="wrapper d-none">
         <nav class="sidebar shadow-sm">
-            <div class="brand"><span class="brand-mark"><i class="fas fa-id-badge"></i></span><div><div class="brand-name">ID Card App</div><div class="brand-sub">Kartu Ujian PSAJ</div></div></div>
+            <div class="brand"><span class="brand-mark"><i class="fas fa-id-badge"></i></span><div><div class="brand-name">ID Card & SK</div><div class="brand-sub">Admin Panel</div></div></div>
             <div class="flex-grow-1">
                 <p class="nav-label">Menu utama</p>
                 <div class="nav-item-custom nav-link active mb-1 rounded" onclick="showPage('dashboard', this)">
@@ -387,6 +406,14 @@
                 </div>
                 <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('cetak', this)">
                     <i class="fa-solid fa-print"></i> Cetak Kartu
+                </div>
+                
+                <p class="nav-label mt-4">Kepanitiaan</p>
+                <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('sk', this)">
+                    <i class="fa-solid fa-file-signature"></i> Data SK Panitia
+                </div>
+                <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('cetak-sk', this)">
+                    <i class="fa-solid fa-file-contract"></i> Cetak SK Panitia
                 </div>
             </div>
             <div class="mt-auto w-100 pt-3">
@@ -407,16 +434,19 @@
                 <button class="btn btn-danger btn-sm px-3 fw-bold shadow-sm" onclick="logout()"><i class="fa-solid fa-power-off"></i> Keluar</button>
             </div>
 
+            <!-- HALAMAN DASHBOARD -->
             <div id="page-dashboard" class="page-section">
                 <div class="row" id="dashboardContainer"></div>
             </div>
 
+            <!-- HALAMAN SEKOLAH -->
             <div id="page-sekolah" class="page-section d-none">
                 <div class="card border-0 shadow-sm rounded-4">
                     <div class="card-body p-4" id="sekolahContainer"></div>
                 </div>
             </div>
 
+            <!-- HALAMAN SISWA -->
             <div id="page-siswa" class="page-section d-none">
                 <div class="card border-0 shadow-sm rounded-4">
                     <div class="card-body p-4">
@@ -447,6 +477,7 @@
                 </div>
             </div>
 
+            <!-- HALAMAN JADWAL -->
             <div id="page-jadwal" class="page-section d-none">
                 <div class="card border-0 shadow-sm rounded-4">
                     <div class="card-body p-4">
@@ -459,6 +490,7 @@
                 </div>
             </div>
 
+            <!-- HALAMAN CETAK KARTU -->
             <div id="page-cetak" class="page-section d-none">
                 <div class="card border-0 shadow-sm rounded-4 mb-3 btn-print-action">
                     <div class="card-body p-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
@@ -467,7 +499,6 @@
                             <small class="text-muted">Gunakan Kertas A4. Setting Margin: None, Scale: 100%.</small>
                         </div>
                         <div class="d-flex align-items-center gap-3 flex-wrap">
-                            <!-- Tombol Toggle FOTO -->
                             <div class="btn-group" role="group">
                                 <input type="radio" class="btn-check" name="modeKartu" id="modeFoto" value="foto" onchange="setModeKartu(this.value)">
                                 <label class="btn btn-outline-primary btn-sm fw-bold" for="modeFoto"><i class="fa-solid fa-image"></i> Foto</label>
@@ -475,7 +506,6 @@
                                 <label class="btn btn-outline-primary btn-sm fw-bold" for="modeTanpa"><i class="fa-solid fa-user-slash"></i> Tanpa Foto</label>
                             </div>
                             
-                            <!-- Tombol Toggle JADWAL -->
                             <div class="btn-group" role="group">
                                 <input type="radio" class="btn-check" name="modeJadwal" id="modeDenganJadwal" value="dengan_jadwal" onchange="setModeJadwal(this.value)">
                                 <label class="btn btn-outline-primary btn-sm fw-bold" for="modeDenganJadwal"><i class="fa-solid fa-calendar-check"></i> Dengan Jadwal</label>
@@ -492,13 +522,103 @@
                 <div id="cetakContainer" class="preview-wrapper"></div>
             </div>
 
+            <!-- HALAMAN DATA KEPANITIAAN SK -->
+            <div id="page-sk" class="page-section d-none">
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold text-primary mb-3 border-bottom pb-2">Identitas & Kop Surat SK Panitia</h5>
+                        <form onsubmit="event.preventDefault(); saveSKSettings();">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small text-muted">Instansi (KOP Baris 1)</label>
+                                    <input type="text" id="skInstansi" class="form-control" placeholder="Cth: PEMERINTAH KABUPATEN BEKASI" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small text-muted">Dinas (KOP Baris 2)</label>
+                                    <input type="text" id="skDinas" class="form-control" placeholder="Cth: DINAS PENDIDIKAN" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small text-muted">Nama Sekolah (KOP Baris 3)</label>
+                                    <input type="text" id="skSekolah" class="form-control" placeholder="Cth: SD NEGERI MUARA BAKTI 01" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small text-muted">Kecamatan (KOP Baris 4)</label>
+                                    <input type="text" id="skKecamatan" class="form-control" placeholder="Cth: KECAMATAN BABELAN">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small text-muted">Alamat Lengkap</label>
+                                    <input type="text" id="skAlamat" class="form-control" placeholder="Cth: Jl. Bayangkara RT. 12/07 Ds. Muara Bakti" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small text-muted">Kontak / Email</label>
+                                    <input type="text" id="skEmail" class="form-control" placeholder="Cth: Email : sdnmuarabakti1@gmail.com">
+                                </div>
+                            </div>
+                            <div class="row border-top pt-3 mt-2">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label small text-muted">Nomor Surat / SK</label>
+                                    <input type="text" id="skNomor" class="form-control" placeholder="Cth: 421.2/001/SD.MB.01/2026" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label small text-muted">Tempat & Tanggal Ditetapkan</label>
+                                    <input type="text" id="skTempatTgl" class="form-control" placeholder="Cth: Babelan, 15 November 2026" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label small text-muted">Nama Kepala Sekolah</label>
+                                    <input type="text" id="skKepsek" class="form-control" placeholder="Cth: Rohiman Supriyadi, S.Pd" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label small text-muted">NIP Kepala Sekolah</label>
+                                    <input type="text" id="skNip" class="form-control" placeholder="Cth: 19800101 200501 1 001" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label small text-muted fw-bold">Upload Logo (Daerah)</label>
+                                    <input type="file" class="form-control form-control-sm mb-2" onchange="handleImageUpload(this, 'skLogoVal', 'skLogoPreview')">
+                                    <input type="hidden" id="skLogoVal">
+                                    <img id="skLogoPreview" src="" style="max-height:50px;">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary px-4"><i class="fa-solid fa-save"></i> Simpan Data SK</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold text-primary mb-0">Daftar Susunan Panitia</h5>
+                            <button class="btn btn-success btn-sm" onclick="openModalPanitia()"><i class="fa-solid fa-plus"></i> Tambah Panitia</button>
+                        </div>
+                        <div class="table-responsive" id="panitiaContainer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HALAMAN CETAK SK -->
+            <div id="page-cetak-sk" class="page-section d-none">
+                <div class="card border-0 shadow-sm rounded-4 mb-3 btn-print-action">
+                    <div class="card-body p-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <div>
+                            <h5 class="fw-bold mb-0">Preview Cetak SK Kepanitiaan</h5>
+                            <small class="text-muted">Gunakan Kertas F4 / Folio (215 x 330 mm). Margin: None.</small>
+                        </div>
+                        <button class="btn btn-warning fw-bold px-4 py-2 shadow-sm" onclick="window.print()">
+                            <i class="fa-solid fa-print"></i> CETAK SK
+                        </button>
+                    </div>
+                </div>
+                <div id="cetakSKContainer" class="preview-wrapper"></div>
+            </div>
+
             <footer class="text-center mt-5 mb-4 topbar">
                 <small class="text-muted fw-bold">Hak Cipta &copy; 2026 Rohiman Supriyadi</small>
             </footer>
         </div>
     </div>
 
-    <!-- MODAL SISWA -->
+    <!-- MODAL SISWA (Tetap seperti semula) -->
     <div class="modal fade" id="modalSiswa" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content rounded-4 border-0">
@@ -567,7 +687,7 @@
         </div>
     </div>
 
-    <!-- MODAL JADWAL -->
+    <!-- MODAL JADWAL (Tetap seperti semula) -->
     <div class="modal fade" id="modalJadwal" tabindex="-1">
         <div class="modal-dialog modal-sm">
             <div class="modal-content rounded-4 border-0">
@@ -604,6 +724,43 @@
         </div>
     </div>
 
+    <!-- MODAL TAMBAH PANITIA (BARU) -->
+    <div class="modal fade" id="modalPanitia" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content rounded-4 border-0">
+                <div class="modal-header border-0 bg-light rounded-top-4">
+                    <h5 class="modal-title fw-bold">Tambah Panitia SK</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form onsubmit="event.preventDefault(); savePanitia();">
+                    <div class="modal-body p-4">
+                        <input type="hidden" id="pId">
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Nama Lengkap & Gelar</label>
+                            <input type="text" class="form-control" id="pNama" placeholder="Cth: Budi Santoso, S.Pd" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">NIP (Isi "-" jika tidak ada)</label>
+                            <input type="text" class="form-control" id="pNip" placeholder="Cth: 19820202 200604 1 002" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Jabatan Dinas / Sekolah</label>
+                            <input type="text" class="form-control" id="pJabatanDinas" placeholder="Cth: Guru / Staf TU" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small text-muted">Jabatan dalam Panitia</label>
+                            <input type="text" class="form-control" id="pJabatanPanitia" placeholder="Cth: Ketua / Sekretaris" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary w-100">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
@@ -622,6 +779,11 @@
         var isSekolahLoaded = false;
         var isSiswaLoaded = false;
         var isJadwalLoaded = false;
+
+        /* DATA SK & PANITIA (BARU) */
+        var dbSK = {};
+        var dbPanitia = [];
+        var isSKLoaded = false;
 
         var mockSekolah = {
             instansi: "PEMERINTAH KABUPATEN BEKASI",
@@ -647,6 +809,25 @@
         var mockJadwal = [
             { id: 1, hari: "Senin,", tahun: "08-06-2026", pukul: "07.30 - 09.00", mapel: "PABP" },
             { id: 2, hari: "", tahun: "", pukul: "09.30 - 11.00", mapel: "PPKN" }
+        ];
+        
+        var mockSK = {
+            instansi: "PEMERINTAH KABUPATEN BEKASI",
+            dinas: "DINAS PENDIDIKAN",
+            sekolah: "SD NEGERI MUARA BAKTI 01",
+            kecamatan: "KECAMATAN BABELAN",
+            alamat: "Jl. Bayangkara RT. 12/07 Ds. Muara Bakti",
+            email: "Email : sdnmuarabakti1@gmail.com",
+            logo: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Coat_of_arms_of_Bekasi_Regency.svg",
+            nomor: "421.2/001/SD.MB.01/2026",
+            tempat_tgl: "Babelan, 15 November 2026",
+            nama_kepsek: "ROHIMAN SUPRIYADI, S.Pd",
+            nip_kepsek: "19800101 200501 1 001"
+        };
+        var mockPanitia = [
+            { id: 1, nama: "Rohiman Supriyadi, S.Pd", nip: "19800101 200501 1 001", jabatan_dinas: "Kepala Sekolah", jabatan_panitia: "Penanggung Jawab" },
+            { id: 2, nama: "Budi Santoso, S.Pd", nip: "19820202 200604 1 002", jabatan_dinas: "Wakasek Kurikulum", jabatan_panitia: "Ketua" },
+            { id: 3, nama: "Siti Aminah, S.Pd", nip: "19850303 200705 2 003", jabatan_dinas: "Guru", jabatan_panitia: "Sekretaris" }
         ];
 
         function escapeHTML(str) {
@@ -739,8 +920,8 @@
             sessionToken = null; currentUser = null;
             localStorage.removeItem('sessionToken');
             localStorage.removeItem('currentUser');
-            dbSekolah = {}; dbSiswa = []; dbJadwal = [];
-            isSekolahLoaded = false; isSiswaLoaded = false; isJadwalLoaded = false;
+            dbSekolah = {}; dbSiswa = []; dbJadwal = []; dbSK = {}; dbPanitia = [];
+            isSekolahLoaded = false; isSiswaLoaded = false; isJadwalLoaded = false; isSKLoaded = false;
             activePage = 'dashboard';
             localStorage.setItem('activePage', activePage);
             checkLoginState();
@@ -767,9 +948,9 @@
             activePage = pageName;
             localStorage.setItem('activePage', activePage);
 
-            var titles = { 'dashboard':'Dashboard', 'sekolah':'Data Sekolah', 'siswa':'Data Siswa', 'jadwal':'Jadwal Ujian', 'cetak':'Cetak Kartu Ujian' };
+            var titles = { 'dashboard':'Dashboard', 'sekolah':'Data Sekolah', 'siswa':'Data Siswa', 'jadwal':'Jadwal Ujian', 'cetak':'Cetak Kartu Ujian', 'sk':'Data Kepanitiaan SK', 'cetak-sk':'Cetak SK Panitia' };
             document.getElementById('pageTitle').innerText = titles[pageName];
-            var subs = { 'dashboard':'Ringkasan data kartu ujian', 'sekolah':'Kop, judul kartu, dan tanda tangan', 'siswa':'Kelola peserta dan foto', 'jadwal':'Atur mata pelajaran dan waktu ujian', 'cetak':'Pratinjau dan cetak ke PDF' };
+            var subs = { 'dashboard':'Ringkasan data kartu ujian & SK', 'sekolah':'Kop, judul kartu, dan tanda tangan', 'siswa':'Kelola peserta dan foto', 'jadwal':'Atur mata pelajaran dan waktu ujian', 'cetak':'Pratinjau dan cetak ke PDF', 'sk':'Pengaturan Kop, Identitas, dan Daftar Panitia', 'cetak-sk':'Pratinjau Surat Keputusan ke PDF' };
             var subEl = document.getElementById('pageSub'); if (subEl) subEl.innerText = subs[pageName] || '';
 
             document.querySelectorAll('.nav-item-custom').forEach(function(n) { n.classList.remove('active'); });
@@ -791,6 +972,7 @@
             else if (pageName === 'sekolah') { if (!isSekolahLoaded) fetchSekolah(); else renderSekolah(); }
             else if (pageName === 'siswa') { if (!isSiswaLoaded) fetchSiswa(); else renderSiswa(); }
             else if (pageName === 'jadwal') { if (!isJadwalLoaded) fetchJadwal(); else renderJadwal(); }
+            else if (pageName === 'sk') { if (!isSKLoaded) fetchSKData(); else renderSKPage(); }
             else if (pageName === 'cetak') {
                 showSectionLoading('cetakContainer');
                 if (typeof google === 'undefined') {
@@ -807,6 +989,26 @@
                             dbSekolah = res.sekolah || {}; dbSiswa = res.siswa || []; dbJadwal = res.jadwal || [];
                             isSekolahLoaded = true; isSiswaLoaded = true; isJadwalLoaded = true;
                             renderCetak();
+                        }
+                    });
+                }
+            } else if (pageName === 'cetak-sk') {
+                showSectionLoading('cetakSKContainer');
+                if (typeof google === 'undefined') {
+                    setTimeout(function() {
+                        if (!isSKLoaded) { 
+                            dbSK = JSON.parse(localStorage.getItem('dbSK')) || mockSK; 
+                            dbPanitia = JSON.parse(localStorage.getItem('dbPanitia')) || mockPanitia; 
+                            isSKLoaded = true; 
+                        }
+                        renderCetakSK();
+                    }, 500);
+                } else {
+                    // Logic google script integration for SK if needed
+                    gasRun('getSKData', sessionToken).then(function(res) {
+                        if (res.success) {
+                            dbSK = res.sk || {}; dbPanitia = res.panitia || [];
+                            isSKLoaded = true; renderCetakSK();
                         }
                     });
                 }
@@ -857,6 +1059,19 @@
                 });
             }
         }
+        
+        function fetchSKData() {
+            if (typeof google === 'undefined') {
+                setTimeout(function() {
+                    dbSK = JSON.parse(localStorage.getItem('dbSK')) || mockSK;
+                    dbPanitia = JSON.parse(localStorage.getItem('dbPanitia')) || mockPanitia;
+                    isSKLoaded = true; renderSKPage();
+                }, 500);
+            } else {
+                // Implementasi GAS getSKData jika diperlukan
+                isSKLoaded = true; renderSKPage(); 
+            }
+        }
 
         function renderDashboard() {
             var nama = (currentUser && currentUser.fullname) ? escapeHTML(currentUser.fullname) : 'Pengguna';
@@ -866,22 +1081,22 @@
             var modeTeks = (modeKartu === 'tanpa' ? 'Tanpa foto' : 'Dengan foto') + '<br><small>' + (modeJadwal === 'tanpa_jadwal' ? 'Tanpa jadwal' : 'Dengan jadwal') + '</small>';
             
             var html =
-                '<div class="col-12 mb-4"><div class="hero-banner"><small class="hero-date">' + tgl + '</small><h2>' + sapa + ', ' + nama + '</h2><p>Kelola data peserta dan jadwal, lalu cetak kartu ujian langsung dari sini.</p><button class="btn btn-warning" onclick="showPage(\'cetak\')"><i class="fa-solid fa-print me-2"></i>Cetak kartu</button></div></div>' +
+                '<div class="col-12 mb-4"><div class="hero-banner"><small class="hero-date">' + tgl + '</small><h2>' + sapa + ', ' + nama + '</h2><p>Kelola data peserta, jadwal ujian, serta pencetakan SK Kepanitiaan secara langsung.</p><button class="btn btn-warning me-2" onclick="showPage(\'cetak\')"><i class="fa-solid fa-print me-2"></i>Cetak Kartu</button><button class="btn btn-light" onclick="showPage(\'cetak-sk\')"><i class="fa-solid fa-file-contract me-2"></i>Cetak SK</button></div></div>' +
                 '<div class="col-md-4 mb-3"><div class="stat-card"><div class="stat-icon i-indigo"><i class="fa-solid fa-users"></i></div><div><div class="stat-value">' + dbSiswa.length + '</div><div class="stat-label">Total siswa</div></div></div></div>' +
                 '<div class="col-md-4 mb-3"><div class="stat-card"><div class="stat-icon i-jade"><i class="fa-solid fa-calendar-check"></i></div><div><div class="stat-value">' + dbJadwal.length + '</div><div class="stat-label">Mata pelajaran terjadwal</div></div></div></div>' +
                 '<div class="col-md-4 mb-3"><div class="stat-card"><div class="stat-icon i-amber"><i class="fa-solid fa-id-card"></i></div><div><div class="stat-value" style="font-size:1.1rem; line-height:1.3;">' + modeTeks + '</div><div class="stat-label">Model kartu aktif</div></div></div></div>' +
                 '<div class="col-12 mt-2 mb-2"><h6 class="fw-bold mb-0">Akses cepat</h6></div>' +
-                '<div class="col-md-6 col-xl-3 mb-3"><div class="quick-tile" onclick="showPage(\'sekolah\')"><i class="fa-solid fa-school qt-icon"></i><div><strong>Data sekolah</strong><span>Kop dan tanda tangan</span></div></div></div>' +
                 '<div class="col-md-6 col-xl-3 mb-3"><div class="quick-tile" onclick="showPage(\'siswa\')"><i class="fa-solid fa-users qt-icon"></i><div><strong>Data siswa</strong><span>Impor Excel dan foto</span></div></div></div>' +
                 '<div class="col-md-6 col-xl-3 mb-3"><div class="quick-tile" onclick="showPage(\'jadwal\')"><i class="fa-solid fa-calendar-alt qt-icon"></i><div><strong>Jadwal ujian</strong><span>Mapel dan waktu</span></div></div></div>' +
-                '<div class="col-md-6 col-xl-3 mb-3"><div class="quick-tile" onclick="showPage(\'cetak\')"><i class="fa-solid fa-print qt-icon"></i><div><strong>Cetak kartu</strong><span>Pratinjau A4</span></div></div></div>';
+                '<div class="col-md-6 col-xl-3 mb-3"><div class="quick-tile" onclick="showPage(\'cetak\')"><i class="fa-solid fa-print qt-icon"></i><div><strong>Cetak kartu</strong><span>Pratinjau A4</span></div></div></div>'+
+                '<div class="col-md-6 col-xl-3 mb-3"><div class="quick-tile" onclick="showPage(\'cetak-sk\')"><i class="fa-solid fa-file-contract qt-icon"></i><div><strong>Cetak SK Panitia</strong><span>Pratinjau F4/Folio</span></div></div></div>';
             document.getElementById('dashboardContainer').innerHTML = html;
         }
 
         function renderSekolah() {
             var s = dbSekolah;
             var html = '<form onsubmit="event.preventDefault(); saveSekolah();">' +
-                '<h5 class="mb-3 text-primary border-bottom pb-2">Informasi Kop & Stempel</h5>' +
+                '<h5 class="mb-3 text-primary border-bottom pb-2">Informasi Kop & Stempel (Untuk Kartu Ujian)</h5>' +
                 '<div class="row"><div class="col-md-6 mb-3"><label class="small text-muted">Instansi (KOP Baris 1)</label><input type="text" id="kInstansi" class="form-control" value="'+escapeHTML(s.instansi)+'" required></div>' +
                 '<div class="col-md-6 mb-3"><label class="small text-muted">Dinas Pendidikan (KOP Baris 2)</label><input type="text" id="kDinas" class="form-control" value="'+escapeHTML(s.dinas)+'"></div></div>' +
                 '<div class="row"><div class="col-md-6 mb-3"><label class="small text-muted">Nama Sekolah (KOP Baris 3)</label><input type="text" id="kNama" class="form-control" value="'+escapeHTML(s.nama)+'" required></div>' +
@@ -1087,6 +1302,238 @@
             
             if (!noJadwal) fitJadwal();
         }
+
+        /* --- FUNGSI HALAMAN SK DAN PANITIA --- */
+        function renderSKPage() {
+            document.getElementById('skInstansi').value = dbSK.instansi || '';
+            document.getElementById('skDinas').value = dbSK.dinas || '';
+            document.getElementById('skSekolah').value = dbSK.sekolah || '';
+            document.getElementById('skKecamatan').value = dbSK.kecamatan || '';
+            document.getElementById('skAlamat').value = dbSK.alamat || '';
+            document.getElementById('skEmail').value = dbSK.email || '';
+            document.getElementById('skNomor').value = dbSK.nomor || '';
+            document.getElementById('skTempatTgl').value = dbSK.tempat_tgl || '';
+            document.getElementById('skKepsek').value = dbSK.nama_kepsek || '';
+            document.getElementById('skNip').value = dbSK.nip_kepsek || '';
+            document.getElementById('skLogoVal').value = dbSK.logo || '';
+            if (dbSK.logo) document.getElementById('skLogoPreview').src = dbSK.logo;
+
+            renderPanitiaTable();
+        }
+
+        window.saveSKSettings = function() {
+            dbSK = {
+                instansi: document.getElementById('skInstansi').value,
+                dinas: document.getElementById('skDinas').value,
+                sekolah: document.getElementById('skSekolah').value,
+                kecamatan: document.getElementById('skKecamatan').value,
+                alamat: document.getElementById('skAlamat').value,
+                email: document.getElementById('skEmail').value,
+                nomor: document.getElementById('skNomor').value,
+                tempat_tgl: document.getElementById('skTempatTgl').value,
+                nama_kepsek: document.getElementById('skKepsek').value,
+                nip_kepsek: document.getElementById('skNip').value,
+                logo: document.getElementById('skLogoVal').value
+            };
+            
+            if (typeof google !== 'undefined') gasRun('saveSK', sessionToken, dbSK).then(function(){ Swal.fire('Tersimpan', '', 'success'); });
+            else { localStorage.setItem('dbSK', JSON.stringify(dbSK)); Swal.fire('Tersimpan', 'Pengaturan SK berhasil disimpan', 'success'); }
+        };
+
+        function renderPanitiaTable() {
+            var c = document.getElementById('panitiaContainer');
+            if(dbPanitia.length === 0) { c.innerHTML = '<div class="text-center py-4 text-muted">Belum ada data panitia</div>'; return; }
+            
+            var html = '<table class="table table-hover align-middle table-sm"><thead class="table-light"><tr><th>No</th><th>Nama & Gelar / NIP</th><th>Jabatan Dinas</th><th>Jabatan Panitia</th><th class="text-end">Aksi</th></tr></thead><tbody>';
+            dbPanitia.forEach(function(p, i) {
+                html += '<tr>' +
+                    '<td>'+(i+1)+'</td>' +
+                    '<td><strong>'+escapeHTML(p.nama)+'</strong><br><small class="text-muted">NIP. '+escapeHTML(p.nip)+'</small></td>' +
+                    '<td>'+escapeHTML(p.jabatan_dinas)+'</td>' +
+                    '<td>'+escapeHTML(p.jabatan_panitia)+'</td>' +
+                    '<td class="text-end"><button class="btn btn-sm btn-light border text-danger" onclick="hapusPanitia('+p.id+')"><i class="fa-solid fa-trash"></i></button></td>' +
+                    '</tr>';
+            });
+            html += '</tbody></table>';
+            c.innerHTML = html;
+        }
+
+        window.openModalPanitia = function() {
+            document.getElementById('pId').value = '';
+            document.getElementById('pNama').value = '';
+            document.getElementById('pNip').value = '';
+            document.getElementById('pJabatanDinas').value = '';
+            document.getElementById('pJabatanPanitia').value = '';
+            new bootstrap.Modal(document.getElementById('modalPanitia')).show();
+        };
+
+        window.savePanitia = function() {
+            var payload = {
+                id: Date.now(),
+                nama: document.getElementById('pNama').value,
+                nip: document.getElementById('pNip').value,
+                jabatan_dinas: document.getElementById('pJabatanDinas').value,
+                jabatan_panitia: document.getElementById('pJabatanPanitia').value
+            };
+            dbPanitia.push(payload);
+            
+            if(typeof google !== 'undefined') gasRun('savePanitia', sessionToken, payload).then(function(){ renderPanitiaTable(); });
+            else { localStorage.setItem('dbPanitia', JSON.stringify(dbPanitia)); renderPanitiaTable(); }
+            
+            bootstrap.Modal.getInstance(document.getElementById('modalPanitia')).hide();
+        };
+
+        window.hapusPanitia = function(id) {
+            dbPanitia = dbPanitia.filter(function(x) { return x.id != id; });
+            
+            if(typeof google !== 'undefined') gasRun('deletePanitia', sessionToken, id).then(function(){ renderPanitiaTable(); });
+            else { localStorage.setItem('dbPanitia', JSON.stringify(dbPanitia)); renderPanitiaTable(); }
+        };
+
+        window.renderCetakSK = function() {
+            var logoHtml = dbSK.logo ? '<img src="'+escapeHTML(dbSK.logo)+'" class="sk-logo">' : '';
+            var nipText = dbSK.nip_kepsek && dbSK.nip_kepsek !== '-' ? 'NIP. ' + escapeHTML(dbSK.nip_kepsek) : '';
+            var splitTgl = dbSK.tempat_tgl ? dbSK.tempat_tgl.split(',') : ['..................', '..................'];
+            var tempatDitetapkan = escapeHTML(splitTgl[0].trim());
+            var tglDitetapkan = splitTgl[1] ? escapeHTML(splitTgl[1].trim()) : '..................';
+            
+            var tablePanitiaHtml = '';
+            dbPanitia.forEach(function(p, i) {
+                tablePanitiaHtml += '<tr>' +
+                    '<td style="text-align:center;">'+(i+1)+'</td>' +
+                    '<td>'+escapeHTML(p.nama)+'<br>NIP. '+escapeHTML(p.nip)+'</td>' +
+                    '<td>'+escapeHTML(p.jabatan_dinas)+'</td>' +
+                    '<td>'+escapeHTML(p.jabatan_panitia)+'</td>' +
+                    '</tr>';
+            });
+
+            var html = 
+            '<!-- HALAMAN 1 : KEPUTUSAN -->' +
+            '<div class="page-f4">' +
+                '<div class="sk-header-container">' + logoHtml +
+                    '<div class="sk-kop-text">' +
+                        '<div class="sk-kop-1">'+escapeHTML(dbSK.instansi || '')+'</div>' +
+                        '<div class="sk-kop-2">'+escapeHTML(dbSK.dinas || '')+'</div>' +
+                        '<div class="sk-kop-3">'+escapeHTML(dbSK.sekolah || '')+'</div>' +
+                        '<div class="sk-kop-4">'+escapeHTML(dbSK.kecamatan || '')+'</div>' +
+                        '<div class="sk-kop-5">'+escapeHTML(dbSK.alamat || '')+'</div>' +
+                        '<div class="sk-kop-6">'+escapeHTML(dbSK.email || '')+'</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="sk-title">' +
+                    'KEPUTUSAN KEPALA '+escapeHTML(dbSK.sekolah || 'SEKOLAH')+'<br>' +
+                    'NOMOR : '+escapeHTML(dbSK.nomor || '......................')+'<br>' +
+                    'TENTANG<br>' +
+                    'PEMBENTUKAN PANITIA SUMATIF AKHIR SEMESTER (SAS)<br>' +
+                    'TAHUN PELAJARAN 2026/2027' +
+                '</div>' +
+                '<table class="sk-body-table">' +
+                    '<tr>' +
+                        '<td class="sk-col-1">Menimbang</td><td class="sk-col-2">:</td>' +
+                        '<td class="sk-col-3">' +
+                            '<table>' +
+                                '<tr><td style="width:20px;">a.</td><td>Bahwa dalam rangka mengevaluasi pencapaian kompetensi dan hasil belajar peserta didik pada akhir semester, perlu diselenggarakan Sumatif Akhir Semester (SAS);</td></tr>' +
+                                '<tr><td>b.</td><td>Bahwa agar pelaksanaan Sumatif Akhir Semester dapat berjalan dengan tertib, lancar, dan terkoordinasi dengan baik, dipandang perlu untuk membentuk Panitia Penyelenggara;</td></tr>' +
+                                '<tr><td>c.</td><td>Bahwa berdasarkan pertimbangan sebagaimana dimaksud pada huruf a dan huruf b, perlu menetapkan Keputusan Kepala Sekolah tentang Pembentukan Panitia Sumatif Akhir Semester.</td></tr>' +
+                            '</table>' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td class="sk-col-1"><br>Mengingat</td><td class="sk-col-2"><br>:</td>' +
+                        '<td class="sk-col-3"><br>' +
+                            '<table>' +
+                                '<tr><td style="width:20px;">1.</td><td>Undang-Undang Nomor 20 Tahun 2003 tentang Sistem Pendidikan Nasional;</td></tr>' +
+                                '<tr><td>2.</td><td>Peraturan Pemerintah Nomor 4 Tahun 2022 tentang Perubahan atas Peraturan Pemerintah Nomor 57 Tahun 2021 tentang Standar Nasional Pendidikan;</td></tr>' +
+                                '<tr><td>3.</td><td>Peraturan Menteri Pendidikan, Kebudayaan, Riset, dan Teknologi Nomor 21 Tahun 2022 tentang Standar Penilaian Pendidikan;</td></tr>' +
+                                '<tr><td>4.</td><td>Kalender Akademik Tahun Pelajaran 2026/2027.</td></tr>' +
+                            '</table>' +
+                        '</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td class="sk-col-1"><br>Memperhatikan</td><td class="sk-col-2"><br>:</td>' +
+                        '<td class="sk-col-3"><br>Hasil Rapat Dinas Dewan Guru dan Staf Tata Usaha pada tanggal '+tglDitetapkan+' tentang Persiapan Pelaksanaan Sumatif Akhir Semester Tahun Pelajaran 2026/2027.</td>' +
+                    '</tr>' +
+                '</table>' +
+                '<div style="text-align:center; font-weight:bold; margin: 10mm 0 5mm 0; font-size:12pt;">MEMUTUSKAN:</div>' +
+                '<table class="sk-body-table">' +
+                    '<tr>' +
+                        '<td class="sk-col-1">Menetapkan</td><td class="sk-col-2">:</td>' +
+                        '<td class="sk-col-3">KEPUTUSAN KEPALA SEKOLAH TENTANG PEMBENTUKAN PANITIA SUMATIF AKHIR SEMESTER TAHUN PELAJARAN 2026/2027.</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td class="sk-col-1"><br>KESATU</td><td class="sk-col-2"><br>:</td>' +
+                        '<td class="sk-col-3"><br>Membentuk Panitia Sumatif Akhir Semester (SAS) Tahun Pelajaran 2026/2027 dengan susunan kepanitiaan sebagaimana tercantum dalam Lampiran I yang merupakan bagian tidak terpisahkan dari keputusan ini.</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td class="sk-col-1"><br>KEDUA</td><td class="sk-col-2"><br>:</td>' +
+                        '<td class="sk-col-3"><br>Panitia sebagaimana dimaksud pada Diktum KESATU bertugas menyusun perencanaan, melaksanakan, melakukan evaluasi, serta menyusun laporan seluruh rangkaian kegiatan Sumatif Akhir Semester sesuai dengan pedoman dan peraturan perundang-undangan yang berlaku.</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td class="sk-col-1"><br>KETIGA</td><td class="sk-col-2"><br>:</td>' +
+                        '<td class="sk-col-3"><br>Segala biaya yang timbul akibat diterbitkannya Keputusan ini dibebankan pada Anggaran Pendapatan dan Belanja Sekolah (APBS) / Rencana Kegiatan dan Anggaran Sekolah (RKAS) Tahun Anggaran yang relevan.</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td class="sk-col-1"><br>KEEMPAT</td><td class="sk-col-2"><br>:</td>' +
+                        '<td class="sk-col-3"><br>Apabila di kemudian hari terdapat kekeliruan dalam keputusan ini, akan diadakan perbaikan dan penyesuaian sebagaimana mestinya.</td>' +
+                    '</tr>' +
+                    '<tr>' +
+                        '<td class="sk-col-1"><br>KELIMA</td><td class="sk-col-2"><br>:</td>' +
+                        '<td class="sk-col-3"><br>Keputusan ini mulai berlaku sejak tanggal ditetapkan.</td>' +
+                    '</tr>' +
+                '</table>' +
+                '<div class="sk-ttd-container">' +
+                    '<div class="sk-ttd-box">' +
+                        '<table>' +
+                            '<tr><td style="width:30mm;">Ditetapkan di</td><td>: '+tempatDitetapkan+'</td></tr>' +
+                            '<tr><td style="border-bottom:1px solid #000; padding-bottom:5px;">Pada tanggal</td><td style="border-bottom:1px solid #000; padding-bottom:5px;">: '+tglDitetapkan+'</td></tr>' +
+                        '</table>' +
+                        '<div style="margin-top:5px;">Kepala Sekolah,</div>' +
+                        '<div style="height: 25mm;"></div>' +
+                        '<div style="font-weight:bold; text-decoration:underline;">'+escapeHTML(dbSK.nama_kepsek || '................................')+'</div>' +
+                        '<div>'+nipText+'</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+
+            '<!-- HALAMAN 2 : LAMPIRAN -->' +
+            '<div class="page-f4">' +
+                '<div class="sk-lampiran-header">' +
+                    '<table>' +
+                        '<tr><td style="width:25mm;">LAMPIRAN</td><td>:</td><td>KEPUTUSAN KEPALA '+escapeHTML(dbSK.sekolah || 'SEKOLAH')+'</td></tr>' +
+                        '<tr><td>NOMOR</td><td>:</td><td>'+escapeHTML(dbSK.nomor || '......................')+'</td></tr>' +
+                        '<tr><td>TANGGAL</td><td>:</td><td>'+tglDitetapkan+'</td></tr>' +
+                        '<tr><td>TENTANG</td><td>:</td><td>PEMBENTUKAN PANITIA SUMATIF AKHIR SEMESTER</td></tr>' +
+                    '</table>' +
+                '</div>' +
+                '<div class="lampiran-title">' +
+                    'SUSUNAN PANITIA SUMATIF AKHIR SEMESTER (SAS)<br>' +
+                    'TAHUN PELAJARAN 2026/2027' +
+                '</div>' +
+                '<table class="table-panitia">' +
+                    '<thead>' +
+                        '<tr>' +
+                            '<th style="width: 5%;">NO</th>' +
+                            '<th style="width: 35%;">NAMA / NIP</th>' +
+                            '<th style="width: 30%;">JABATAN DINAS</th>' +
+                            '<th style="width: 30%;">JABATAN PANITIA</th>' +
+                        '</tr>' +
+                    '</thead>' +
+                    '<tbody>' +
+                        tablePanitiaHtml +
+                    '</tbody>' +
+                '</table>' +
+                '<div class="sk-ttd-container">' +
+                    '<div class="sk-ttd-box">' +
+                        '<div style="margin-top:5px;">Kepala Sekolah,</div>' +
+                        '<div style="height: 25mm;"></div>' +
+                        '<div style="font-weight:bold; text-decoration:underline;">'+escapeHTML(dbSK.nama_kepsek || '................................')+'</div>' +
+                        '<div>'+nipText+'</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+            
+            document.getElementById('cetakSKContainer').innerHTML = html;
+        };
 
         window.downloadTemplateExcel = function() {
             var ws_data = [
