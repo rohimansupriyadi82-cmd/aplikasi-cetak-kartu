@@ -466,6 +466,98 @@
         .teks-sk-hint { background:#faf6ea; border-left:3px solid var(--gold); border-radius:8px; padding:10px 14px; font-size:.8rem; color:#5b5030; }
         textarea.teks-sk { font-size:.88rem; line-height:1.5; }
 
+                /* ===== peningkatan tampilan ===== */
+        @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+        @keyframes aurora { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
+        @keyframes pulseGold { 0%,100% { box-shadow:0 0 0 0 rgba(201,162,75,.55); } 50% { box-shadow:0 0 0 6px rgba(201,162,75,0); } }
+        .page-section:not(.d-none) { animation:fadeUp .45s ease both; }
+        .hero-banner { background-size:200% 200%; animation:aurora 16s ease infinite; }
+        .hero-banner h2 { background:linear-gradient(90deg,#fff,#ecd9a0 60%,#fff); -webkit-background-clip:text; background-clip:text; color:transparent; }
+        #heroClock { font-variant-numeric:tabular-nums; color:#fff; }
+        .stat-card { background:linear-gradient(145deg,#fff,#fbf8ef); backdrop-filter:blur(6px); transition:transform .2s, box-shadow .2s; }
+        .stat-card:hover { transform:translateY(-3px); box-shadow:0 22px 38px -24px rgba(10,17,36,.55); }
+        .quick-tile { position:relative; overflow:hidden; }
+        .quick-tile::after { content:""; position:absolute; inset:0; background:linear-gradient(120deg,transparent 30%,rgba(201,162,75,.16) 50%,transparent 70%); transform:translateX(-120%); transition:transform .6s; }
+        .quick-tile:hover::after { transform:translateX(120%); }
+        .sidebar .nav-link { transition:background .2s, transform .2s, color .2s; }
+        .sidebar .nav-link:hover { transform:translateX(3px); }
+        .sidebar .nav-link i { transition:transform .25s; }
+        .sidebar .nav-link:hover i { transform:scale(1.18) rotate(-6deg); }
+        .nav-badge { margin-left:auto; font-size:.56rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; background:linear-gradient(135deg,#ecd9a0,#c9a24b); color:#2b1e05; border-radius:20px; padding:2px 7px; animation:pulseGold 2.4s infinite; }
+        .sidebar::-webkit-scrollbar { width:6px; } .sidebar::-webkit-scrollbar-thumb { background:rgba(201,162,75,.35); border-radius:6px; }
+        .cmdk-trigger { display:inline-flex; align-items:center; gap:8px; color:#46506a; }
+        kbd { background:#13214a; color:#ecd9a0; border-radius:6px; padding:1px 7px; font-size:.68rem; font-family:inherit; border:1px solid rgba(201,162,75,.5); }
+        #cmdk { position:fixed; inset:0; z-index:10000; background:rgba(10,17,36,.55); backdrop-filter:blur(6px); display:none; align-items:flex-start; justify-content:center; padding-top:14vh; }
+        #cmdk.open { display:flex; animation:fadeUp .2s ease both; }
+        .cmdk-box { width:min(540px,92vw); background:#fff; border-radius:20px; border:1px solid var(--gold); box-shadow:0 40px 90px -30px rgba(0,0,0,.7); overflow:hidden; }
+        .cmdk-box input { width:100%; border:0; border-bottom:1px solid var(--line); padding:18px 22px; font-size:1rem; outline:none; font-family:inherit; }
+        .cmdk-item { display:flex; align-items:center; gap:14px; padding:13px 22px; cursor:pointer; color:#1c2438; }
+        .cmdk-item i { width:22px; text-align:center; color:var(--gold); }
+        .cmdk-item span { flex:1; font-weight:600; } .cmdk-item kbd { opacity:0; }
+        .cmdk-item.on, .cmdk-item:hover { background:linear-gradient(90deg,#faf3dc,#fff); } .cmdk-item.on kbd { opacity:1; }
+        .cmdk-empty { padding:22px; text-align:center; color:var(--muted); }
+        .cmdk-foot { padding:9px 22px; font-size:.72rem; color:var(--muted); background:#faf6ea; display:flex; gap:14px; }
+        @media screen { #dn-pages .dn-page { zoom:.78; } }
+        @media print { #dn-pages .dn-page { zoom:1; } }
+
+        /* ===== panel denah ===== */
+        #page-cetak-denah { --dn-gold:#c9a24b; }
+        .dn-panel { position:sticky; top:12px; max-height:calc(100vh - 24px); display:flex; flex-direction:column; border-radius:22px; overflow:hidden; color:#fff; background:linear-gradient(170deg,#022c22,#064e3b 60%,#065f46); box-shadow:0 26px 54px -26px rgba(2,44,34,.95); border:1px solid rgba(201,162,75,.4); }
+        .dn-head { display:flex; align-items:center; gap:12px; padding:16px 20px; background:linear-gradient(135deg,#022c22,#064e3b); border-bottom:1px solid rgba(255,255,255,.1); }
+        .dn-head img { width:42px; height:42px; background:#fff; border-radius:50%; padding:3px; object-fit:contain; box-shadow:0 0 0 2px var(--dn-gold); }
+        .dn-head h3 { margin:0; font:800 1.02rem 'Playfair Display',serif; letter-spacing:.07em; text-transform:uppercase; color:#fff; }
+        .dn-tabs { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; background:rgba(0,0,0,.28); padding:5px; margin:12px 14px 0; border-radius:12px; }
+        .dn-tab { padding:10px 2px; border:0; border-radius:9px; background:transparent; color:#fff; font:700 9px 'Plus Jakarta Sans',sans-serif; cursor:pointer; text-transform:uppercase; letter-spacing:.04em; transition:.25s; }
+        .dn-tab:hover { background:rgba(255,255,255,.1); }
+        .dn-tab.active { background:linear-gradient(135deg,#10b981,#059669); box-shadow:0 6px 14px -6px rgba(16,185,129,.9); }
+        .dn-body { flex:1; overflow-y:auto; padding:14px; }
+        .dn-body::-webkit-scrollbar { width:6px; } .dn-body::-webkit-scrollbar-thumb { background:rgba(201,162,75,.4); border-radius:6px; }
+        .dn-acc { background:rgba(255,255,255,.05); border-radius:14px; margin-bottom:12px; border:1px solid rgba(255,255,255,.1); overflow:hidden; }
+        .dn-acc-h { padding:14px 18px; cursor:pointer; font-weight:700; font-size:.8rem; display:flex; justify-content:space-between; align-items:center; transition:.3s; }
+        .dn-acc-h i { font-style:italic; } .dn-acc-h.active { background:rgba(255,255,255,.1); }
+        .dn-acc-c { padding:0 18px; max-height:0; overflow:hidden; transition:.4s ease-out; background:rgba(0,0,0,.12); }
+        .dn-acc-c.show { padding:18px; max-height:5000px; }
+        .dn-fg { margin-bottom:12px; }
+        .dn-fg label { display:block; font-size:9px; font-weight:800; margin-bottom:4px; text-transform:uppercase; opacity:.75; color:#fff; letter-spacing:.04em; }
+        .dn-fg input, .dn-fg select { width:100%; padding:9px 10px; border:1px solid rgba(255,255,255,.2); border-radius:8px; font-size:12px; background:rgba(255,255,255,.1); color:#fff; outline:none; font-family:inherit; }
+        .dn-fg input:focus, .dn-fg select:focus { border-color:var(--dn-gold); box-shadow:0 0 0 3px rgba(201,162,75,.25); }
+        .dn-fg select option { color:#111; }
+        .dn-btn { width:100%; padding:12px; border:0; border-radius:10px; cursor:pointer; font:800 10px 'Plus Jakarta Sans',sans-serif; display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:10px; text-transform:uppercase; letter-spacing:.04em; transition:.25s; color:#fff; }
+        .dn-btn:hover { transform:translateY(-2px); }
+        .dn-btn-main { background:linear-gradient(135deg,#10b981,#059669); box-shadow:0 10px 20px -10px rgba(16,185,129,.9); }
+        .dn-btn-out { border:1px solid rgba(255,255,255,.3); background:transparent; }
+        .dn-btn-out:hover { background:rgba(255,255,255,.08); }
+        .dn-btn-del { background:linear-gradient(135deg,#ef4444,#dc2626); }
+        .dn-by { text-align:center; font-size:10px; opacity:.55; margin-top:6px; padding-bottom:6px; font-weight:600; letter-spacing:1px; }
+        .dn-stage { background:radial-gradient(900px 400px at 50% -10%,#3a4660,#252d3d); border-radius:16px; padding:22px 10px; display:flex; flex-direction:column; align-items:center; overflow-x:auto; min-height:500px; }
+        @media print {
+            #page-cetak-denah .row { display:block !important; margin:0 !important; }
+            #page-cetak-denah [class*="col-"] { width:100% !important; max-width:100% !important; padding:0 !important; }
+            .dn-stage { background:transparent !important; padding:0 !important; border-radius:0; display:block; overflow:visible; }
+            #dn-pages .dn-page { box-shadow:none; margin:0; width:215mm; height:330mm; break-after:page; }
+            #dn-pages .dn-page:last-child { break-after:auto; }
+        }
+        /* ===== DENAH (scoped) ===== */
+        #page-cetak-denah{display:block}
+#page-cetak-denah .dn-page{
+            width: 215mm; height: 330mm;
+            padding: 8mm 12mm; 
+            background: white;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.1);
+            position: relative; margin-bottom: 30px;
+            display: flex; flex-direction: column;
+            overflow: hidden; 
+            page-break-after: always; color: #000;
+        }#page-cetak-denah .dn-header{ text-align: center; border-bottom: 3.5pt double #000; padding-bottom: 8px; margin-bottom: 10px; position: relative; flex-shrink: 0; }#page-cetak-denah .logo-img{ position: absolute; left: 0; top: 0; width: 25mm; height: 30mm; object-fit: contain; }#page-cetak-denah .dn-header h1{ margin: 0; font-size: 15pt; text-transform: uppercase; line-height: 1.1; font-weight: 700; letter-spacing: 0.5px; }#page-cetak-denah .dn-header h2{ margin: 2px 0; font-size: 24pt; font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: 1px; }#page-cetak-denah .dn-header p{ margin: 1px 0; font-size: 9pt; font-weight: 600; line-height: 1.3; }#page-cetak-denah .photo-grid{ display: grid; gap: 5mm 5mm; justify-content: center; flex-grow: 1; align-content: flex-start; width: 100%; margin-top: 2mm; }#page-cetak-denah .student-card{ width: 40mm; display: flex; flex-direction: column; align-items: center; }#page-cetak-denah .photo-frame{ width: 30mm; height: 35mm; border: 1.2pt solid #000; background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; }#page-cetak-denah .photo-frame img{ width: 100%; height: 100%; object-fit: cover; }#page-cetak-denah .id-label{ margin-top: 3px; background: #ffff00 !important; border: 1.2pt solid #000; width: 38mm; text-align: center; font-weight: 800; font-size: 8.5pt; padding: 2px 0; }#page-cetak-denah .nisn-label{ font-size: 7.5pt; font-weight: 700; margin-top: 1px; }#page-cetak-denah .denah-card{ width: 42mm; height: 42mm; border: 1.5pt solid #000; display: flex; flex-direction: column; background: #fff; overflow: hidden; }#page-cetak-denah .denah-row-1{ border-bottom: 1pt solid #000; text-align: center; font-size: 7.5pt; font-weight: 800; padding: 2px 0; background: #eee !important; }#page-cetak-denah .denah-row-2{ border-bottom: 1pt solid #000; text-align: center; font-size: 10.5pt; font-weight: 900; padding: 3px 0; }#page-cetak-denah .denah-row-bottom{ display: flex; flex-grow: 1; }#page-cetak-denah .denah-box-photo{ flex: 1; border-right: 1pt solid #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }#page-cetak-denah .denah-box-photo img{ width: 100%; height: 100%; object-fit: cover; }#page-cetak-denah .denah-box-name{ flex: 1.2; background: var(--purple-shaded) !important; display: flex; align-items: center; justify-content: center; padding: 3px; text-align: center; font-size: 7pt; font-weight: 800; line-height: 1.1; text-transform: uppercase; word-break: break-word; }#page-cetak-denah .abs-table{ width: 100%; border-collapse: collapse; border: 1.5pt solid #000; table-layout: fixed; }#page-cetak-denah .abs-table th{ background: #f1f5f9 !important; border: 1pt solid #000; padding: 6px 4px; font-size: 9pt; text-transform: uppercase; font-weight: 800; }#page-cetak-denah .abs-table td{ border: 1pt solid #000; padding: 3px 8px; font-size: 9.5pt; height: 9.8mm; vertical-align: middle; }#page-cetak-denah .zigzag-ttd{ display: flex; align-items: center; width: 100%; height: 100%; font-size: 9pt; font-weight: 700; }#page-cetak-denah .footer-sig{ 
+            margin-top: 4mm; 
+            display: flex; 
+            justify-content: flex-end; 
+            width: 100%; 
+            padding-bottom: 4mm; 
+        }#page-cetak-denah .sig-container{ display: flex; justify-content: space-between; width: 100%; }#page-cetak-denah .sig-box{ min-width: 65mm; font-size: 11pt; text-align: center; line-height: 1.3; }
+
+        
+        /* ===== END DENAH ===== */
         /* ================= LJK (scoped) ================= */
         #page-cetak-ljk { --ljk-blue:#3B82F6; --ljk-line:1pt; --ljk-line-bold:1.5pt; }
         #ljk-pages, #ljk-pages * { box-sizing:border-box; margin:0; padding:0; font-family:Arial,Helvetica,sans-serif; }
@@ -815,7 +907,10 @@
                     <i class="fa-solid fa-id-badge"></i> Cetak No Meja
                 </div>
                 <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('cetak-ljk', this)">
-                    <i class="fa-solid fa-file-pen"></i> Cetak LJK
+                    <i class="fa-solid fa-file-pen"></i> Cetak LJK <span class="nav-badge">Baru</span>
+                </div>
+                <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('cetak-denah', this)">
+                    <i class="fa-solid fa-chair"></i> Cetak Denah <span class="nav-badge">Baru</span>
                 </div>
                 <p class="nav-label">Kepanitiaan</p>
                 <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('sk', this)">
@@ -840,7 +935,7 @@
         <div class="main-content">
             <div class="topbar d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded shadow-sm">
                 <div><h4 class="mb-0" id="pageTitle">Dashboard</h4><div class="page-sub" id="pageSub">Ringkasan data kartu ujian</div></div>
-                <button class="btn btn-danger btn-sm px-3 fw-bold shadow-sm" onclick="logout()"><i class="fa-solid fa-power-off"></i> Keluar</button>
+                <div class="d-flex gap-2 align-items-center"><button class="btn btn-light btn-sm border cmdk-trigger" onclick="openCmdk()"><i class="fa-solid fa-magnifying-glass"></i> Cari menu <kbd>Ctrl K</kbd></button><button class="btn btn-danger btn-sm px-3 fw-bold shadow-sm" onclick="logout()"><i class="fa-solid fa-power-off"></i> Keluar</button></div>
             </div>
 
             <!-- HALAMAN DASHBOARD -->
@@ -1343,6 +1438,109 @@
                 </div>
             </div>
 
+            <!-- HALAMAN CETAK DENAH -->
+            <div id="page-cetak-denah" class="page-section d-none">
+                <div class="row g-3">
+                    <div class="col-lg-4 col-xl-3 btn-print-action">
+                        <div class="dn-panel">
+                            <div class="dn-head"><img src="https://iili.io/oKGMU5Q.png" alt="Logo"><h3>PSAJ Precision F4</h3></div>
+<div class="dn-tabs">
+            <button class="dn-tab active" id="tab-main" onclick="dnSwitch('main')">Album & Denah</button>
+            <button class="dn-tab" id="tab-absen" onclick="dnSwitch('absen')">Daftar Hadir</button>
+            <button class="dn-tab" id="tab-pengawas" onclick="dnSwitch('pengawas')">Pengawas</button>
+        </div>
+
+        <div class="dn-body">
+            <div id="common-settings">
+                <div class="dn-acc">
+                    <div class="dn-acc-h active" onclick="dnAcc(this)"><i>🏢 DATA INSTANSI (SENTRAL)</i><span>▼</span></div>
+                    <div class="dn-acc-c show">
+                        <div class="dn-fg"><label>Status Sekolah</label><select id="in-status" onchange="dnStatus()"><option value="negeri">Negeri (Kab. Bekasi)</option><option value="swasta">Swasta (Kustom)</option></select></div>
+                        <div class="dn-fg" id="yayasan-group" style="display:none;"><label>Nama Yayasan</label><input type="text" id="in-yayasan" value="YAYASAN PENDIDIKAN ISLAM" oninput="dnSave()"></div>
+                        <div class="dn-fg" id="logo-upload-group" style="display:none;"><label>Upload Logo</label><input type="file" id="in-logo" accept="image/*" onchange="dnLogo(this)"></div>
+                        <div class="dn-fg"><label>Nama Sekolah</label><input type="text" id="in-school" value="SDN MUARA BAKTI 01" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>Kecamatan</label><input type="text" id="in-dist" value="KECAMATAN BABELAN" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>Alamat</label><input type="text" id="in-addr" value="Jl. Bayangkara Rt. 12/07 Ds. Muara Bakti Kec. Babelan Kab. Bekasi" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>Email</label><input type="text" id="in-email" value="sdnmuarabakti01@gmail.com" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>Kota/Kabupaten (Titimangsa)</label><input type="text" id="in-city" value="Babelan" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>Tahun Pelajaran</label><input type="text" id="in-year" value="2025/2026" oninput="dnSave()"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panel-main">
+                <div class="dn-acc">
+                    <div class="dn-acc-h active" onclick="dnAcc(this)"><i>🖼️ SETTING ALBUM & DENAH</i><span>▼</span></div>
+                    <div class="dn-acc-c show">
+                        <button class="dn-btn dn-btn-main" onclick="dnSave()">💾 SIMPAN KONFIGURASI PATEN</button>
+                        <button class="dn-btn dn-btn-out" onclick="dnFromSiswa()">👥 Ambil dari Data Siswa</button>
+                        <button class="dn-btn dn-btn-out" onclick="dnTemplate()">📥 Template Excel</button>
+                        <div class="dn-fg"><label>1. Upload Excel</label><input type="file" id="import-excel" accept=".xlsx, .xls"></div>
+                        <div class="dn-fg"><label>2. Upload ZIP/File Foto</label><input type="file" id="import-photos" multiple accept="image/*, .zip"></div>
+                        <hr style="border: 0.5px solid rgba(255,255,255,0.1);">
+                        <div class="dn-fg"><label>Judul Album Foto</label><input type="text" id="title-album" value="ALBUM FOTO PENILAIAN SUMATIF AKHIR JENJANG (PSAJ)" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>Judul Denah Tempat Duduk</label><input type="text" id="title-denah" value="DENAH TEMPAT DUDUK PENILAIAN SUMATIF AKHIR JENJANG (PSAJ)" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>Mode Dokumen</label><select id="in-mode" onchange="dnSave()"><option value="album">Album Foto Peserta</option><option value="denah">Denah Kursi Peserta</option></select></div>
+                        <div class="dn-fg"><label>Tata Letak (Urutan)</label><select id="in-layout" onchange="dnSave()"><option value="zigzag">Zigzag (U-Turn)</option><option value="vertical">Vertical (Kolom)</option></select></div>
+                        <div class="dn-fg"><label>Siswa Per Halaman</label><select id="in-perpage" onchange="dnSave()"><option value="20">20 Siswa (4 Kolom)</option><option value="15">15 Siswa (3 Kolom)</option></select></div>
+                        <div class="dn-fg"><label>Ruangan Mulai</label><input type="number" id="in-room" value="1" oninput="dnSave()"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panel-absen" style="display:none;">
+                <div class="dn-acc">
+                    <div class="dn-acc-h active" onclick="dnAcc(this)"><i>📝 LIST PENGAWAS PER RUANG</i><span>▼</span></div>
+                    <div class="dn-acc-c show">
+                        <div class="dn-fg"><label>Judul Daftar Hadir</label><input type="text" id="title-absen" value="DAFTAR HADIR PESERTA PENILAIAN SUMATIF AKHIR JENJANG (PSAJ)" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>Mata Pelajaran</label><input type="text" id="abs-mapel" value="BAHASA INDONESIA" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>Hari, Tanggal</label><input type="text" id="abs-date" value="Senin, 11 Mei 2026" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>Waktu</label><input type="text" id="abs-time" value="08.00 - 09.30" oninput="dnSave()"></div>
+                        
+                        <div class="dn-fg">
+                            <label>Jumlah Pengawas Per Ruang</label>
+                            <select id="abs-p-mode" onchange="dnSave()">
+                                <option value="1">1 Pengawas per Halaman</option>
+                                <option value="2">2 Pengawas per Halaman</option>
+                            </select>
+                        </div>
+
+                        <p style="font-size: 10px; color: #fbbf24; font-weight: 800; margin-bottom: 10px;">DATA PENGAWAS PER RUANGAN:</p>
+                        
+                        <div id="room-proctor-inputs">
+                            <!-- JS Will Render here based on 1 or 2 proctors -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panel-pengawas" style="display:none;">
+                <div class="dn-acc">
+                    <div class="dn-acc-h active" onclick="dnAcc(this)"><i>👨‍🏫 DAFTAR HADIR PENGAWAS GABUNGAN</i><span>▼</span></div>
+                    <div class="dn-acc-c show">
+                        <div class="dn-fg"><label>Judul Daftar Hadir</label><input type="text" id="title-pengawas" value="DAFTAR HADIR PENGAWAS PENILAIAN SUMATIF AKHIR JENJANG (PSAJ)" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>Mata Pelajaran</label><input type="text" id="p-mapel" value="BAHASA INDONESIA" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>Ketua Panitia</label><input type="text" id="p-ketua" value="ROHIMAN KHAN" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>NIP Ketua</label><input type="text" id="p-nip" value="198412182025211003" oninput="dnSave()"></div>
+                        <div class="dn-fg">
+                            <label>Format List</label>
+                            <select id="p-format" onchange="dnPInputs()"><option value="4" selected>4 Pengawas (2 Ruang)</option><option value="6">6 Pengawas (3 Ruang)</option></select>
+                        </div>
+                        <div id="p-inputs-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="dn-btn dn-btn-main" onclick="dnPrint()">🖨️ CETAK SEKARANG (F4)</button>
+            <button class="dn-btn dn-btn-out" style="background:#ef4444; color:white; border:none;" onclick="dnClear()">🗑️ Hapus Data</button>
+            <div class="dn-by">Created Rohiman Supriyadi</div>
+        </div>
+    </div>
+                    </div>
+                    <div class="col-lg-8 col-xl-9"><div id="dn-pages" class="dn-stage"></div></div>
+                </div>
+            </div>
+
             <footer class="text-center mt-5 mb-4 topbar">
                 <small class="text-muted fw-bold">Hak Cipta &copy; 2026 Rohiman Supriyadi</small>
             </footer>
@@ -1491,6 +1689,8 @@
             </div>
         </div>
     </div>
+
+    <div id="cmdk"><div class="cmdk-box"><input id="cmdkInput" type="text" placeholder="Ketik nama menu... (Cetak LJK, Data Siswa, Denah)" autocomplete="off"><div id="cmdkList"></div><div class="cmdk-foot"><span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> pilih</span><span><kbd>Enter</kbd> buka</span><span><kbd>Esc</kbd> tutup</span></div></div></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -1686,9 +1886,9 @@
             activePage = pageName;
             localStorage.setItem('activePage', activePage);
 
-            var titles = { 'cetak-ljk':'Cetak LJK', 'dashboard':'Dashboard', 'sekolah':'Data Sekolah', 'siswa':'Data Siswa', 'jadwal':'Jadwal Ujian', 'cetak':'Cetak Kartu Ujian', 'cetak-presisi':'Cetak No Meja', 'sk':'Data Kepanitiaan SK', 'cetak-sk':'Cetak SK Panitia' };
+            var titles = { 'cetak-denah':'Cetak Denah & Daftar Hadir', 'cetak-ljk':'Cetak LJK', 'dashboard':'Dashboard', 'sekolah':'Data Sekolah', 'siswa':'Data Siswa', 'jadwal':'Jadwal Ujian', 'cetak':'Cetak Kartu Ujian', 'cetak-presisi':'Cetak No Meja', 'sk':'Data Kepanitiaan SK', 'cetak-sk':'Cetak SK Panitia' };
             document.getElementById('pageTitle').innerText = titles[pageName];
-            var subs = { 'cetak-ljk':'Lembar jawaban komputer siap cetak A4', 'dashboard':'Ringkasan data kartu ujian & SK', 'sekolah':'Kop, judul kartu, dan tanda tangan', 'siswa':'Kelola peserta dan foto', 'jadwal':'Atur mata pelajaran dan waktu ujian', 'cetak':'Pratinjau dan cetak ke PDF', 'cetak-presisi':'Pratinjau Nomor Meja F4','sk':'Pengaturan Kop, Identitas, dan Daftar Panitia', 'cetak-sk':'Pratinjau Surat Keputusan ke PDF' };
+            var subs = { 'cetak-denah':'Album foto, denah tempat duduk, daftar hadir, dan pengawas (F4)', 'cetak-ljk':'Lembar jawaban komputer siap cetak A4', 'dashboard':'Ringkasan data kartu ujian & SK', 'sekolah':'Kop, judul kartu, dan tanda tangan', 'siswa':'Kelola peserta dan foto', 'jadwal':'Atur mata pelajaran dan waktu ujian', 'cetak':'Pratinjau dan cetak ke PDF', 'cetak-presisi':'Pratinjau Nomor Meja F4','sk':'Pengaturan Kop, Identitas, dan Daftar Panitia', 'cetak-sk':'Pratinjau Surat Keputusan ke PDF' };
             var subEl = document.getElementById('pageSub'); if (subEl) subEl.innerText = subs[pageName] || '';
 
             document.querySelectorAll('.nav-item-custom').forEach(function(n) { n.classList.remove('active'); });
@@ -1708,6 +1908,7 @@
             if (!sessionToken) return;
             if (pageName === 'dashboard') renderDashboard();
             else if (pageName === 'cetak-ljk') renderLJK();
+            else if (pageName === 'cetak-denah') dnInit();
             else if (pageName === 'sekolah') { if (!isSekolahLoaded) fetchSekolah(); else renderSekolah(); }
             else if (pageName === 'siswa') { if (!isSiswaLoaded) fetchSiswa(); else renderSiswa(); }
             else if (pageName === 'jadwal') { if (!isJadwalLoaded) fetchJadwal(); else renderJadwal(); }
@@ -2711,14 +2912,14 @@
             }
             var modeTeks = (modeKartu === 'tanpa' ? 'Tanpa foto' : 'Dengan foto') + '<br><small>' + (modeJadwal === 'tanpa_jadwal' ? 'Tanpa jadwal' : 'Dengan jadwal') + '</small>';
             function stat(cls, ic, v, l, st) { return '<div class="col-md-6 col-xl-3 mb-3"><div class="stat-card"><div class="stat-icon ' + cls + '"><i class="fa-solid ' + ic + '"></i></div><div><div class="stat-value" style="' + (st || '') + '">' + v + '</div><div class="stat-label">' + l + '</div></div></div></div>'; }
-            function tile(pg, ic, t, s) { return '<div class="col-md-6 col-xl-4 mb-3"><div class="quick-tile" onclick="showPage(\'' + pg + '\')"><i class="fa-solid ' + ic + ' qt-icon"></i><div><strong>' + t + '</strong><span>' + s + '</span></div></div></div>'; }
+            function tile(pg, ic, t, s) { return '<div class="col-md-6 col-xl mb-3"><div class="quick-tile" onclick="showPage(\'' + pg + '\')"><i class="fa-solid ' + ic + ' qt-icon"></i><div><strong>' + t + '</strong><span>' + s + '</span></div></div></div>'; }
             function grp(t, sub, tiles) { return '<div class="col-12"><div class="qa-head">' + t + ' <small>' + sub + '</small></div></div>' + tiles; }
             document.getElementById('dashboardContainer').innerHTML =
                 '<div class="col-12 mb-4"><div class="hero-banner"><small class="hero-date">' + tgl + '</small><h2>' + sapa + ', ' + nama + '</h2><p>Kelola data peserta, jadwal ujian, serta pencetakan kartu dan SK Kepanitiaan dalam satu panel yang rapi.</p><button class="btn btn-warning fw-bold px-4" onclick="showPage(\'cetak\')"><i class="fa-solid fa-print me-2"></i>Cetak Kartu Ujian</button></div></div>' +
                 stat('i-indigo', 'fa-users', nS, 'Total siswa') + stat('i-jade', 'fa-calendar-check', nJ, 'Mata pelajaran terjadwal') +
                 stat('i-amber', 'fa-people-group', nP, 'Anggota panitia') + stat('i-indigo', 'fa-id-card', modeTeks, 'Mode kartu aktif', 'font-size:1rem;line-height:1.3;') +
                 grp('Data Master', 'Kelola data dasar', tile('sekolah', 'fa-school', 'Data Sekolah', 'Kop, judul, TTD & stempel') + tile('siswa', 'fa-users', 'Data Siswa', 'Impor Excel dan foto') + tile('jadwal', 'fa-calendar-alt', 'Jadwal Ujian', 'Mapel dan waktu')) +
-                grp('Pencetakan Ujian', 'Kartu dan nomor peserta', tile('cetak', 'fa-print', 'Cetak Kartu', 'ID Card B2 siap cetak') + tile('cetak-presisi', 'fa-id-badge', 'Cetak No Meja', 'Presisi F4/Folio') + tile('cetak-ljk', 'fa-file-pen', 'Cetak LJK', 'Lembar jawaban komputer A4')) +
+                grp('Pencetakan Ujian', 'Kartu dan nomor peserta', tile('cetak', 'fa-print', 'Cetak Kartu', 'ID Card B2 siap cetak') + tile('cetak-presisi', 'fa-id-badge', 'Cetak No Meja', 'Presisi F4/Folio') + tile('cetak-ljk', 'fa-file-pen', 'Cetak LJK', 'Lembar jawaban komputer A4') + tile('cetak-denah', 'fa-chair', 'Cetak Denah', 'Album, denah & daftar hadir F4')) +
                 grp('Kepanitiaan', 'Surat keputusan panitia', tile('sk', 'fa-file-signature', 'Data SK Panitia', 'Kop, teks SK & susunan panitia') + tile('cetak-sk', 'fa-file-contract', 'Cetak SK Panitia', 'Pratinjau F4/Folio'));
         }
 
@@ -2842,13 +3043,372 @@
         /* Cadangan: bila memakai Ctrl+P langsung pada menu LJK */
         var ljkPageStyle = null;
         window.addEventListener('beforeprint', function() {
-            if (activePage !== 'cetak-ljk' || ljkPageStyle) return;
+            if ((activePage !== 'cetak-ljk' && activePage !== 'cetak-denah') || ljkPageStyle) return;
             ljkPageStyle = document.createElement('style');
-            ljkPageStyle.textContent = '@page{size:210mm 297mm;margin:0}';
+            ljkPageStyle.textContent = activePage === 'cetak-denah' ? '@page{size:215mm 330mm;margin:0}' : '@page{size:210mm 297mm;margin:0}';
             document.head.appendChild(ljkPageStyle);
         });
         window.addEventListener('afterprint', function() { if (ljkPageStyle) { ljkPageStyle.remove(); ljkPageStyle = null; } });
 
+        /* ================= CETAK DENAH (PSAJ PRECISION F4) ================= */
+        const DN_LOGO = "https://iili.io/oKGMU5Q.png";
+        var DN_MARK = "/* ===== DENAH (scoped) ===== */", DN_END = "/* ===== END DENAH ===== */";
+        let dnStudents = [];
+        let dnPhotos = {};
+        let dnLogoSrc = DN_LOGO;
+        let dnTab = 'main';
+
+        const DB_NAME = "PSAJ_Database";
+        const STORE_NAME = "AppData";
+
+        function dnInitDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                request.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME);
+                };
+                request.onsuccess = (e) => resolve(e.target.result);
+                request.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+        async function dnSaveDB() {
+            const db = await dnInitDB();
+            const configData = {};
+            document.querySelectorAll('#page-cetak-denah input, #page-cetak-denah select').forEach(el => { if(el.id && el.type !== 'file') configData[el.id] = el.value; });
+            const transaction = db.transaction(STORE_NAME, "readwrite");
+            const store = transaction.objectStore(STORE_NAME);
+            store.put(dnStudents, "dnStudents");
+            store.put(dnPhotos, "dnPhotos");
+            store.put(dnLogoSrc, "dnLogoSrc");
+            store.put(configData, "config");
+        }
+
+        async function dnLoadDB() {
+            const db = await dnInitDB();
+            const transaction = db.transaction(STORE_NAME, "readonly");
+            const store = transaction.objectStore(STORE_NAME);
+            store.get("dnStudents").onsuccess = (e) => { dnStudents = e.target.result || []; dnUpdate(); };
+            store.get("dnPhotos").onsuccess = (e) => { dnPhotos = e.target.result || {}; dnUpdate(); };
+            store.get("dnLogoSrc").onsuccess = (e) => { if(e.target.result) dnLogoSrc = e.target.result; dnUpdate(); };
+            store.get("config").onsuccess = (e) => {
+                const data = e.target.result;
+                if(data) {
+                    for (let id in data) { const el = document.getElementById(id); if (el) el.value = data[id]; }
+                    dnStatus(false);
+                    dnPInputs(); 
+                }
+            };
+        }
+
+        async function dnClear() {
+            var ok = (typeof Swal !== 'undefined') ? (await Swal.fire({ title: 'Hapus semua data denah?', text: 'Data peserta, foto, dan pengaturan menu ini dihapus permanen.', icon: 'warning', showCancelButton: true, confirmButtonText: 'Hapus', cancelButtonText: 'Batal', confirmButtonColor: '#c23a4b' })).isConfirmed : confirm('Hapus semua data permanen?');
+            if (!ok) return;
+            const db = await dnInitDB(); db.transaction(STORE_NAME, "readwrite").objectStore(STORE_NAME).clear();
+            dnStudents = []; dnPhotos = {}; dnLogoSrc = DN_LOGO;
+            for (var id in dnDefaults) { var el = document.getElementById(id); if (el) el.value = dnDefaults[id]; }
+            dnStatus(false); dnPInputs(); dnRoomInputs(); dnUpdate();
+        }
+
+        function dnSave() { 
+            dnRoomInputs();
+            dnSaveDB(); 
+            dnUpdate(); 
+        }
+
+        function dnRoomInputs() {
+            const container = document.getElementById('room-proctor-inputs');
+            if(!container) return;
+            const mode = document.getElementById('abs-p-mode').value;
+            const currentVals = {};
+            container.querySelectorAll('input').forEach(i => currentVals[i.id] = i.value);
+            
+            let html = '';
+            for(let r=1; r<=4; r++) {
+                html += `<div style="background: rgba(255,255,255,0.05); padding: 8px; border-radius: 5px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2);">
+                    <label style="font-size: 9px; color: #10b981;">RUANG 00${r}</label>
+                    <input type="text" id="abs-p-name-r${r}" value="${currentVals[`abs-p-name-r${r}`] || ''}" placeholder="Pengawas 1" oninput="dnSaveDB(); dnUpdate()" style="margin-bottom:4px;">
+                    <input type="text" id="abs-p-nip-r${r}" value="${currentVals[`abs-p-nip-r${r}`] || ''}" placeholder="NIP Pengawas 1" oninput="dnSaveDB(); dnUpdate()" style="margin-bottom:8px;">`;
+                
+                if(mode === '2') {
+                    html += `<input type="text" id="abs-p2-name-r${r}" value="${currentVals[`abs-p2-name-r${r}`] || ''}" placeholder="Pengawas 2" oninput="dnSaveDB(); dnUpdate()" style="margin-bottom:4px;">
+                             <input type="text" id="abs-p2-nip-r${r}" value="${currentVals[`abs-p2-nip-r${r}`] || ''}" placeholder="NIP Pengawas 2" oninput="dnSaveDB(); dnUpdate()">`;
+                }
+                html += `</div>`;
+            }
+            container.innerHTML = html;
+        }
+
+        function dnSwitch(m) {
+            dnTab = m;
+            document.querySelectorAll('.dn-tab').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + m).classList.add('active');
+            document.getElementById('panel-main').style.display = (m === 'main') ? 'block' : 'none';
+            document.getElementById('panel-absen').style.display = (m === 'absen') ? 'block' : 'none';
+            document.getElementById('panel-pengawas').style.display = (m === 'pengawas') ? 'block' : 'none';
+            if(m === 'absen') dnRoomInputs();
+            dnUpdate();
+        }
+
+        function dnStatus(refresh = true) {
+            const s = document.getElementById('in-status').value;
+            document.getElementById('yayasan-group').style.display = (s === 'swasta') ? 'block' : 'none';
+            document.getElementById('logo-upload-group').style.display = (s === 'swasta') ? 'block' : 'none';
+            if (s !== 'swasta') dnLogoSrc = DN_LOGO;
+            if (refresh) dnSave();
+        }
+
+        function dnAcc(h) { h.classList.toggle('active'); h.nextElementSibling.classList.toggle('show'); }
+
+        function dnLogo(input) { if (input.files && input.files[0]) { const reader = new FileReader(); reader.onload = (e) => { dnLogoSrc = e.target.result; dnSave(); }; reader.readAsDataURL(input.files[0]); } }
+
+        function dnPInputs() {
+            let val = document.getElementById('p-format').value;
+            let count = parseInt(val);
+            const container = document.getElementById('p-inputs-container');
+            const currentVals = {};
+            container.querySelectorAll('input').forEach(i => currentVals[i.id] = i.value);
+            container.innerHTML = '';
+            for(let i=1; i<=count; i++) {
+                const id = `p-name-${i}`;
+                const val = currentVals[id] || "";
+                container.innerHTML += `<div class="dn-fg"><label>Pengawas ${i}</label><input type="text" id="${id}" value="${val}" placeholder="Nama Pengawas ${i}" oninput="dnSave()"></div>`;
+            }
+            dnUpdate();
+        }
+
+        function dnUpdate() {
+            const container = document.getElementById('dn-pages'); if (!container) return;
+            container.innerHTML = '';
+            if (dnTab === 'pengawas') { container.innerHTML = dnPengawas(); return; }
+            const perPage = parseInt(document.getElementById('in-perpage').value) || 20;
+            const dataList = dnStudents.length > 0 ? dnStudents : Array(perPage).fill({ no: "00-00-00-00", nisn: "1234567890", nama: "CONTOH NAMA PESERTA" });
+            for (let i = 0; i < dataList.length; i += perPage) {
+                let chunk = dataList.slice(i, i + perPage);
+                if (dnTab === 'main') container.innerHTML += dnMain(chunk, perPage, Math.floor(i/perPage));
+                else container.innerHTML += dnAbsen(chunk, perPage, Math.floor(i/perPage));
+            }
+        }
+
+        function dnKop() {
+            const status = document.getElementById('in-status').value;
+            const yayasan = document.getElementById('in-yayasan').value;
+            const school = document.getElementById('in-school').value;
+            const dist = document.getElementById('in-dist').value;
+            const addr = document.getElementById('in-addr').value;
+            const email = document.getElementById('in-email').value;
+            let headerContent = (status === 'negeri') ? `<h1>PEMERINTAH KABUPATEN BEKASI</h1><h1>DINAS PENDIDIKAN</h1>` : `<h1>${yayasan}</h1>`;
+            return `<div class="dn-header"><img class="logo-img" src="${dnLogoSrc}">${headerContent}<h2>${school}</h2><h1>${dist}</h1><p>${addr}</p><p style="color:blue; text-decoration:underline; font-size:7.5pt;">Email: ${email}</p></div>`;
+        }
+
+        function dnMain(chunk, perPage, pageIdx) {
+            const mode = document.getElementById('in-mode').value;
+            const layout = document.getElementById('in-layout').value;
+            const roomNum = (parseInt(document.getElementById('in-room').value) + pageIdx).toString().padStart(3, '0');
+            const cols = (perPage == 15) ? 3 : 4;
+            const rows = perPage / cols;
+            let ordered = new Array(perPage).fill(null);
+            if (layout === 'vertical') {
+                let count = 0; for (let c = 0; c < cols; c++) { for (let r = 0; r < rows; r++) { if (count < chunk.length) ordered[r * cols + c] = chunk[count++]; } }
+            } else { 
+                let count = 0; for (let r = 0; r < rows; r++) { if (r % 2 === 0) { for (let c = 0; c < cols; c++) { if (count < chunk.length) ordered[r * cols + c] = chunk[count++]; } } else { for (let c = cols - 1; c >= 0; c--) { if (count < chunk.length) ordered[r * cols + c] = chunk[count++]; } } }
+            }
+            let gridHtml = '';
+            ordered.forEach(s => {
+                if(!s) { gridHtml += `<div style="visibility:hidden; width:40mm;"></div>`; return; }
+                const img = dnPhotos[s.nisn] || dnPhotos[s.no] || "";
+                const imgTag = img ? `<img src="${img}">` : `<div style="font-size:7pt; color:#ccc;">FOTO</div>`;
+                if (mode === 'album') gridHtml += `<div class="student-card"><div class="photo-frame">${imgTag}</div><div class="id-label">${s.no}</div><div class="nisn-label">NISN: ${s.nisn}</div></div>`;
+                else gridHtml += `<div class="denah-card"><div class="denah-row-1">NOMOR PESERTA</div><div class="denah-row-2">${s.no}</div><div class="denah-row-bottom"><div class="denah-box-photo">${imgTag}</div><div class="denah-box-name">${s.nama}</div></div></div>`;
+            });
+            const headerJudul = `<div style="text-align:center; margin-bottom:5px;"><div style="display:inline-block; padding:3px 15px; font-weight:800; font-size:12pt; text-transform:uppercase;">${mode === 'album' ? document.getElementById('title-album').value : document.getElementById('title-denah').value}</div><div style="margin-top:3px; font-weight:700; font-size:10pt;">RUANGAN: <span style="font-size:14pt; font-weight:900;">${roomNum}</span></div></div>`;
+            const mejaPengawas = mode === 'denah' ? `<div style="margin-left:10mm; margin-bottom:8px; font-weight:900; font-size:11pt; text-transform:uppercase;">MEJA PENGAWAS</div>` : '';
+            return `<div class="dn-page">${dnKop()}${headerJudul}${mejaPengawas}<div class="photo-grid" style="grid-template-columns: repeat(${cols}, 1fr);">${gridHtml}</div></div>`;
+        }
+
+        function dnAbsen(chunk, perPage, pageIdx) {
+            const startRoom = parseInt(document.getElementById('in-room').value);
+            const actualRoom = startRoom + pageIdx;
+            const roomNum = actualRoom.toString().padStart(3, '0');
+            const pMode = document.getElementById('abs-p-mode').value;
+            const city = document.getElementById('in-city').value;
+
+            const p1Name = document.getElementById(`abs-p-name-r${actualRoom}`)?.value || "....................................";
+            const p1Nip = document.getElementById(`abs-p-nip-r${actualRoom}`)?.value || "....................................";
+            const p2Name = document.getElementById(`abs-p2-name-r${actualRoom}`)?.value || "....................................";
+            const p2Nip = document.getElementById(`abs-p2-nip-r${actualRoom}`)?.value || "....................................";
+
+            let rowsHtml = '';
+            chunk.forEach((s, i) => {
+                const num = (pageIdx * perPage) + i + 1;
+                const ttd = num % 2 !== 0 ? `${num}. .....................` : `<div style="padding-left:60px;">${num}. .....................</div>`;
+                rowsHtml += `<tr><td align="center">${num}</td><td align="center" style="font-weight:700;">${s.no}</td><td style="text-transform:uppercase; font-weight:700; padding-left:10px;">${s.nama}</td><td><div class="zigzag-ttd">${ttd}</div></td></tr>`;
+            });
+
+            const titiMangsa = `${city}, ${document.getElementById('abs-date').value.split(',')[1] || ''}`;
+            let footerHtml = '';
+            
+            if(pMode === '1') {
+                footerHtml = `<div class="footer-sig"><div class="sig-box">${titiMangsa}<br>Pengawas Ruang,<br><br><br><br><b>${p1Name}</b><br>NIP. ${p1Nip}</div></div>`;
+            } else {
+                footerHtml = `<div class="footer-sig">
+                    <div class="sig-container">
+                        <div class="sig-box"><br>Pengawas 1,<br><br><br><br><b>${p1Name}</b><br>NIP. ${p1Nip}</div>
+                        <div class="sig-box">${titiMangsa}<br>Pengawas 2,<br><br><br><br><b>${p2Name}</b><br>NIP. ${p2Nip}</div>
+                    </div>
+                </div>`;
+            }
+
+            return `<div class="dn-page">${dnKop()}<div style="text-align:center; font-weight:800; font-size:11pt; margin-bottom:10px; text-transform:uppercase;">${document.getElementById('title-absen').value}</div><table style="width:100%; font-weight:700; font-size:9.5pt; margin-bottom:8px;"><tr><td width="140">MATA PELAJARAN</td><td>: ${document.getElementById('abs-mapel').value}</td><td width="80">RUANG</td><td>: ${roomNum}</td></tr><tr><td>HARI, TANGGAL</td><td>: ${document.getElementById('abs-date').value}</td><td>TAHUN</td><td>: ${document.getElementById('in-year').value}</td></tr><tr><td>WAKTU</td><td colspan="3">: ${document.getElementById('abs-time').value}</td></tr></table><table class="abs-table"><thead><tr><th width="40">NO</th><th width="140">NO PESERTA</th><th>NAMA PESERTA</th><th width="200">TANDA TANGAN</th></tr></thead><tbody>${rowsHtml}</tbody></table>${footerHtml}</div>`;
+        }
+
+        function dnPengawas() {
+            const format = document.getElementById('p-format').value;
+            const city = document.getElementById('in-city').value;
+            let count = parseInt(format);
+            let rowsHtml = ''; 
+            for(let i=1; i<=count; i++) {
+                const name = document.getElementById(`p-name-${i}`)?.value || "....................................";
+                let roomCell = (i % 2 !== 0) ? `<td rowspan="2" align="center" style="font-size:20pt; font-weight:900;">${Math.ceil(i/2)}</td>` : '';
+                const ttd = (i % 2 !== 0) ? `${i}. .....................` : `<div style="padding-left:60px;">${i}. .....................</div>`;
+                rowsHtml += `<tr><td align="center">${i}.</td><td style="text-transform:uppercase; font-weight:700;">${name}</td>${roomCell}<td><div class="zigzag-ttd">${ttd}</div></td></tr>`;
+            }
+            const dateOnly = document.getElementById('abs-date').value.split(',')[1] || '';
+            return `<div class="dn-page">${dnKop()}<div style="text-align:center; font-weight:800; font-size:12pt; margin-bottom:15px; text-transform:uppercase;">${document.getElementById('title-pengawas').value}</div><div style="margin-left: 20px; margin-bottom: 15px; font-weight: 700; font-size: 10pt;"><table><tr><td width="150">Mata Pelajaran</td><td>: ${document.getElementById('p-mapel').value}</td></tr><tr><td>Hari/Tanggal</td><td>: ${document.getElementById('abs-date').value}</td></tr></table></div><table class="abs-table"><thead><tr><th width="50">No.</th><th>Nama Pengawas</th><th width="80">Ruang</th><th width="220">Tanda Tangan</th></tr></thead><tbody>${rowsHtml}</tbody></table><div class="footer-sig"><div class="sig-box">${city}, ${dateOnly}<br>Ketua Panitia Pelaksana<br><br><br><br><br><u><b>${document.getElementById('p-ketua').value}</b></u><br>NIP. ${document.getElementById('p-nip').value}</div></div></div>`;
+        }
+
+        document.getElementById('import-excel').addEventListener('change', function(e) {
+            const file = e.target.files[0]; if(!file) return;
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const data = new Uint8Array(event.target.result);
+                const workbook = XLSX.read(data, {type: 'array'});
+                const json = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], {header: 1});
+                dnStudents = json.slice(1).filter(r => r.some(c => String(c == null ? '' : c).trim() !== '')).map(r => ({ no: String(r[0] == null ? '' : r[0]).trim(), nisn: String(r[1] == null ? '' : r[1]).trim(), nama: String(r[2] == null ? '' : r[2]).trim() }));
+                dnSave();
+                dnNote('Import Berhasil', dnStudents.length + ' peserta diimpor.');
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        document.getElementById('import-photos').addEventListener('change', async function(e) {
+            for (let f of e.target.files) {
+                if (f.name.toLowerCase().endsWith('.zip')) {
+                    const zip = await JSZip.loadAsync(f);
+                    for (let filename in zip.files) {
+                        const fileData = zip.files[filename];
+                        if (!fileData.dir && /\.(jpe?g|png|webp)$/i.test(filename)) {
+                            const b64 = await fileData.async("base64");
+                            const key = filename.split('/').pop().split('.')[0].trim();
+                            dnPhotos[key] = "data:" + (/png$/i.test(filename) ? "image/png" : (/webp$/i.test(filename) ? "image/webp" : "image/jpeg")) + ";base64," + b64;
+                        }
+                    }
+                } else {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => { const key = f.name.split('.')[0].trim(); dnPhotos[key] = ev.target.result; dnSave(); };
+                    reader.readAsDataURL(f);
+                }
+            }
+            dnSave();
+            dnNote('Foto Berhasil Diproses', Object.keys(dnPhotos).length + ' foto tersimpan.');
+        });
+
+        function dnTemplate() {
+            if (typeof XLSX === 'undefined') return dnNote('Error', 'Library Excel belum termuat.', 'error');
+            const wb = XLSX.utils.book_new(); const ws = XLSX.utils.aoa_to_sheet([["No Peserta", "NISN", "Nama Peserta"], ["24-01-01-001", "1234567890", "NAMA PESERTA"]]);
+            ws['!cols'] = [{ wch: 18 }, { wch: 16 }, { wch: 34 }];
+            XLSX.utils.book_append_sheet(wb, ws, "Data"); downloadXlsx(wb, "Template_PSAJ.xlsx");
+        }
+        
+    
+        /* ================= CETAK DENAH: TAMBAHAN INTEGRASI ================= */
+        var dnInited = false, dnDefaults = {};
+        window.dnInit = function() {
+            if (!dnInited) {
+                dnInited = true;
+                document.querySelectorAll('#page-cetak-denah input, #page-cetak-denah select').forEach(function(el) { if (el.id && el.type !== 'file') dnDefaults[el.id] = el.value; });
+                dnLoadDB();
+            } else dnUpdate();
+        };
+        function dnNote(t, m, i) { if (typeof Swal !== 'undefined') Swal.fire(t, m || '', i || 'success'); else alert(t + (m ? '\n' + m : '')); }
+        window.dnFromSiswa = function() {
+            if (!isGAS()) ensureSiswa();
+            if (!dbSiswa.length) return dnNote('Data siswa kosong', isGAS() ? 'Buka menu Data Siswa lebih dulu agar data termuat.' : 'Isi atau impor data di menu Data Siswa.', 'info');
+            dnStudents = dbSiswa.map(function(s) { return { no: String(s.no_peserta || '').trim(), nisn: String(s.nisn || '').trim(), nama: String(s.nama || '').trim() }; });
+            var f = 0;
+            dbSiswa.forEach(function(s) { if (s.foto) { f++; if (s.nisn) dnPhotos[String(s.nisn).trim()] = s.foto; if (s.no_peserta) dnPhotos[String(s.no_peserta).trim()] = s.foto; } });
+            dnSave();
+            dnNote('Berhasil', dnStudents.length + ' peserta dan ' + f + ' foto diambil dari Data Siswa.');
+        };
+        window.dnPrint = function() {
+            var pages = document.getElementById('dn-pages').innerHTML;
+            var css = ''; document.querySelectorAll('style').forEach(function(st) { var t = st.textContent; if (t.indexOf(DN_MARK) > -1) css = t.split(DN_MARK)[1].split(DN_END)[0]; });
+            var html = '<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><title>Denah</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet"><style>' + css +
+                '@page{size:215mm 330mm;margin:0}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}html,body{margin:0;padding:0;background:#fff;font-family:"Plus Jakarta Sans",sans-serif}' +
+                '.dn-stage{display:block!important;background:#fff!important;padding:0!important;border-radius:0!important;overflow:visible!important}' +
+                '#dn-pages .dn-page{zoom:1!important;width:215mm!important;height:330mm!important;margin:0!important;box-shadow:none!important;break-after:page}#dn-pages .dn-page:last-child{break-after:auto}' +
+                '</style></head><body><div id="page-cetak-denah"><div id="dn-pages" class="dn-stage">' + pages + '</div></div></body></html>';
+            var old = document.getElementById('dnPrintFrame'); if (old) old.remove();
+            var f = document.createElement('iframe'); f.id = 'dnPrintFrame';
+            f.style.cssText = 'position:fixed;left:-10000px;top:0;width:215mm;height:330mm;border:0;';
+            document.body.appendChild(f);
+            var d = f.contentWindow.document; d.open(); d.write(html); d.close();
+            var go = function() { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) { dnNote('Gagal mencetak', 'Browser memblokir pencetakan.', 'error'); } setTimeout(function() { if (f.parentNode) f.remove(); }, 60000); };
+            var done = false, once = function() { if (!done) { done = true; go(); } };
+            try { f.contentWindow.document.fonts.ready.then(function() { setTimeout(once, 300); }); } catch (e) {}
+            setTimeout(once, 1800);
+        };
+
+        /* ================= PENINGKATAN TAMPILAN ================= */
+        var baseDash = renderDashboard;
+        renderDashboard = function() {
+            baseDash();
+            var hd = document.querySelector('#dashboardContainer .hero-date');
+            if (hd) hd.innerHTML += ' &middot; <span id="heroClock"></span>';
+            tickClock();
+            document.querySelectorAll('#dashboardContainer .stat-value').forEach(function(el) {
+                var n = parseInt(el.textContent, 10);
+                if (!isNaN(n) && String(n) === el.textContent.trim() && n > 0) {
+                    var t0 = null;
+                    (function step(ts) { if (!t0) t0 = ts; var p = Math.min((ts - t0) / 900, 1); el.textContent = Math.round(n * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); })(performance.now());
+                }
+            });
+        };
+        function tickClock() { var c = document.getElementById('heroClock'); if (c) c.textContent = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }); }
+        setInterval(tickClock, 1000);
+
+        var cmdIdx = 0;
+        function cmdItems() {
+            var q = (document.getElementById('cmdkInput').value || '').toLowerCase(), out = [];
+            document.querySelectorAll('.nav-item-custom').forEach(function(n) {
+                var m = (n.getAttribute('onclick') || '').match(/showPage\('([^']+)'/), t = n.textContent.replace(/Baru/, '').trim();
+                if (m && (!q || t.toLowerCase().indexOf(q) > -1)) out.push({ pg: m[1], t: t, ic: n.querySelector('i').className });
+            });
+            return out;
+        }
+        function cmdRender() {
+            var it = cmdItems(); cmdIdx = Math.max(0, Math.min(cmdIdx, it.length - 1));
+            document.getElementById('cmdkList').innerHTML = it.length ? it.map(function(x, i) {
+                return '<div class="cmdk-item' + (i === cmdIdx ? ' on' : '') + '" onclick="cmdGo(\'' + x.pg + '\')"><i class="' + x.ic + '"></i><span>' + escapeHTML(x.t) + '</span><kbd>Enter</kbd></div>';
+            }).join('') : '<div class="cmdk-empty">Menu tidak ditemukan</div>';
+        }
+        window.cmdGo = function(pg) { closeCmdk(); window.showPage(pg); };
+        window.openCmdk = function() { if (!sessionToken) return; var b = document.getElementById('cmdk'); b.classList.add('open'); var i = document.getElementById('cmdkInput'); i.value = ''; cmdIdx = 0; cmdRender(); setTimeout(function() { i.focus(); }, 30); };
+        window.closeCmdk = function() { document.getElementById('cmdk').classList.remove('open'); };
+        document.addEventListener('keydown', function(e) {
+            var b = document.getElementById('cmdk'); if (!b) return;
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); b.classList.contains('open') ? closeCmdk() : openCmdk(); return; }
+            if (!b.classList.contains('open')) return;
+            if (e.key === 'Escape') closeCmdk();
+            else if (e.key === 'ArrowDown') { e.preventDefault(); cmdIdx++; cmdRender(); }
+            else if (e.key === 'ArrowUp') { e.preventDefault(); cmdIdx--; cmdRender(); }
+            else if (e.key === 'Enter') { var it = cmdItems(); if (it[cmdIdx]) cmdGo(it[cmdIdx].pg); }
+        });
+        document.getElementById('cmdkInput').addEventListener('input', function() { cmdIdx = 0; cmdRender(); });
+        document.getElementById('cmdk').addEventListener('click', function(e) { if (e.target === this) closeCmdk(); });
+
+        window.dnSwitch = dnSwitch; window.dnStatus = dnStatus; window.dnAcc = dnAcc; window.dnLogo = dnLogo; window.dnPInputs = dnPInputs; window.dnSave = dnSave; window.dnSaveDB = dnSaveDB; window.dnClear = dnClear; window.dnTemplate = dnTemplate; window.dnUpdate = dnUpdate;
         // Tunggu dokumen termuat semua untuk inisiasi event/page
         document.addEventListener('DOMContentLoaded', function() {
             var inputFoto = document.getElementById('sFotoFile');
