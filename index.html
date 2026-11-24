@@ -4031,6 +4031,8 @@
             container.innerHTML = '';
             if (dnTab === 'pengawas') { container.innerHTML = dnPengawas(); return; }
             const perPage = parseInt(document.getElementById('in-perpage').value) || 20;
+            dnEnsureStudents();
+            if (window.dnKelasRefresh) window.dnKelasRefresh();
             let dataList = dnStudents.length > 0 ? dnStudents : Array(perPage).fill({ no: "00-00-00-00", nisn: "1234567890", nama: "CONTOH NAMA PESERTA" });
             if (dnTab === 'absen' && dnStudents.length > 0) {
                 dataList = dnFilterKelas(dataList);
@@ -4199,7 +4201,7 @@
         window.dnFromSiswa = function() {
             if (!isGAS()) ensureSiswa();
             if (!dbSiswa.length) return dnNote('Data siswa kosong', isGAS() ? 'Buka menu Data Siswa lebih dulu agar data termuat.' : 'Isi atau impor data di menu Data Siswa.', 'info');
-            dnStudents = dbSiswa.map(function(s) { return { no: String(s.no_peserta || '').trim(), nisn: String(s.nisn || '').trim(), nama: String(s.nama || '').trim(), kelas: String(s.kelas || '').trim() }; });
+            dnStudents = dbSiswa.map(dnNormalizeStudent);
             var f = 0;
             dbSiswa.forEach(function(s) { if (s.foto) { f++; if (s.nisn) dnPhotos[String(s.nisn).trim()] = s.foto; if (s.no_peserta) dnPhotos[String(s.no_peserta).trim()] = s.foto; } });
             dnSave();
@@ -4358,15 +4360,61 @@
         }
         window.dnJadwalRefresh = dnJadwalRefresh;
         /* ================= DAFTAR HADIR: PILIH KELAS ================= */
+        // Satu normalisasi sumber peserta untuk panel denah/daftar hadir.
+        // IndexedDB tetap menjadi sumber utama; dbSiswa dipakai sebagai fallback
+        // ketika aplikasi dibuka di browser/origin baru atau database denah kosong.
+        function dnNormalizeStudent(s) {
+            s = s || {};
+            return {
+                no: String(s.no != null ? s.no : (s.no_peserta != null ? s.no_peserta : (s.nomor_peserta || ''))).trim(),
+                nisn: String(s.nisn != null ? s.nisn : '').trim(),
+                nama: String(s.nama != null ? s.nama : (s.name || '')).trim(),
+                kelas: String(s.kelas != null ? s.kelas : (s.class || '')).trim()
+            };
+        }
+        function dnEnsureStudents() {
+            if (!Array.isArray(dnStudents)) dnStudents = [];
+            if (dnStudents.length) {
+                dnStudents = dnStudents.map(dnNormalizeStudent);
+                return dnStudents;
+            }
+            try {
+                // Pada mode lokal, baca storage langsung agar tidak bergantung
+                // pada apakah menu Data Siswa pernah dibuka pada sesi ini.
+                if (!isGAS()) {
+                    if (typeof ensureSiswa === 'function') ensureSiswa();
+                    if ((!Array.isArray(dbSiswa) || !dbSiswa.length) && localStorage.getItem('dbSiswa')) {
+                        var saved = JSON.parse(localStorage.getItem('dbSiswa'));
+                        if (Array.isArray(saved)) { dbSiswa = saved; isSiswaLoaded = true; }
+                    }
+                }
+                var source = Array.isArray(dbSiswa) ? dbSiswa : [];
+                if (source.length) {
+                    dnStudents = source.map(function(s) {
+                        var row = dnNormalizeStudent(s);
+                        if (s && s.foto) {
+                            if (row.nisn) dnPhotos[row.nisn] = s.foto;
+                            if (row.no) dnPhotos[row.no] = s.foto;
+                        }
+                        return row;
+                    });
+                }
+            } catch (err) { console.warn('Fallback data siswa untuk denah gagal:', err); }
+            return dnStudents;
+        }
         function dnKelasOf(s) {
-            if (s && s.kelas) return s.kelas;
+            if (s && s.kelas) return String(s.kelas).trim();
             try {
                 if (!isGAS()) ensureSiswa();
                 if (!window.dnKelasMap || window.dnKelasMapN !== (dbSiswa || []).length) {
                     window.dnKelasMap = {}; window.dnKelasMapN = (dbSiswa || []).length;
-                    (dbSiswa || []).forEach(function(x) { if (x.nisn) window.dnKelasMap[String(x.nisn).trim()] = x.kelas || ''; if (x.no_peserta) window.dnKelasMap[String(x.no_peserta).trim()] = x.kelas || ''; });
+                    (dbSiswa || []).forEach(function(x) {
+                        var k = String(x.kelas || '').trim();
+                        if (x.nisn) window.dnKelasMap[String(x.nisn).trim()] = k;
+                        if (x.no_peserta) window.dnKelasMap[String(x.no_peserta).trim()] = k;
+                    });
                 }
-                return window.dnKelasMap[String(s.nisn || '').trim()] || window.dnKelasMap[String(s.no || '').trim()] || '';
+                return window.dnKelasMap[String(s && s.nisn || '').trim()] || window.dnKelasMap[String(s && (s.no || s.no_peserta) || '').trim()] || '';
             } catch (e) { return ''; }
         }
         function dnFilterKelas(list) {
@@ -4376,11 +4424,12 @@
         window.dnKelasRefresh = function(want) {
             var el = document.getElementById('abs-kelas'); if (!el) return;
             var w = want != null ? want : (el.value && el.value !== '' ? el.value : (window.dnKelasWant || 'all'));
-            var list = dnStudents || [];
+            var list = dnEnsureStudents();
             var pick = kelasBangunOpsi(el, list, dnKelasOf, w, true);
             window.dnKelasWant = pick;
             var info = document.getElementById('abs-kelas-info');
-            if (info) info.textContent = list.length ? (kelasUnik(list.map(dnKelasOf)).length ? '' : 'Kolom Kelas belum terisi. Isi kolom Kelas di Data Siswa lalu klik "Ambil dari Data Siswa", atau pakai Template Excel terbaru (kolom ke-4).') : 'Belum ada data peserta.';
+            if (info) info.textContent = list.length ? (kelasUnik(list.map(dnKelasOf)).length ? '' : 'Kolom Kelas belum terisi. Isi kolom Kelas di Data Siswa lalu klik \"Ambil dari Data Siswa\", atau pakai Template Excel terbaru (kolom ke-4).') : 'Belum ada data peserta.';
+            return list;
         };
         function dnWaktuKelasRow() {
             var el = document.getElementById('abs-kelas'), v = el ? el.value : 'all', t = document.getElementById('abs-time').value;
