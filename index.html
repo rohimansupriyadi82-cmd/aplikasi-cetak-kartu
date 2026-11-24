@@ -516,6 +516,7 @@
         .dn-head img { width:42px; height:42px; background:#fff; border-radius:50%; padding:3px; object-fit:contain; box-shadow:0 0 0 2px var(--dn-gold); }
         .dn-head h3 { margin:0; font:800 1.02rem 'Playfair Display',serif; letter-spacing:.07em; text-transform:uppercase; color:#fff; }
         .dn-tabs { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; background:rgba(0,0,0,.28); padding:5px; margin:12px 14px 0; border-radius:12px; }
+        .dn-tabs { display:none !important; }
         .dn-tab { padding:10px 2px; border:0; border-radius:9px; background:transparent; color:#fff; font:700 9px 'Plus Jakarta Sans',sans-serif; cursor:pointer; text-transform:uppercase; letter-spacing:.04em; transition:.25s; }
         .dn-tab:hover { background:rgba(255,255,255,.1); }
         .dn-tab.active { background:linear-gradient(135deg,#10b981,#059669); box-shadow:0 6px 14px -6px rgba(16,185,129,.9); }
@@ -557,7 +558,7 @@
             display: flex; flex-direction: column;
             overflow: hidden; 
             page-break-after: always; color: #000;
-        }#page-cetak-denah .dn-header{ text-align: center; border-bottom: 3.5pt double #000; padding-bottom: 8px; margin-bottom: 10px; position: relative; flex-shrink: 0; }#page-cetak-denah .logo-img{ position: absolute; left: 0; top: 0; width: 25mm; height: 30mm; object-fit: contain; }#page-cetak-denah .dn-header h1{ margin: 0; font-size: 15pt; text-transform: uppercase; line-height: 1.1; font-weight: 700; letter-spacing: 0.5px; }#page-cetak-denah .dn-header h2{ margin: 2px 0; font-size: 24pt; font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: 1px; }#page-cetak-denah .dn-header p{ margin: 1px 0; font-size: 9pt; font-weight: 600; line-height: 1.3; }#page-cetak-denah .photo-grid{ display: grid; gap: 5mm 5mm; justify-content: center; flex-grow: 1; align-content: flex-start; width: 100%; margin-top: 2mm; }#page-cetak-denah .student-card{ width: 40mm; display: flex; flex-direction: column; align-items: center; }#page-cetak-denah .photo-frame{ width: 30mm; height: 35mm; border: 1.2pt solid #000; background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; }#page-cetak-denah .photo-frame img{ width: 100%; height: 100%; object-fit: cover; }#page-cetak-denah .id-label{ margin-top: 3px; background: #ffff00 !important; border: 1.2pt solid #000; width: 38mm; text-align: center; font-weight: 800; font-size: 8.5pt; padding: 2px 0; }#page-cetak-denah .nisn-label{ font-size: 7.5pt; font-weight: 700; margin-top: 1px; }#page-cetak-denah .denah-card{ width: 42mm; height: 42mm; border: 1.5pt solid #000; display: flex; flex-direction: column; background: #fff; overflow: hidden; }#page-cetak-denah .denah-row-1{ border-bottom: 1pt solid #000; text-align: center; font-size: 7.5pt; font-weight: 800; padding: 2px 0; background: #eee !important; }#page-cetak-denah .denah-row-2{ border-bottom: 1pt solid #000; text-align: center; font-size: 10.5pt; font-weight: 900; padding: 3px 0; }#page-cetak-denah .denah-row-bottom{ display: flex; flex-grow: 1; }#page-cetak-denah .denah-box-photo{ flex: 1; border-right: 1pt solid #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }#page-cetak-denah .denah-box-photo img{ width: 100%; height: 100%; object-fit: cover; }#page-cetak-denah .denah-box-name{ flex: 1.2; background: var(--purple-shaded) !important; display: flex; align-items: center; justify-content: center; padding: 3px; text-align: center; font-size: 7pt; font-weight: 800; line-height: 1.1; text-transform: uppercase; word-break: break-word; }#page-cetak-denah .abs-table{ width: 100%; border-collapse: collapse; border: 1.5pt solid #000; table-layout: fixed; }#page-cetak-denah .abs-table th{ background: #f1f5f9 !important; border: 1pt solid #000; padding: 6px 4px; font-size: 9pt; text-transform: uppercase; font-weight: 800; }#page-cetak-denah .abs-table td{ border: 1pt solid #000; padding: 3px 8px; font-size: 9.5pt; height: 9.8mm; vertical-align: middle; }#page-cetak-denah .zigzag-ttd{ display: flex; align-items: center; width: 100%; height: 100%; font-size: 9pt; font-weight: 700; }#page-cetak-denah .footer-sig{ 
+        }#page-cetak-denah .dn-header{ text-align: center; border-bottom: 3.5pt double #000; padding-bottom: 8px; margin-bottom: 10px; position: relative; flex-shrink: 0; }#page-cetak-denah .logo-img{ position: absolute; left: 0; top: 0; width: 25mm; height: 30mm; object-fit: contain; }#page-cetak-denah .dn-header h1{ margin: 0; font-size: 15pt; text-transform: uppercase; line-height: 1.1; font-weight: 700; letter-spacing: 0.5px; }#page-cetak-denah .dn-header h2{ margin: 2px 0; font-size: 24pt; font-weight: 900; text-transform: uppercase; line-height: 1; letter-spacing: 1px; }#page-cetak-denah .dn-header p{ margin: 1px 0; font-size: 9pt; font-weight: 600; line-height: 1.3; }#page-cetak-denah .photo-grid{ display: grid; gap: 5mm 5mm; justify-content: center; flex-grow: 1; align-content: flex-start; width: 100%; margin-top: 2mm; }#page-cetak-denah .student-card{ width: 40mm; display: flex; flex-direction: column; align-items: center; }#page-cetak-denah .photo-frame{ width: 30mm; height: 35mm; border: 1.2pt solid #000; background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; }#page-cetak-denah .photo-frame img{ width: 100%; height: 100%; object-fit: cover; }#page-cetak-denah .id-label{ margin-top: 3px; background: #ffff00 !important; border: 1.2pt solid #000; width: 38mm; text-align: center; font-weight: 800; font-size: 8.5pt; padding: 2px 0; }#page-cetak-denah .nisn-label{ font-size: 7.5pt; font-weight: 700; margin-top: 1px; }#page-cetak-denah .denah-card{ width: 42mm; height: 42mm; border: 1.5pt solid #000; display: flex; flex-direction: column; background: #fff; overflow: hidden; }#page-cetak-denah .denah-row-1{ border-bottom: 1pt solid #000; text-align: center; font-size: 7.5pt; font-weight: 800; padding: 2px 0; background: #eee !important; }#page-cetak-denah .denah-row-2{ border-bottom: 1pt solid #000; text-align: center; font-size: 10.5pt; font-weight: 900; padding: 3px 0; }#page-cetak-denah .denah-row-bottom{ display: flex; flex-grow: 1; }#page-cetak-denah .denah-box-photo{ flex: 1; border-right: 1pt solid #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }#page-cetak-denah .denah-box-photo img{ width: 100%; height: 100%; object-fit: cover; }#page-cetak-denah .denah-box-name{ flex: 1.2; background: var(--purple-shaded) !important; display: flex; align-items: center; justify-content: center; padding: 3px; text-align: center; font-size: 7pt; font-weight: 800; line-height: 1.1; text-transform: uppercase; word-break: break-word; }#page-cetak-denah .abs-table{ width: 100%; border-collapse: collapse; border: 1.5pt solid #000; table-layout: fixed; }#page-cetak-denah .abs-table th{ background: #f1f5f9 !important; border: 1pt solid #000; padding: 6px 4px; font-size: 9pt; text-transform: uppercase; font-weight: 800; text-align: center; vertical-align: middle; }#page-cetak-denah .abs-table td{ border: 1pt solid #000; padding: 3px 8px; font-size: 9.5pt; height: 9.8mm; vertical-align: middle; }#page-cetak-denah .zigzag-ttd{ display: flex; align-items: center; width: 100%; height: 100%; font-size: 9pt; font-weight: 700; }#page-cetak-denah .footer-sig{ 
             margin-top: 4mm; 
             display: flex; 
             justify-content: flex-end; 
@@ -1308,7 +1309,7 @@
                     <i class="fa-solid fa-chart-pie"></i> Dashboard
                 </div>
                 <div class="nav-group" data-group="data-master">
-                    <div class="nav-label nav-toggle" role="button" tabindex="0" onclick="toggleNavGroup(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleNavGroup(this);}"><span class="nav-label-text">Data Master</span><span class="nav-count">3</span><i class="fa-solid fa-chevron-down nav-chev"></i></div>
+                    <div class="nav-label nav-toggle" role="button" tabindex="0" onclick="toggleNavGroup(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleNavGroup(this);}"><span class="nav-label-text">Data Master</span><span class="nav-count">5</span><i class="fa-solid fa-chevron-down nav-chev"></i></div>
                     <div class="nav-sub"><div class="nav-sub-in">
                 <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('sekolah', this)">
                     <i class="fa-solid fa-school"></i> Data Sekolah
@@ -1319,10 +1320,16 @@
                 <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('jadwal', this)">
                     <i class="fa-solid fa-calendar-alt"></i> Jadwal Ujian
                 </div>
+                <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('panitia', this)">
+                    <i class="fa-solid fa-people-group"></i> Data Panitia
+                </div>
+                <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('sk', this)">
+                    <i class="fa-solid fa-file-signature"></i> Data SK Panitia
+                </div>
                     </div></div>
                 </div>
                 <div class="nav-group" data-group="pencetakan-ujian">
-                    <div class="nav-label nav-toggle" role="button" tabindex="0" onclick="toggleNavGroup(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleNavGroup(this);}"><span class="nav-label-text">Pencetakan Ujian</span><span class="nav-count">4</span><i class="fa-solid fa-chevron-down nav-chev"></i></div>
+                    <div class="nav-label nav-toggle" role="button" tabindex="0" onclick="toggleNavGroup(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleNavGroup(this);}"><span class="nav-label-text">Pencetakan Ujian</span><span class="nav-count">7</span><i class="fa-solid fa-chevron-down nav-chev"></i></div>
                     <div class="nav-sub"><div class="nav-sub-in">
                 <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('cetak', this)">
                     <i class="fa-solid fa-print"></i> Cetak Kartu
@@ -1333,22 +1340,25 @@
                 <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('cetak-ljk', this)">
                     <i class="fa-solid fa-file-pen"></i> Cetak LJK <span class="nav-badge">Baru</span>
                 </div>
-                <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('cetak-denah', this)">
+                <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('cetak-denah', this); dnMenu('main')">
                     <i class="fa-solid fa-chair"></i> Cetak Denah <span class="nav-badge">Baru</span>
+                </div>
+                <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('cetak-denah', this); dnMenu('absen')">
+                    <i class="fa-solid fa-clipboard-list"></i> Cetak Daftar Hadir
+                </div>
+                <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('cetak-denah', this); dnMenu('pengawas')">
+                    <i class="fa-solid fa-user-tie"></i> Daftar Hadir Pengawas
+                </div>
+                <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('cetak-panitia', this)">
+                    <i class="fa-solid fa-address-card"></i> Cetak ID Card Panitia <span class="nav-badge">Baru</span>
                 </div>
                     </div></div>
                 </div>
                 <div class="nav-group" data-group="kepanitiaan">
-                    <div class="nav-label nav-toggle" role="button" tabindex="0" onclick="toggleNavGroup(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleNavGroup(this);}"><span class="nav-label-text">Kepanitiaan</span><span class="nav-count">3</span><i class="fa-solid fa-chevron-down nav-chev"></i></div>
+                    <div class="nav-label nav-toggle" role="button" tabindex="0" onclick="toggleNavGroup(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleNavGroup(this);}"><span class="nav-label-text">Kepanitiaan</span><span class="nav-count">1</span><i class="fa-solid fa-chevron-down nav-chev"></i></div>
                     <div class="nav-sub"><div class="nav-sub-in">
-                <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('sk', this)">
-                    <i class="fa-solid fa-file-signature"></i> Data SK Panitia
-                </div>
                 <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('cetak-sk', this)">
                     <i class="fa-solid fa-file-contract"></i> Cetak SK Panitia
-                </div>
-                <div class="nav-item-custom nav-link mb-1 rounded" onclick="showPage('cetak-panitia', this)">
-                    <i class="fa-solid fa-address-card"></i> Cetak ID Card Panitia <span class="nav-badge">Baru</span>
                 </div>
                     </div></div>
                 </div>
@@ -1633,7 +1643,15 @@
                     </div>
                 </div>
 
-                <!-- MENU DAFTAR PANITIA YANG DITAMBAHKAN FITUR IMPORT -->
+                <div class="alert alert-light border rounded-4 small mb-0">
+                    <i class="fa-solid fa-circle-info text-primary me-1"></i>
+                    Daftar Susunan Panitia kini dikelola di menu <b>Data Master &rarr; Data Panitia</b>
+                    (<a href="#" onclick="showPage('panitia'); return false;">buka Data Panitia</a>).
+                </div>
+            </div>
+
+            <!-- HALAMAN DATA PANITIA (DATA MASTER) -->
+            <div id="page-panitia" class="page-section d-none">
                 <div class="card border-0 shadow-sm rounded-4">
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
@@ -1657,7 +1675,7 @@
                         <div class="table-responsive" id="panitiaContainer"></div>
                     </div>
                 </div>
-            </div>
+                        </div>
 
             <!-- HALAMAN CETAK SK -->
             <div id="page-cetak-sk" class="page-section d-none">
@@ -1957,16 +1975,23 @@
                     <div class="dn-acc-h active" onclick="dnAcc(this)"><i>📝 LIST PENGAWAS PER RUANG</i><span>▼</span></div>
                     <div class="dn-acc-c show">
                         <div class="dn-fg"><label>Judul Daftar Hadir</label><input type="text" id="title-absen" value="DAFTAR HADIR PESERTA PENILAIAN SUMATIF AKHIR JENJANG (PSAJ)" oninput="dnSave()"></div>
-                        <div class="dn-fg"><label>Mata Pelajaran</label><input type="text" id="abs-mapel" value="BAHASA INDONESIA" oninput="dnSave()"></div>
-                        <div class="dn-fg"><label>Hari, Tanggal</label><input type="text" id="abs-date" value="Senin, 11 Mei 2026" oninput="dnSave()"></div>
-                        <div class="dn-fg"><label>Waktu</label><input type="text" id="abs-time" value="08.00 - 09.30" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>Pilih Kelas</label><select id="abs-kelas" onchange="window.dnKelasWant=this.value; dnSave()"><option value="all">Semua Kelas</option></select><div id="abs-kelas-info" style="font-size:10px;opacity:.8;margin-top:4px;"></div></div>
+                        <div class="dn-fg"><label>Mata Pelajaran (dari Jadwal Ujian)</label><select id="abs-mapel-sel" onchange="dnPickMapel('abs')"><option value="">— Pilih mata pelajaran —</option></select><input type="hidden" id="abs-mapel" value="BAHASA INDONESIA"></div>
+                        <div class="dn-fg"><label>Tanggal</label><input type="date" id="abs-date-pick" value="2026-05-11" onchange="dnPickSync('abs')" oninput="dnPickSync('abs')"><input type="hidden" id="abs-date" value="Senin, 11 Mei 2026"><div id="abs-hari-view" style="font-size:10px;opacity:.8;margin-top:4px;">Hari: Senin</div></div>
+                        <div class="dn-fg"><label>Waktu (Mulai - Selesai)</label><div style="display:flex;gap:8px;align-items:center;"><input type="time" id="abs-time-start" value="08:00" onchange="dnPickSync('abs')" oninput="dnPickSync('abs')"><span style="font-size:11px;">s.d.</span><input type="time" id="abs-time-end" value="09:30" onchange="dnPickSync('abs')" oninput="dnPickSync('abs')"></div><input type="hidden" id="abs-time" value="08.00 - 09.30"></div>
                         
                         <div class="dn-fg">
                             <label>Jumlah Pengawas Per Ruang</label>
-                            <select id="abs-p-mode" onchange="dnSave()">
+                            <select id="abs-p-mode" onchange="dnSave(); dnPanitiaSync()">
                                 <option value="1">1 Pengawas per Halaman</option>
                                 <option value="2">2 Pengawas per Halaman</option>
                             </select>
+                        </div>
+                        <div class="dn-fg">
+                            <label>Pengisian Pengawas</label>
+                            <select id="abs-auto-pan" onchange="dnPanitiaSync(true)"><option value="1" selected>Otomatis dari Data Panitia</option><option value="0">Isi manual</option></select>
+                            <button type="button" class="dn-btn dn-btn-out" style="margin-top:6px;" onclick="dnPanitiaSync(true, true)">🔄 Sinkron Data Panitia Sekarang</button>
+                            <div id="abs-auto-info" style="font-size:10px;opacity:.8;margin-top:4px;"></div>
                         </div>
 
                         <p style="font-size: 10px; color: #fbbf24; font-weight: 800; margin-bottom: 10px;">DATA PENGAWAS PER RUANGAN:</p>
@@ -1983,12 +2008,22 @@
                     <div class="dn-acc-h active" onclick="dnAcc(this)"><i>👨‍🏫 DAFTAR HADIR PENGAWAS GABUNGAN</i><span>▼</span></div>
                     <div class="dn-acc-c show">
                         <div class="dn-fg"><label>Judul Daftar Hadir</label><input type="text" id="title-pengawas" value="DAFTAR HADIR PENGAWAS PENILAIAN SUMATIF AKHIR JENJANG (PSAJ)" oninput="dnSave()"></div>
-                        <div class="dn-fg"><label>Mata Pelajaran</label><input type="text" id="p-mapel" value="BAHASA INDONESIA" oninput="dnSave()"></div>
+                        <div class="dn-fg"><label>Mata Pelajaran (dari Jadwal Ujian)</label><select id="p-mapel-sel" onchange="dnPickMapel('p')"><option value="">— Pilih mata pelajaran —</option></select><input type="hidden" id="p-mapel" value="BAHASA INDONESIA"></div>
+                        <div class="dn-fg"><label>Tanggal</label><input type="date" id="p-date-pick" value="2026-05-11" onchange="dnPickSync('p')" oninput="dnPickSync('p')"><input type="hidden" id="p-date" value="Senin, 11 Mei 2026"><div id="p-hari-view" style="font-size:10px;opacity:.8;margin-top:4px;">Hari: Senin</div></div>
+                        <div class="dn-fg"><label>Waktu (Mulai - Selesai)</label><div style="display:flex;gap:8px;align-items:center;"><input type="time" id="p-time-start" value="08:00" onchange="dnPickSync('p')" oninput="dnPickSync('p')"><span style="font-size:11px;">s.d.</span><input type="time" id="p-time-end" value="09:30" onchange="dnPickSync('p')" oninput="dnPickSync('p')"></div><input type="hidden" id="p-time" value="08.00 - 09.30"></div>
                         <div class="dn-fg"><label>Ketua Panitia</label><input type="text" id="p-ketua" value="ROHIMAN KHAN" oninput="dnSave()"></div>
                         <div class="dn-fg"><label>NIP Ketua</label><input type="text" id="p-nip" value="198412182025211003" oninput="dnSave()"></div>
                         <div class="dn-fg">
                             <label>Format List</label>
-                            <select id="p-format" onchange="dnPInputs()"><option value="4" selected>4 Pengawas (2 Ruang)</option><option value="6">6 Pengawas (3 Ruang)</option></select>
+                            <select id="p-format" onchange="dnPInputs(); dnPanitiaSync()"><option value="4" selected>4 Pengawas (2 Ruang)</option><option value="6">6 Pengawas (3 Ruang)</option><option value="p1">1 Pengawas 1 Ruang</option><option value="p2">2 Pengawas 1 Ruang</option></select>
+                        </div>
+                        <div class="dn-fg" id="p-rooms-group" style="display:none;"><label>Jumlah Ruang</label>
+                            <select id="p-rooms" onchange="dnPInputs(); dnPanitiaSync()"><option value="1">1 Ruang</option><option value="2">2 Ruang</option><option value="3">3 Ruang</option><option value="4" selected>4 Ruang</option><option value="5">5 Ruang</option><option value="6">6 Ruang</option><option value="7">7 Ruang</option><option value="8">8 Ruang</option></select>
+                        </div>
+                        <div class="dn-fg"><label>Pengisian Pengawas &amp; Ketua</label>
+                            <select id="p-auto-pan" onchange="dnPanitiaSync(true)"><option value="1" selected>Otomatis dari Data Panitia</option><option value="0">Isi manual</option></select>
+                            <button type="button" class="dn-btn dn-btn-out" style="margin-top:6px;" onclick="dnPanitiaSync(true, true)">🔄 Sinkron Data Panitia Sekarang</button>
+                            <div id="p-auto-info" style="font-size:10px;opacity:.8;margin-top:4px;"></div>
                         </div>
                         <div id="p-inputs-container"></div>
                     </div>
@@ -2084,10 +2119,6 @@
             <details>
                 <summary>🖼️ Media (Foto & Logo)</summary>
                 <div class="kp-dc">
-                    <div class="kp-fg">
-                        <label>Foto Panitia (3x4)</label>
-                        <input type="file" id="kpin-foto" accept="image/*">
-                    </div>
                     <div class="kp-fg">
                         <label>Logo Tutwuri</label>
                         <input type="file" id="kpin-logo" accept="image/*">
@@ -2212,7 +2243,7 @@
 
     <!-- MODAL JADWAL -->
     <div class="modal fade" id="modalJadwal" tabindex="-1">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content rounded-4 border-0">
                 <div class="modal-header border-0 bg-light rounded-top-4">
                     <h5 class="modal-title fw-bold" id="titleModalJadwal">Tambah Jadwal</h5>
@@ -2221,37 +2252,41 @@
                 <form id="formJadwal" onsubmit="event.preventDefault(); saveJadwal();">
                     <div class="modal-body p-4">
                         <input type="hidden" id="jId">
-                        <div class="mb-3">
-                            <label class="form-label small text-muted">Kelas Ujian</label>
-                            <select class="form-select" id="jKelas" required>
-                                <option value="pagi">Kelas Pagi</option>
-                                <option value="siang">Kelas Siang</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-muted">Hari</label>
-                            <select class="form-select" id="jHari"><option value="">Pilih hari</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option></select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-muted">Tanggal</label>
-                            <input type="date" class="form-control" id="jTanggal" onchange="updateHariTanggalJadwal()">
-                            <input type="hidden" id="jTahun">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-muted">Jam Mulai</label>
-                            <input type="time" class="form-control mb-2" id="jJamMulai" required>
-                            <label class="form-label small text-muted">Jam Selesai</label>
-                            <input type="time" class="form-control" id="jJamSelesai" required>
-                            <input type="hidden" id="jPukul">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label small text-muted">Mata Pelajaran</label>
-                            <input type="text" class="form-control" id="jMapel" required>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label small text-muted">Kelas Ujian</label>
+                                <select class="form-select" id="jKelas" required>
+                                    <option value="pagi">Kelas Pagi</option>
+                                    <option value="siang">Kelas Siang</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small text-muted">Hari</label>
+                                <select class="form-select" id="jHari"><option value="">Pilih hari</option><option>Senin</option><option>Selasa</option><option>Rabu</option><option>Kamis</option><option>Jumat</option><option>Sabtu</option><option>Minggu</option></select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label small text-muted">Tanggal</label>
+                                <input type="date" class="form-control" id="jTanggal" onchange="updateHariTanggalJadwal()">
+                                <input type="hidden" id="jTahun">
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <label class="form-label small text-muted">Jam Mulai</label>
+                                <input type="time" class="form-control" id="jJamMulai" required>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <label class="form-label small text-muted">Jam Selesai</label>
+                                <input type="time" class="form-control" id="jJamSelesai" required>
+                                <input type="hidden" id="jPukul">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label small text-muted">Mata Pelajaran</label>
+                                <input type="text" class="form-control" id="jMapel" required>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer border-0">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary w-100">Simpan</button>
+                        <button type="submit" class="btn btn-primary px-5">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -2511,16 +2546,16 @@
             activePage = pageName;
             localStorage.setItem('activePage', activePage);
 
-            var titles = { 'cetak-ba':'Cetak Berita Acara', 'cetak-hadir-panitia':'Cetak Daftar Hadir Panitia', 'cetak-panitia':'Cetak ID Card Panitia', 'cetak-denah':'Cetak Denah & Daftar Hadir', 'cetak-ljk':'Cetak LJK', 'dashboard':'Dashboard', 'sekolah':'Data Sekolah', 'siswa':'Data Siswa', 'jadwal':'Jadwal Ujian', 'cetak':'Cetak Kartu Ujian', 'cetak-presisi':'Cetak No Meja', 'sk':'Data Kepanitiaan SK', 'cetak-sk':'Cetak SK Panitia' };
+            var titles = { 'panitia':'Data Panitia', 'cetak-ba':'Cetak Berita Acara', 'cetak-hadir-panitia':'Cetak Daftar Hadir Panitia', 'cetak-panitia':'Cetak ID Card Panitia', 'cetak-denah':'Cetak Denah', 'cetak-ljk':'Cetak LJK', 'dashboard':'Dashboard', 'sekolah':'Data Sekolah', 'siswa':'Data Siswa', 'jadwal':'Jadwal Ujian', 'cetak':'Cetak Kartu Ujian', 'cetak-presisi':'Cetak No Meja', 'sk':'Data Kepanitiaan SK', 'cetak-sk':'Cetak SK Panitia' };
             document.getElementById('pageTitle').innerText = titles[pageName];
-            var subs = { 'cetak-ba':'Berita acara pelaksanaan, otomatis sesuai jenis kegiatan (F4)', 'cetak-hadir-panitia':'Daftar hadir panitia dari Data SK (F4)', 'cetak-panitia':'Kartu panitia ukuran 10,5 x 8,5 cm (muat cardcase mika)', 'cetak-denah':'Album foto, denah tempat duduk, daftar hadir, dan pengawas (F4)', 'cetak-ljk':'Lembar jawaban komputer siap cetak A4', 'dashboard':'Ringkasan data kartu ujian & SK', 'sekolah':'Kop, judul kartu, dan tanda tangan', 'siswa':'Kelola peserta dan foto', 'jadwal':'Atur mata pelajaran dan waktu ujian', 'cetak':'Pratinjau dan cetak ke PDF', 'cetak-presisi':'Pratinjau Nomor Meja F4','sk':'Pengaturan Kop, Identitas, dan Daftar Panitia', 'cetak-sk':'Pratinjau Surat Keputusan ke PDF' };
+            var subs = { 'panitia':'Daftar susunan panitia, impor Excel, dan pengawas otomatis', 'cetak-ba':'Berita acara pelaksanaan, otomatis sesuai jenis kegiatan (F4)', 'cetak-hadir-panitia':'Daftar hadir panitia dari Data SK (F4)', 'cetak-panitia':'Kartu panitia ukuran 10,5 x 8,5 cm (muat cardcase mika)', 'cetak-denah':'Album foto dan denah tempat duduk (F4)', 'cetak-ljk':'Lembar jawaban komputer siap cetak A4', 'dashboard':'Ringkasan data kartu ujian & SK', 'sekolah':'Kop, judul kartu, dan tanda tangan', 'siswa':'Kelola peserta dan foto', 'jadwal':'Atur mata pelajaran dan waktu ujian', 'cetak':'Pratinjau dan cetak ke PDF', 'cetak-presisi':'Pratinjau Nomor Meja F4','sk':'Pengaturan Kop, Identitas, dan Daftar Panitia', 'cetak-sk':'Pratinjau Surat Keputusan ke PDF' };
             var subEl = document.getElementById('pageSub'); if (subEl) subEl.innerText = subs[pageName] || '';
 
             document.querySelectorAll('.nav-item-custom').forEach(function(n) { n.classList.remove('active'); });
             if (navEl) navEl.classList.add('active');
             else {
                 var links = document.querySelectorAll('.nav-item-custom');
-                for(var i=0; i<links.length; i++){ if(links[i].getAttribute('onclick').indexOf("'" + pageName + "'") > -1) links[i].classList.add('active'); }
+                for(var i=0; i<links.length; i++){ if(links[i].getAttribute('onclick').indexOf("'" + pageName + "'") > -1) { links[i].classList.add('active'); break; } }
             }
 
             if (window.syncNavGroups) window.syncNavGroups();
@@ -2534,14 +2569,14 @@
             if (!sessionToken) return;
             if (pageName === 'dashboard') renderDashboard();
             else if (pageName === 'cetak-ljk') renderLJK();
-            else if (pageName === 'cetak-denah') dnInit();
+            else if (pageName === 'cetak-denah') { dnInit(); if (window.dnJadwalRefresh) window.dnJadwalRefresh(); if (window.dnSwitch) window.dnSwitch('main'); if (window.dnPanitiaSync) window.dnPanitiaSync(); if (window.dnKelasRefresh) window.dnKelasRefresh(); }
             else if (pageName === 'cetak-panitia') kpInit();
             else if (pageName === 'cetak-ba') baInit();
             else if (pageName === 'cetak-hadir-panitia') hpInit();
             else if (pageName === 'sekolah') { if (!isSekolahLoaded) fetchSekolah(); else renderSekolah(); }
             else if (pageName === 'siswa') { if (!isSiswaLoaded) fetchSiswa(); else renderSiswa(); }
             else if (pageName === 'jadwal') { if (!isJadwalLoaded) fetchJadwal(); else renderJadwal(); }
-            else if (pageName === 'sk') { if (!isSKLoaded) fetchSKData(); else renderSKPage(); }
+            else if (pageName === 'sk' || pageName === 'panitia') { if (!isSKLoaded) fetchSKData(); else renderSKPage(); }
             else if (pageName === 'cetak') {
                 showSectionLoading('cetakContainer');
                 if (typeof google === 'undefined') {
@@ -2766,6 +2801,41 @@
             if (elJadwal) elJadwal.checked = true;
         }
 
+        /* ===== Daftar kelas dinamis (mengikuti isian kolom Kelas pada data siswa/template) ===== */
+        function kelasNorm(k) { return String(k == null ? '' : k).toLowerCase().replace(/[\s\-_.\/]+/g, ''); }
+        function kelasSama(a, b) { return kelasNorm(a) !== '' && kelasNorm(a) === kelasNorm(b); }
+        function kelasAttr(v) { return String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+        function kelasLabel(v) { v = String(v || '').trim(); return /^kelas\b/i.test(v) ? v : 'Kelas ' + v; }
+        function kelasUnik(list) {
+            var seen = {}, out = [];
+            (list || []).forEach(function(x) {
+                var raw = String(x == null ? '' : x).replace(/\s+/g, ' ').trim(), key = kelasNorm(raw);
+                if (raw && !seen[key]) { seen[key] = raw; out.push(raw); }
+            });
+            return out.sort(function(a, b) { return a.localeCompare(b, 'id', { numeric: true, sensitivity: 'base' }); });
+        }
+        function kelasHitung(list, getter) {
+            var c = {}, kosong = 0;
+            (list || []).forEach(function(x) { var k = kelasNorm(getter(x)); if (k) c[k] = (c[k] || 0) + 1; else kosong++; });
+            return { per: c, kosong: kosong };
+        }
+        function kelasBangunOpsi(sel, list, getter, want, withCount, allLabel) {
+            if (!sel) return 'all';
+            var uniq = kelasUnik(list.map(getter)), cnt = kelasHitung(list, getter);
+            var h = '<option value="all">' + (allLabel || 'Semua Kelas') + (withCount ? ' (' + list.length + ')' : '') + '</option>';
+            uniq.forEach(function(k) { h += '<option value="' + kelasAttr(k) + '">' + escapeHTML(kelasLabel(k)) + (withCount ? ' (' + (cnt.per[kelasNorm(k)] || 0) + ')' : '') + '</option>'; });
+            if (cnt.kosong && uniq.length) h += '<option value="lain">Tanpa Kelas' + (withCount ? ' (' + cnt.kosong + ')' : '') + '</option>';
+            sel.innerHTML = h;
+            var pick = 'all';
+            for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].value === want || (want && want !== 'all' && want !== 'lain' && kelasSama(sel.options[i].value, want))) { pick = sel.options[i].value; break; } }
+            sel.value = pick;
+            return pick;
+        }
+        function kelasCocok(kelasSiswa, pilihan) {
+            if (!pilihan || pilihan === 'all') return true;
+            if (pilihan === 'lain') return kelasNorm(kelasSiswa) === '';
+            return kelasSama(kelasSiswa, pilihan);
+        }
         function kelasKey(k) {
             var t = String(k == null ? '' : k).toLowerCase().trim(), m = t.match(/(?:^|[^0-9])([1-6])(?![0-9])/);
             if (m) return m[1];
@@ -2774,19 +2844,13 @@
         }
         function kelasFilterList() {
             if (kartuKelas === 'all') return dbSiswa;
-            return dbSiswa.filter(function(s) { return (kelasKey(s.kelas) || 'lain') === kartuKelas; });
+            return dbSiswa.filter(function(s) { return kelasCocok(s.kelas, kartuKelas); });
         }
         window.setFilterKelas = function(v) { kartuKelas = v; localStorage.setItem('kartuKelas', v); renderCetak(); };
         window.setFilterShiftKartu = function(v) { kartuJadwalKelas = v === 'siang' ? 'siang' : 'pagi'; localStorage.setItem('kartuJadwalKelas', kartuJadwalKelas); renderCetak(); };
         function syncKelasUI(shown) {
             var sel = document.getElementById('filterKelasKartu'); if (!sel) return;
-            var c = {}; dbSiswa.forEach(function(x) { var k = kelasKey(x.kelas) || 'lain'; c[k] = (c[k] || 0) + 1; });
-            var h = '<option value="all">Semua Kelas (' + dbSiswa.length + ')</option>';
-            for (var n = 1; n <= 6; n++) h += '<option value="' + n + '">Kelas ' + n + ' (' + (c[n] || 0) + ')</option>';
-            if (c.lain) h += '<option value="lain">Lainnya (' + c.lain + ')</option>';
-            sel.innerHTML = h;
-            if (!sel.querySelector('option[value="' + kartuKelas + '"]')) kartuKelas = 'all';
-            sel.value = kartuKelas;
+            kartuKelas = kelasBangunOpsi(sel, dbSiswa, function(x) { return x.kelas; }, kartuKelas, true);
             var info = document.getElementById('filterKelasInfo');
             if (info) info.textContent = shown + ' kartu · ' + Math.ceil(shown / 4) + ' halaman';
             var shiftSel = document.getElementById('filterShiftKartu');
@@ -3115,13 +3179,13 @@
             }
 
             var filterEl = document.getElementById('filterKelasPresisi');
-            var filter = filterEl ? filterEl.value : 'all';
+            var filter = filterEl ? kelasBangunOpsi(filterEl, dataSource, function(m) { return m.kelas; }, localStorage.getItem('cfg_filterKelasPresisi') || filterEl.value || 'all', false) : 'all';
             
             const sch = document.getElementById('schoolNamePresisi') ? document.getElementById('schoolNamePresisi').value : "SDN MUARA BAKTI 01";
             const exm = document.getElementById('examTitlePresisi') ? document.getElementById('examTitlePresisi').value : "PENILAIAN SUMATIF AKHIR TAHUN (PSAT)";
             const yer = document.getElementById('yearNamePresisi') ? document.getElementById('yearNamePresisi').value : "2025/2026";
             
-            var filteredData = filter === 'all' ? dataSource : dataSource.filter(m => (m.kelas && m.kelas.includes(filter)));
+            var filteredData = filter === 'all' ? dataSource : dataSource.filter(m => kelasCocok(m.kelas, filter));
 
             if(filteredData.length === 0) {
                 container.innerHTML = `<div style="color:#666; padding:50px; grid-column: 1/-1; text-align:center;">Data Kosong untuk kelas tersebut.</div>`;
@@ -3698,9 +3762,9 @@
                 '<div class="col-12 mb-4"><div class="hero-banner"><small class="hero-date">' + tgl + '</small><h2>' + sapa + ', ' + nama + '</h2><p>Kelola data peserta, jadwal ujian, serta pencetakan kartu dan SK Kepanitiaan dalam satu panel yang rapi.</p><button class="btn btn-warning fw-bold px-4" onclick="showPage(\'cetak\')"><i class="fa-solid fa-print me-2"></i>Cetak Kartu Ujian</button><div class="hero-media"><a href="https://freeimage.host/i/ofxCnLl" target="_blank" rel="noopener noreferrer" aria-label="Buka gambar dashboard"><img src="https://iili.io/ofxCnLl.md.png" alt="Ilustrasi dashboard aplikasi kartu ujian" loading="eager" decoding="async" referrerpolicy="no-referrer"></a></div></div></div>' +
                 stat('i-indigo', 'fa-users', nS, 'Total siswa') + stat('i-jade', 'fa-calendar-check', nJ, 'Mata pelajaran terjadwal') +
                 stat('i-amber', 'fa-people-group', nP, 'Anggota panitia') + stat('i-indigo', 'fa-id-card', modeTeks, 'Mode kartu aktif', 'font-size:1rem;line-height:1.3;') +
-                grp('Data Master', 'Kelola data dasar', tile('sekolah', 'fa-school', 'Data Sekolah', 'Kop, judul, TTD & stempel') + tile('siswa', 'fa-users', 'Data Siswa', 'Impor Excel dan foto') + tile('jadwal', 'fa-calendar-alt', 'Jadwal Ujian', 'Mapel dan waktu')) +
+                grp('Data Master', 'Kelola data dasar', tile('sekolah', 'fa-school', 'Data Sekolah', 'Kop, judul, TTD & stempel') + tile('siswa', 'fa-users', 'Data Siswa', 'Impor Excel dan foto') + tile('jadwal', 'fa-calendar-alt', 'Jadwal Ujian', 'Mapel dan waktu') + tile('panitia', 'fa-people-group', 'Data Panitia', 'Susunan panitia & pengawas')) +
                 grp('Pencetakan Ujian', 'Kartu dan nomor peserta', tile('cetak', 'fa-print', 'Cetak Kartu', 'Kartu 10,5 × 8,5 cm, 4 per halaman') + tile('cetak-presisi', 'fa-id-badge', 'Cetak No Meja', 'Presisi F4/Folio') + tile('cetak-ljk', 'fa-file-pen', 'Cetak LJK', 'Lembar jawaban komputer A4') + tile('cetak-denah', 'fa-chair', 'Cetak Denah', 'Album, denah & daftar hadir F4')) +
-                grp('Kepanitiaan', 'Surat keputusan panitia', tile('sk', 'fa-file-signature', 'Data SK Panitia', 'Kop, teks SK & susunan panitia') + tile('cetak-sk', 'fa-file-contract', 'Cetak SK Panitia', 'Pratinjau F4/Folio') + tile('cetak-panitia', 'fa-address-card', 'ID Card Panitia', 'Kartu 10,5 x 8,5 cm (cardcase)')) + grp('Administrasi Kegiatan', 'Berita acara dan kehadiran', tile('cetak-ba', 'fa-file-lines', 'Berita Acara', 'Otomatis sesuai jenis kegiatan') + tile('cetak-hadir-panitia', 'fa-clipboard-user', 'Daftar Hadir Panitia', 'Tanda tangan panitia dari Data SK'));
+                grp('Kepanitiaan', 'Surat keputusan panitia', tile('sk', 'fa-file-signature', 'Data SK Panitia', 'Kop, identitas & teks SK') + tile('cetak-sk', 'fa-file-contract', 'Cetak SK Panitia', 'Pratinjau F4/Folio') + tile('cetak-panitia', 'fa-address-card', 'ID Card Panitia', 'Kartu 10,5 x 8,5 cm (cardcase)')) + grp('Administrasi Kegiatan', 'Berita acara dan kehadiran', tile('cetak-ba', 'fa-file-lines', 'Berita Acara', 'Otomatis sesuai jenis kegiatan') + tile('cetak-hadir-panitia', 'fa-clipboard-user', 'Daftar Hadir Panitia', 'Tanda tangan panitia dari Data SK'));
         }
 
         /* ================= IMPOR EXCEL SISWA: SEMUA BARIS MASUK ================= */
@@ -3869,15 +3933,16 @@
             const db = await dnInitDB();
             const transaction = db.transaction(STORE_NAME, "readonly");
             const store = transaction.objectStore(STORE_NAME);
-            store.get("dnStudents").onsuccess = (e) => { dnStudents = e.target.result || []; dnUpdate(); };
+            store.get("dnStudents").onsuccess = (e) => { dnStudents = e.target.result || []; if (window.dnKelasRefresh) window.dnKelasRefresh(); dnUpdate(); };
             store.get("dnPhotos").onsuccess = (e) => { dnPhotos = e.target.result || {}; dnUpdate(); };
             store.get("dnLogoSrc").onsuccess = (e) => { if(e.target.result) dnLogoSrc = e.target.result; dnUpdate(); };
             store.get("config").onsuccess = (e) => {
                 const data = e.target.result;
                 if(data) {
-                    for (let id in data) { const el = document.getElementById(id); if (el) el.value = data[id]; }
+                    for (let id in data) { const el = document.getElementById(id); if (el && el.type !== 'select-one') el.value = data[id]; else if (el) { try { el.value = data[id]; } catch (e) {} } }
                     dnStatus(false);
                     dnPInputs(); 
+                    dnPickRestore(data); dnKelasRefresh(data['abs-kelas'] || 'all'); dnUpdate(); dnPanitiaSync();
                 }
             };
         }
@@ -3888,10 +3953,11 @@
             const db = await dnInitDB(); db.transaction(STORE_NAME, "readwrite").objectStore(STORE_NAME).clear();
             dnStudents = []; dnPhotos = {}; dnLogoSrc = DN_LOGO;
             for (var id in dnDefaults) { var el = document.getElementById(id); if (el) el.value = dnDefaults[id]; }
-            dnStatus(false); dnPInputs(); dnRoomInputs(); dnUpdate();
+            dnStatus(false); dnPInputs(); dnRoomInputs(); dnPickRestore(null); dnKelasRefresh('all'); dnUpdate();
         }
 
         function dnSave() { 
+            if (window.dnKelasRefresh) window.dnKelasRefresh();
             dnRoomInputs();
             dnSaveDB(); 
             dnUpdate(); 
@@ -3945,7 +4011,9 @@
 
         function dnPInputs() {
             let val = document.getElementById('p-format').value;
-            let count = parseInt(val);
+            const pcfg = dnPCfg();
+            let count = pcfg.count;
+            const rg = document.getElementById('p-rooms-group'); if (rg) rg.style.display = pcfg.custom ? 'block' : 'none';
             const container = document.getElementById('p-inputs-container');
             const currentVals = {};
             container.querySelectorAll('input').forEach(i => currentVals[i.id] = i.value);
@@ -3953,7 +4021,7 @@
             for(let i=1; i<=count; i++) {
                 const id = `p-name-${i}`;
                 const val = currentVals[id] || "";
-                container.innerHTML += `<div class="dn-fg"><label>Pengawas ${i}</label><input type="text" id="${id}" value="${val}" placeholder="Nama Pengawas ${i}" oninput="dnSave()"></div>`;
+                container.innerHTML += `<div class="dn-fg"><label>Pengawas ${i}${pcfg.per === 1 ? ' (Ruang ' + i + ')' : ' (Ruang ' + Math.ceil(i/2) + ')'}</label><input type="text" id="${id}" value="${val}" placeholder="Nama Pengawas ${i}" oninput="dnSave()"></div>`;
             }
             dnUpdate();
         }
@@ -3963,7 +4031,11 @@
             container.innerHTML = '';
             if (dnTab === 'pengawas') { container.innerHTML = dnPengawas(); return; }
             const perPage = parseInt(document.getElementById('in-perpage').value) || 20;
-            const dataList = dnStudents.length > 0 ? dnStudents : Array(perPage).fill({ no: "00-00-00-00", nisn: "1234567890", nama: "CONTOH NAMA PESERTA" });
+            let dataList = dnStudents.length > 0 ? dnStudents : Array(perPage).fill({ no: "00-00-00-00", nisn: "1234567890", nama: "CONTOH NAMA PESERTA" });
+            if (dnTab === 'absen' && dnStudents.length > 0) {
+                dataList = dnFilterKelas(dataList);
+                if (!dataList.length) { container.innerHTML = '<div style="padding:40px;text-align:center;color:#64748b;background:#fff;border-radius:12px;">Tidak ada peserta pada kelas yang dipilih.</div>'; return; }
+            }
             for (let i = 0; i < dataList.length; i += perPage) {
                 let chunk = dataList.slice(i, i + perPage);
                 if (dnTab === 'main') container.innerHTML += dnMain(chunk, perPage, Math.floor(i/perPage));
@@ -4040,22 +4112,34 @@
                 </div>`;
             }
 
-            return `<div class="dn-page dn-pp-${perPage}">${dnKop()}<div style="text-align:center; font-weight:800; font-size:11pt; margin-bottom:10px; text-transform:uppercase;">${document.getElementById('title-absen').value}</div><table style="width:100%; font-weight:700; font-size:9.5pt; margin-bottom:8px;"><tr><td width="140">MATA PELAJARAN</td><td>: ${document.getElementById('abs-mapel').value}</td><td width="80">RUANG</td><td>: ${roomNum}</td></tr><tr><td>HARI, TANGGAL</td><td>: ${document.getElementById('abs-date').value}</td><td>TAHUN</td><td>: ${document.getElementById('in-year').value}</td></tr><tr><td>WAKTU</td><td colspan="3">: ${document.getElementById('abs-time').value}</td></tr></table><table class="abs-table"><thead><tr><th width="40">NO</th><th width="140">NO PESERTA</th><th>NAMA PESERTA</th><th width="200">TANDA TANGAN</th></tr></thead><tbody>${rowsHtml}</tbody></table>${footerHtml}</div>`;
+            return `<div class="dn-page dn-pp-${perPage}">${dnKop()}<div style="text-align:center; font-weight:800; font-size:11pt; margin-bottom:10px; text-transform:uppercase;">${document.getElementById('title-absen').value}</div><table style="width:100%; font-weight:700; font-size:9.5pt; margin-bottom:8px;"><tr><td width="140">MATA PELAJARAN</td><td>: ${document.getElementById('abs-mapel').value}</td><td width="80">RUANG</td><td>: ${roomNum}</td></tr><tr><td>HARI, TANGGAL</td><td>: ${document.getElementById('abs-date').value}</td><td>TAHUN</td><td>: ${document.getElementById('in-year').value}</td></tr>${dnWaktuKelasRow()}</table><table class="abs-table"><thead><tr><th width="40">NO</th><th width="140">NO PESERTA</th><th>NAMA PESERTA</th><th width="200">TANDA TANGAN</th></tr></thead><tbody>${rowsHtml}</tbody></table>${footerHtml}</div>`;
         }
 
+        /* Konfigurasi Format List pengawas: per = jumlah pengawas per ruang, rooms = jumlah ruang, count = total pengawas */
+        function dnPCfg() {
+            const v = (document.getElementById('p-format') || {}).value || '4';
+            const rEl = document.getElementById('p-rooms'), nr = Math.max(1, parseInt(rEl && rEl.value) || 4);
+            if (v === 'p1') return { per: 1, rooms: nr, count: nr, custom: true };
+            if (v === 'p2') return { per: 2, rooms: nr, count: nr * 2, custom: true };
+            const c = parseInt(v) || 4;
+            return { per: 2, rooms: Math.ceil(c / 2), count: c, custom: false };
+        }
         function dnPengawas() {
             const format = document.getElementById('p-format').value;
             const city = document.getElementById('in-city').value;
-            let count = parseInt(format);
+            const pcfg = dnPCfg();
+            let count = pcfg.count;
             let rowsHtml = ''; 
             for(let i=1; i<=count; i++) {
                 const name = document.getElementById(`p-name-${i}`)?.value || "....................................";
-                let roomCell = (i % 2 !== 0) ? `<td rowspan="2" align="center" style="font-size:20pt; font-weight:900;">${Math.ceil(i/2)}</td>` : '';
+                let roomCell = pcfg.per === 1
+                    ? `<td align="center" style="font-size:20pt; font-weight:900;">${i}</td>`
+                    : ((i % 2 !== 0) ? `<td rowspan="2" align="center" style="font-size:20pt; font-weight:900;">${Math.ceil(i/2)}</td>` : '');
                 const ttd = (i % 2 !== 0) ? `${i}. .....................` : `<div style="padding-left:60px;">${i}. .....................</div>`;
                 rowsHtml += `<tr><td align="center">${i}.</td><td style="text-transform:uppercase; font-weight:700;">${name}</td>${roomCell}<td><div class="zigzag-ttd">${ttd}</div></td></tr>`;
             }
-            const dateOnly = document.getElementById('abs-date').value.split(',')[1] || '';
-            return `<div class="dn-page">${dnKop()}<div style="text-align:center; font-weight:800; font-size:12pt; margin-bottom:15px; text-transform:uppercase;">${document.getElementById('title-pengawas').value}</div><div style="margin-left: 20px; margin-bottom: 15px; font-weight: 700; font-size: 10pt;"><table><tr><td width="150">Mata Pelajaran</td><td>: ${document.getElementById('p-mapel').value}</td></tr><tr><td>Hari/Tanggal</td><td>: ${document.getElementById('abs-date').value}</td></tr></table></div><table class="abs-table"><thead><tr><th width="50">No.</th><th>Nama Pengawas</th><th width="80">Ruang</th><th width="220">Tanda Tangan</th></tr></thead><tbody>${rowsHtml}</tbody></table><div class="footer-sig"><div class="sig-box">${city}, ${dateOnly}<br>Ketua Panitia Pelaksana<br><br><br><br><br><u><b>${document.getElementById('p-ketua').value}</b></u><br>NIP. ${document.getElementById('p-nip').value}</div></div></div>`;
+            const dateOnly = document.getElementById('p-date').value.split(',')[1] || '';
+            return `<div class="dn-page">${dnKop()}<div style="text-align:center; font-weight:800; font-size:12pt; margin-bottom:15px; text-transform:uppercase;">${document.getElementById('title-pengawas').value}</div><div style="margin-left: 20px; margin-bottom: 15px; font-weight: 700; font-size: 10pt;"><table><tr><td width="150">Mata Pelajaran</td><td>: ${document.getElementById('p-mapel').value}</td></tr><tr><td>Hari/Tanggal</td><td>: ${document.getElementById('p-date').value}</td></tr><tr><td>Waktu</td><td>: ${document.getElementById('p-time').value}</td></tr></table></div><table class="abs-table"><thead><tr><th width="50">No.</th><th>Nama Pengawas</th><th width="80">Ruang</th><th width="220">Tanda Tangan</th></tr></thead><tbody>${rowsHtml}</tbody></table><div class="footer-sig"><div class="sig-box">${city}, ${dateOnly}<br>Ketua Panitia Pelaksana<br><br><br><br><br><u><b>${document.getElementById('p-ketua').value}</b></u><br>NIP. ${document.getElementById('p-nip').value}</div></div></div>`;
         }
 
         document.getElementById('import-excel').addEventListener('change', function(e) {
@@ -4065,7 +4149,7 @@
                 const data = new Uint8Array(event.target.result);
                 const workbook = XLSX.read(data, {type: 'array'});
                 const json = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], {header: 1});
-                dnStudents = json.slice(1).filter(r => r.some(c => String(c == null ? '' : c).trim() !== '')).map(r => ({ no: String(r[0] == null ? '' : r[0]).trim(), nisn: String(r[1] == null ? '' : r[1]).trim(), nama: String(r[2] == null ? '' : r[2]).trim() }));
+                dnStudents = json.slice(1).filter(r => r.some(c => String(c == null ? '' : c).trim() !== '')).map(r => ({ no: String(r[0] == null ? '' : r[0]).trim(), nisn: String(r[1] == null ? '' : r[1]).trim(), nama: String(r[2] == null ? '' : r[2]).trim(), kelas: String(r[3] == null ? '' : r[3]).trim() }));
                 dnSave();
                 dnNote('Import Berhasil', dnStudents.length + ' peserta diimpor.');
             };
@@ -4096,8 +4180,8 @@
 
         function dnTemplate() {
             if (typeof XLSX === 'undefined') return dnNote('Error', 'Library Excel belum termuat.', 'error');
-            const wb = XLSX.utils.book_new(); const ws = XLSX.utils.aoa_to_sheet([["No Peserta", "NISN", "Nama Peserta"], ["24-01-01-001", "1234567890", "NAMA PESERTA"]]);
-            ws['!cols'] = [{ wch: 18 }, { wch: 16 }, { wch: 34 }];
+            const wb = XLSX.utils.book_new(); const ws = XLSX.utils.aoa_to_sheet([["No Peserta", "NISN", "Nama Peserta", "Kelas"], ["24-01-01-001", "1234567890", "NAMA PESERTA", "1 A"]]);
+            ws['!cols'] = [{ wch: 18 }, { wch: 16 }, { wch: 34 }, { wch: 10 }];
             XLSX.utils.book_append_sheet(wb, ws, "Data"); downloadXlsx(wb, "Template_PSAJ.xlsx");
         }
         
@@ -4115,7 +4199,7 @@
         window.dnFromSiswa = function() {
             if (!isGAS()) ensureSiswa();
             if (!dbSiswa.length) return dnNote('Data siswa kosong', isGAS() ? 'Buka menu Data Siswa lebih dulu agar data termuat.' : 'Isi atau impor data di menu Data Siswa.', 'info');
-            dnStudents = dbSiswa.map(function(s) { return { no: String(s.no_peserta || '').trim(), nisn: String(s.nisn || '').trim(), nama: String(s.nama || '').trim() }; });
+            dnStudents = dbSiswa.map(function(s) { return { no: String(s.no_peserta || '').trim(), nisn: String(s.nisn || '').trim(), nama: String(s.nama || '').trim(), kelas: String(s.kelas || '').trim() }; });
             var f = 0;
             dbSiswa.forEach(function(s) { if (s.foto) { f++; if (s.nisn) dnPhotos[String(s.nisn).trim()] = s.foto; if (s.no_peserta) dnPhotos[String(s.no_peserta).trim()] = s.foto; } });
             dnSave();
@@ -4163,17 +4247,17 @@
             var q = (document.getElementById('cmdkInput').value || '').toLowerCase(), out = [];
             document.querySelectorAll('.nav-item-custom').forEach(function(n) {
                 var m = (n.getAttribute('onclick') || '').match(/showPage\('([^']+)'/), t = n.textContent.replace(/Baru/, '').trim();
-                if (m && (!q || t.toLowerCase().indexOf(q) > -1)) out.push({ pg: m[1], t: t, ic: n.querySelector('i').className });
+                if (m && (!q || t.toLowerCase().indexOf(q) > -1)) out.push({ pg: m[1], t: t, ic: n.querySelector('i').className, el: n });
             });
             return out;
         }
         function cmdRender() {
             var it = cmdItems(); cmdIdx = Math.max(0, Math.min(cmdIdx, it.length - 1));
             document.getElementById('cmdkList').innerHTML = it.length ? it.map(function(x, i) {
-                return '<div class="cmdk-item' + (i === cmdIdx ? ' on' : '') + '" onclick="cmdGo(\'' + x.pg + '\')"><i class="' + x.ic + '"></i><span>' + escapeHTML(x.t) + '</span><kbd>Enter</kbd></div>';
+                return '<div class="cmdk-item' + (i === cmdIdx ? ' on' : '') + '" onclick="cmdGo(\'' + x.pg + '\', ' + i + ')"><i class="' + x.ic + '"></i><span>' + escapeHTML(x.t) + '</span><kbd>Enter</kbd></div>';
             }).join('') : '<div class="cmdk-empty">Menu tidak ditemukan</div>';
         }
-        window.cmdGo = function(pg) { closeCmdk(); window.showPage(pg); };
+        window.cmdGo = function(pg, i) { var it = cmdItems(); closeCmdk(); if (i != null && it[i] && it[i].el) it[i].el.click(); else window.showPage(pg); };
         window.openCmdk = function() { if (!sessionToken) return; var b = document.getElementById('cmdk'); b.classList.add('open'); var i = document.getElementById('cmdkInput'); i.value = ''; cmdIdx = 0; cmdRender(); setTimeout(function() { i.focus(); }, 30); };
         window.closeCmdk = function() { document.getElementById('cmdk').classList.remove('open'); };
         document.addEventListener('keydown', function(e) {
@@ -4183,11 +4267,185 @@
             if (e.key === 'Escape') closeCmdk();
             else if (e.key === 'ArrowDown') { e.preventDefault(); cmdIdx++; cmdRender(); }
             else if (e.key === 'ArrowUp') { e.preventDefault(); cmdIdx--; cmdRender(); }
-            else if (e.key === 'Enter') { var it = cmdItems(); if (it[cmdIdx]) cmdGo(it[cmdIdx].pg); }
+            else if (e.key === 'Enter') { var it = cmdItems(); if (it[cmdIdx]) cmdGo(it[cmdIdx].pg, cmdIdx); }
         });
         document.getElementById('cmdkInput').addEventListener('input', function() { cmdIdx = 0; cmdRender(); });
         document.getElementById('cmdk').addEventListener('click', function(e) { if (e.target === this) closeCmdk(); });
 
+        /* ================= DAFTAR HADIR & PENGAWAS: MAPEL DARI JADWAL + DATEPICKER ================= */
+        var DN_HARI = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        var DN_BULAN = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        function dnIsoToParts(iso) { var m = String(iso || '').match(/^(\d{4})-(\d{2})-(\d{2})$/); return m ? { y: +m[1], mo: +m[2], d: +m[3] } : null; }
+        function dnFmtDate(iso) {
+            var p = dnIsoToParts(iso); if (!p) return '';
+            var dt = new Date(p.y, p.mo - 1, p.d);
+            return DN_HARI[dt.getDay()] + ', ' + p.d + ' ' + DN_BULAN[p.mo - 1] + ' ' + p.y;
+        }
+        function dnLegacyDateToIso(txt) {
+            var m = String(txt || '').match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/); if (!m) return '';
+            var bi = DN_BULAN.findIndex(function(b) { return b.toLowerCase() === m[2].toLowerCase(); }); if (bi < 0) return '';
+            return m[3] + '-' + String(bi + 1).padStart(2, '0') + '-' + m[1].padStart(2, '0');
+        }
+        function dnJadwalList() {
+            try { if (!isJadwalLoaded && !isGAS()) { ensureJadwal(); if (typeof applyJadwalKelasMetadata === 'function') applyJadwalKelasMetadata(); } } catch (e) {}
+            return (typeof dbJadwal !== 'undefined' && Array.isArray(dbJadwal)) ? dbJadwal : [];
+        }
+        function dnJadwalLabel(it) {
+            var tgl = ''; var dm = String(it.tahun || '').match(/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
+            if (dm) tgl = dnFmtDate(dm[3] + '-' + dm[2].padStart(2, '0') + '-' + dm[1].padStart(2, '0'));
+            var kls = (it.kelas || 'pagi') === 'siang' ? 'Siang' : 'Pagi';
+            return String(it.mapel || '-') + (tgl ? ' — ' + tgl : '') + (it.pukul ? ' (' + it.pukul + ')' : '') + ' · ' + kls;
+        }
+        function dnJadwalRefresh() {
+            var list = dnJadwalList();
+            if (!isJadwalLoaded && isGAS() && typeof gasRun === 'function' && !window.dnJadwalFetching) {
+                window.dnJadwalFetching = true;
+                gasRun('getJadwal', sessionToken).then(function(res) { window.dnJadwalFetching = false; if (res && res.success) { dbJadwal = res.data || []; if (typeof applyJadwalKelasMetadata === 'function') applyJadwalKelasMetadata(); isJadwalLoaded = true; dnJadwalRefresh(); } }).catch(function() { window.dnJadwalFetching = false; });
+            }
+            [['abs', 'abs-mapel'], ['p', 'p-mapel']].forEach(function(pr) {
+                var sel = document.getElementById(pr[0] + '-mapel-sel'), hid = document.getElementById(pr[1]); if (!sel || !hid) return;
+                var cur = sel.value, curText = String(hid.value || '').trim();
+                var html = '<option value="">' + (list.length ? '— Pilih mata pelajaran —' : '— Belum ada data Jadwal Ujian —') + '</option>';
+                list.forEach(function(it) { html += '<option value="' + it.id + '">' + escapeHTML(dnJadwalLabel(it)) + '</option>'; });
+                sel.innerHTML = html;
+                if (cur && sel.querySelector('option[value="' + cur + '"]')) sel.value = cur;
+                else if (curText) {
+                    var hit = list.find(function(it) { return String(it.mapel || '').trim().toUpperCase() === curText.toUpperCase(); });
+                    if (hit) sel.value = String(hit.id);
+                    else { var o = document.createElement('option'); o.value = '__cur'; o.textContent = curText + ' (tersimpan)'; sel.appendChild(o); sel.value = '__cur'; }
+                }
+            });
+        }
+        window.dnPickSync = function(p) {
+            var dEl = document.getElementById(p + '-date-pick'), a = document.getElementById(p + '-time-start'), b = document.getElementById(p + '-time-end');
+            var hidDate = document.getElementById(p === 'abs' ? 'abs-date' : 'p-date'), hidTime = document.getElementById(p === 'abs' ? 'abs-time' : 'p-time');
+            var full = dnFmtDate(dEl.value);
+            hidDate.value = full;
+            var hv = document.getElementById(p + '-hari-view'); if (hv) hv.textContent = 'Hari: ' + (full ? full.split(',')[0] : '-');
+            hidTime.value = (a.value && b.value) ? a.value.replace(':', '.') + ' - ' + b.value.replace(':', '.') : (a.value ? a.value.replace(':', '.') + ' - selesai' : '');
+            dnSave();
+        };
+        window.dnPickMapel = function(p) {
+            var sel = document.getElementById(p + '-mapel-sel'); if (!sel || sel.value === '__cur') return;
+            var hid = document.getElementById(p === 'abs' ? 'abs-mapel' : 'p-mapel');
+            var it = dnJadwalList().find(function(x) { return String(x.id) === String(sel.value); });
+            if (!it) { hid.value = ''; dnSave(); return; }
+            hid.value = String(it.mapel || '').toUpperCase();
+            var dm = String(it.tahun || '').match(/(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
+            if (dm) document.getElementById(p + '-date-pick').value = dm[3] + '-' + dm[2].padStart(2, '0') + '-' + dm[1].padStart(2, '0');
+            var tm = String(it.pukul || '').match(/(\d{1,2})[.:](\d{2})\s*[-–]\s*(\d{1,2})[.:](\d{2})/);
+            if (tm) { document.getElementById(p + '-time-start').value = tm[1].padStart(2, '0') + ':' + tm[2]; document.getElementById(p + '-time-end').value = tm[3].padStart(2, '0') + ':' + tm[4]; }
+            dnPickSync(p);
+        };
+        /* Sinkron setelah data tersimpan dimuat / direset (data lama berupa teks diubah menjadi nilai datepicker) */
+        function dnPickRestore(savedCfg) {
+            [['abs', 'abs-date', 'abs-time'], ['p', 'p-date', 'p-time']].forEach(function(x) {
+                var p = x[0], cfg = savedCfg || {};
+                if (savedCfg && !(p + '-date-pick' in cfg)) {
+                    var legacy = (p === 'p' && !(x[1] in cfg)) ? (cfg['abs-date'] || '') : (cfg[x[1]] || '');
+                    var iso = dnLegacyDateToIso(legacy); if (iso) document.getElementById(p + '-date-pick').value = iso;
+                    var tm = String(cfg[x[2]] || (p === 'p' ? cfg['abs-time'] : '') || '').match(/(\d{1,2})[.:](\d{2})\s*[-–]\s*(\d{1,2})[.:](\d{2})/);
+                    if (tm) { document.getElementById(p + '-time-start').value = tm[1].padStart(2, '0') + ':' + tm[2]; document.getElementById(p + '-time-end').value = tm[3].padStart(2, '0') + ':' + tm[4]; }
+                    if (p === 'p' && !('p-mapel' in cfg) && cfg['abs-mapel']) document.getElementById('p-mapel').value = cfg['abs-mapel'];
+                }
+                var dEl = document.getElementById(p + '-date-pick'), a = document.getElementById(p + '-time-start'), b = document.getElementById(p + '-time-end');
+                var full = dnFmtDate(dEl.value);
+                document.getElementById(x[1]).value = full;
+                var hv = document.getElementById(p + '-hari-view'); if (hv) hv.textContent = 'Hari: ' + (full ? full.split(',')[0] : '-');
+                document.getElementById(x[2]).value = (a.value && b.value) ? a.value.replace(':', '.') + ' - ' + b.value.replace(':', '.') : '';
+            });
+            dnJadwalRefresh();
+        }
+        window.dnJadwalRefresh = dnJadwalRefresh;
+        /* ================= DAFTAR HADIR: PILIH KELAS ================= */
+        function dnKelasOf(s) {
+            if (s && s.kelas) return s.kelas;
+            try {
+                if (!isGAS()) ensureSiswa();
+                if (!window.dnKelasMap || window.dnKelasMapN !== (dbSiswa || []).length) {
+                    window.dnKelasMap = {}; window.dnKelasMapN = (dbSiswa || []).length;
+                    (dbSiswa || []).forEach(function(x) { if (x.nisn) window.dnKelasMap[String(x.nisn).trim()] = x.kelas || ''; if (x.no_peserta) window.dnKelasMap[String(x.no_peserta).trim()] = x.kelas || ''; });
+                }
+                return window.dnKelasMap[String(s.nisn || '').trim()] || window.dnKelasMap[String(s.no || '').trim()] || '';
+            } catch (e) { return ''; }
+        }
+        function dnFilterKelas(list) {
+            var el = document.getElementById('abs-kelas'), v = el ? el.value : 'all';
+            return list.filter(function(s) { return kelasCocok(dnKelasOf(s), v); });
+        }
+        window.dnKelasRefresh = function(want) {
+            var el = document.getElementById('abs-kelas'); if (!el) return;
+            var w = want != null ? want : (el.value && el.value !== '' ? el.value : (window.dnKelasWant || 'all'));
+            var list = dnStudents || [];
+            var pick = kelasBangunOpsi(el, list, dnKelasOf, w, true);
+            window.dnKelasWant = pick;
+            var info = document.getElementById('abs-kelas-info');
+            if (info) info.textContent = list.length ? (kelasUnik(list.map(dnKelasOf)).length ? '' : 'Kolom Kelas belum terisi. Isi kolom Kelas di Data Siswa lalu klik "Ambil dari Data Siswa", atau pakai Template Excel terbaru (kolom ke-4).') : 'Belum ada data peserta.';
+        };
+        function dnWaktuKelasRow() {
+            var el = document.getElementById('abs-kelas'), v = el ? el.value : 'all', t = document.getElementById('abs-time').value;
+            if (!el || v === 'all') return `<tr><td>WAKTU</td><td colspan="3">: ${t}</td></tr>`;
+            var teks = v === 'lain' ? '-' : v;
+            return `<tr><td>WAKTU</td><td>: ${t}</td><td>KELAS</td><td>: ${teks}</td></tr>`;
+        }
+        /* ================= PENGAWAS OTOMATIS DARI DATA PANITIA ================= */
+        function dnPanitiaData() {
+            if (isGAS()) { return isSKLoaded ? (dbPanitia || []) : null; }
+            return isSKLoaded ? (dbPanitia || []) : (JSON.parse(localStorage.getItem('dbPanitia')) || mockPanitia);
+        }
+        function dnNipClean(n) { n = String(n || '').trim(); return (n === '-' || n === '') ? '' : n; }
+        function dnSetVal(id, v) { var el = document.getElementById(id); if (el) el.value = v; }
+        window.dnPanitiaSync = function(save, notify) {
+            var arr = dnPanitiaData();
+            if (arr === null) {
+                if (typeof gasRun === 'function' && !window.dnPanFetching) {
+                    window.dnPanFetching = true;
+                    gasRun('getSKData', sessionToken).then(function(res) { window.dnPanFetching = false; if (res && res.success) { dbSK = res.sk || {}; dbPanitia = res.panitia || []; isSKLoaded = true; dnPanitiaSync(save, notify); } }).catch(function() { window.dnPanFetching = false; });
+                }
+                return;
+            }
+            var pengawas = arr.filter(function(x) { return /pengawas/i.test(x.jabatan_panitia || ''); });
+            var ketua = arr.filter(function(x) { return /ketua/i.test(x.jabatan_panitia || '') && !/wakil|sekretaris/i.test(x.jabatan_panitia || ''); })[0];
+            var changed = false;
+            var infoTxt = pengawas.length ? (pengawas.length + ' pengawas ditemukan di Data Panitia.') : 'Belum ada anggota berjabatan "Pengawas" di Data Panitia (menu Data Master → Data Panitia).';
+            var ia = document.getElementById('abs-auto-info'), ip = document.getElementById('p-auto-info');
+            if (ia) ia.textContent = infoTxt; if (ip) ip.textContent = infoTxt;
+            /* Daftar Hadir per ruang */
+            var autoAbs = (document.getElementById('abs-auto-pan') || {}).value !== '0';
+            if (autoAbs) {
+                dnRoomInputs();
+                var mode = document.getElementById('abs-p-mode').value, per = mode === '2' ? 2 : 1;
+                for (var r = 1; r <= 4; r++) {
+                    var p1 = pengawas[(r - 1) * per], p2 = per === 2 ? pengawas[(r - 1) * per + 1] : null;
+                    dnSetVal('abs-p-name-r' + r, p1 ? String(p1.nama || '') : ''); dnSetVal('abs-p-nip-r' + r, p1 ? dnNipClean(p1.nip) : '');
+                    if (per === 2) { dnSetVal('abs-p2-name-r' + r, p2 ? String(p2.nama || '') : ''); dnSetVal('abs-p2-nip-r' + r, p2 ? dnNipClean(p2.nip) : ''); }
+                }
+                changed = true;
+            }
+            /* Daftar Hadir Pengawas gabungan */
+            var autoP = (document.getElementById('p-auto-pan') || {}).value !== '0';
+            if (autoP) {
+                dnPInputs();
+                var cnt = dnPCfg().count;
+                for (var i = 1; i <= cnt; i++) dnSetVal('p-name-' + i, pengawas[i - 1] ? String(pengawas[i - 1].nama || '') : '');
+                if (ketua) { dnSetVal('p-ketua', String(ketua.nama || '')); dnSetVal('p-nip', dnNipClean(ketua.nip)); }
+                changed = true;
+            }
+            if (changed) { try { dnSaveDB(); } catch (e) {} dnUpdate(); }
+            if (notify) dnNote(pengawas.length ? 'Tersinkron' : 'Data pengawas kosong', pengawas.length ? (pengawas.length + ' pengawas diambil dari Data Panitia.') : 'Tambahkan anggota dengan jabatan panitia "Pengawas" di menu Data Panitia.', pengawas.length ? 'success' : 'info');
+        };
+        /* Menu sidebar terpisah: Cetak Denah, Cetak Daftar Hadir, Daftar Hadir Pengawas (memakai engine halaman yang sama) */
+        var DN_MENU = {
+            main: { t: 'Cetak Denah', s: 'Album foto dan denah tempat duduk (F4)' },
+            absen: { t: 'Cetak Daftar Hadir', s: 'Daftar hadir peserta per ruang (F4)' },
+            pengawas: { t: 'Daftar Hadir Pengawas', s: 'Daftar hadir pengawas gabungan (F4)' }
+        };
+        window.dnMenu = function(m) {
+            if (!DN_MENU[m]) m = 'main';
+            dnSwitch(m);
+            var t = document.getElementById('pageTitle'); if (t) t.innerText = DN_MENU[m].t;
+            var sb = document.getElementById('pageSub'); if (sb) sb.innerText = DN_MENU[m].s;
+        };
         window.dnSwitch = dnSwitch; window.dnStatus = dnStatus; window.dnAcc = dnAcc; window.dnLogo = dnLogo; window.dnPInputs = dnPInputs; window.dnSave = dnSave; window.dnSaveDB = dnSaveDB; window.dnClear = dnClear; window.dnTemplate = dnTemplate; window.dnUpdate = dnUpdate;
         /* ================= CETAK ID CARD PANITIA (UKURAN 10,5 x 8,5 CM) ================= */
         var kpList = [], kpFoto = '', kpCounter = 0, kpInited = false;
@@ -4219,7 +4477,8 @@
             if (!kpInited) {
                 kpInited = true;
                 try { var s = JSON.parse(localStorage.getItem('kpList')); if (s && s.list) { kpList = s.list; kpCounter = s.counter || kpList.length; } } catch (e) {}
-                document.getElementById('kpin-foto').addEventListener('change', function(e) {
+                var kpFotoInput = document.getElementById('kpin-foto');
+                if (kpFotoInput) kpFotoInput.addEventListener('change', function(e) {
                     var f = e.target.files[0]; if (!f) return;
                     var r = new FileReader(); r.onload = function() { kpFoto = r.result; }; r.readAsDataURL(f);
                 });
