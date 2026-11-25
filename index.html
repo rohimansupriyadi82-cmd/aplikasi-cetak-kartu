@@ -2553,7 +2553,7 @@
                         <hr style="border: 0.5px solid rgba(255,255,255,0.1);">
                         <div class="dn-fg"><label>Judul Album Foto</label><input type="text" id="title-album" value="ALBUM FOTO PENILAIAN SUMATIF AKHIR JENJANG (PSAJ)" oninput="dnSave()"></div>
                         <div class="dn-fg"><label>Judul Denah Tempat Duduk</label><input type="text" id="title-denah" value="DENAH TEMPAT DUDUK PENILAIAN SUMATIF AKHIR JENJANG (PSAJ)" oninput="dnSave()"></div>
-                        <div class="dn-fg"><label>Mode Dokumen</label><select id="in-mode" onchange="dnSave()"><option value="album">Album Foto Peserta</option><option value="denah">Denah Kursi Peserta (Tanpa Foto)</option></select></div>
+                        <div class="dn-fg"><label>Pilih Kelas</label><select id="main-kelas" onchange="window.dnMainKelasWant=this.value; dnSave()"><option value="all">Semua Kelas</option></select><div id="main-kelas-info" style="font-size:10px;opacity:.85;margin-top:4px;"></div></div><div class="dn-fg"><label>Mode Dokumen</label><select id="in-mode" onchange="dnSave()"><option value="album">Album Foto Peserta</option><option value="denah">Denah Kursi Peserta (Tanpa Foto)</option></select></div>
                         <div class="dn-fg"><label>Tema Warna Denah</label><select id="in-denah-theme" onchange="dnSave()"><option value="multi" selected>🎨 Multi-Warna Ceria (Modern)</option><option value="navy">🔵 Royal Navy &amp; Gold</option><option value="emerald">🟢 Emerald Mint Segar</option><option value="ocean">🩵 Ocean Teal</option><option value="purple">🟣 Royal Purple</option><option value="sunset">🟠 Sunset Coral</option></select></div>
                         <div class="dn-fg"><label>Tata Letak (Urutan)</label><select id="in-layout" onchange="dnSave()"><option value="zigzag">Zigzag (U-Turn)</option><option value="vertical">Vertical (Kolom)</option></select></div>
                         <div class="dn-fg"><label>Siswa Per Halaman</label><select id="in-perpage" onchange="dnSave()"><option value="15">15 Siswa (3 Kolom)</option><option value="20" selected>20 Siswa (4 Kolom)</option><option value="25">25 Siswa (5 Kolom)</option><option value="30">30 Siswa (6 Kolom)</option><option value="35">35 Siswa (7 Kolom)</option></select></div>
@@ -4744,7 +4744,7 @@
                     for (let id in data) { const el = document.getElementById(id); if (el && el.type !== 'select-one') el.value = data[id]; else if (el) { try { el.value = data[id]; } catch (e) {} } }
                     dnStatus(false);
                     dnPInputs(); 
-                    dnPickRestore(data); dnKelasRefresh(data['abs-kelas'] || 'all'); dnUpdate(); dnPanitiaSync();
+                    dnPickRestore(data); dnKelasRefresh(data['abs-kelas'] || 'all', data['main-kelas'] || 'all'); dnUpdate(); dnPanitiaSync();
                 }
             };
         }
@@ -4755,7 +4755,7 @@
             const db = await dnInitDB(); db.transaction(STORE_NAME, "readwrite").objectStore(STORE_NAME).clear();
             dnStudents = []; dnPhotos = {}; dnLogoSrc = DN_LOGO;
             for (var id in dnDefaults) { var el = document.getElementById(id); if (el) el.value = dnDefaults[id]; }
-            dnStatus(false); dnPInputs(); dnRoomInputs(); dnPickRestore(null); dnKelasRefresh('all'); dnUpdate();
+            dnStatus(false); dnPInputs(); dnRoomInputs(); dnPickRestore(null); dnKelasRefresh('all', 'all'); dnUpdate();
         }
 
         function dnSave() { 
@@ -4835,9 +4835,9 @@
             const perPage = parseInt(document.getElementById('in-perpage').value) || 20;
             dnEnsureStudents();
             if (window.dnKelasRefresh) window.dnKelasRefresh();
-            let dataList = dnStudents.length > 0 ? dnStudents : Array(perPage).fill({ no: "00-00-00-00", nisn: "1234567890", nama: "CONTOH NAMA PESERTA" });
-            if (dnTab === 'absen' && dnStudents.length > 0) {
-                dataList = dnFilterKelas(dataList);
+            let dataList = dnStudents.length > 0 ? dnStudents : Array(perPage).fill({ no: "00-00-00-00", nisn: "1234567890", nama: "CONTOH NAMA PESERTA", kelas: "" });
+            if (dnStudents.length > 0) {
+                dataList = (dnTab === 'main') ? dnFilterMainKelas(dataList) : dnFilterKelas(dataList);
                 if (!dataList.length) { container.innerHTML = '<div style="padding:40px;text-align:center;color:#64748b;background:#fff;border-radius:12px;">Tidak ada peserta pada kelas yang dipilih.</div>'; return; }
             }
             for (let i = 0; i < dataList.length; i += perPage) {
@@ -4863,8 +4863,20 @@
             const layout = document.getElementById('in-layout').value;
             const themeKey = (document.getElementById('in-denah-theme') || {}).value || 'multi';
             const roomNum = (parseInt(document.getElementById('in-room').value) + pageIdx).toString().padStart(3, '0');
-            const cols = Math.max(3, Math.round(perPage / 5));
-            const rows = perPage / cols;
+            const selectedKelas = (document.getElementById('main-kelas') || {}).value || 'all';
+
+            const n = chunk.length;
+            let cols = Math.max(3, Math.round(perPage / 5));
+            if (mode === 'denah' && n > 0) {
+                if (n <= 12) cols = 3;
+                else if (n <= 20) cols = 4;
+                else if (n <= 25) cols = 5;
+                else if (n <= 30) cols = 6;
+                else cols = 7;
+            }
+            const rows = (mode === 'denah' && n > 0) ? Math.max(1, Math.ceil(n / cols)) : Math.max(1, Math.ceil(perPage / cols));
+            const slotCount = rows * cols;
+            const scaleClass = (mode === 'denah' && n > 0) ? (n <= 20 ? '20' : (n <= 25 ? '25' : (n <= 30 ? '30' : '35'))) : String(perPage);
 
             const DN_THEMES = {
                 navy:    [{ head:'linear-gradient(135deg,#0f172a,#1e3a8a)', soft:'#eff6ff', border:'#1e3a8a', text:'#0f172a', strip:'#eab308' }],
@@ -4883,7 +4895,7 @@
             const palette = DN_THEMES[themeKey] || DN_THEMES.multi;
             const pageBase = palette[0];
 
-            let ordered = new Array(perPage).fill(null);
+            let ordered = new Array(slotCount).fill(null);
             if (layout === 'vertical') {
                 let count = 0;
                 for (let c = 0; c < cols; c++) {
@@ -4929,12 +4941,16 @@
                 }
             });
 
+            const kelasBadge = (selectedKelas && selectedKelas !== 'all' && selectedKelas !== 'lain')
+                ? ` &bull; ${escapeHTML(kelasLabel(selectedKelas).toUpperCase())}`
+                : '';
+            const countBadge = (mode === 'denah' && n > 0) ? ` (${n} SISWA)` : '';
             const pageStyle = `--dn-head-bg:${pageBase.head};--dn-soft-bg:${pageBase.soft};--dn-border:${pageBase.border};--dn-accent-text:${pageBase.text};--dn-desk-bg:linear-gradient(135deg,#f59e0b,#d97706);`;
             const headerJudul = mode === 'album'
-                ? `<div style="text-align:center; margin-bottom:5px;"><div style="display:inline-block; padding:3px 15px; font-weight:800; font-size:12pt; text-transform:uppercase;">${document.getElementById('title-album').value}</div><div style="margin-top:3px; font-weight:700; font-size:10pt;">RUANGAN: <span style="font-size:14pt; font-weight:900;">${roomNum}</span></div></div>`
-                : `<div style="text-align:center; margin-bottom:6px;"><div class="denah-banner-title">${document.getElementById('title-denah').value}</div><br><div class="denah-room-pill"><span>RUANG UJIAN:</span><span style="font-size:13pt; font-weight:900;">${roomNum}</span></div></div>`;
+                ? `<div style="text-align:center; margin-bottom:5px;"><div style="display:inline-block; padding:3px 15px; font-weight:800; font-size:12pt; text-transform:uppercase;">${document.getElementById('title-album').value}</div><div style="margin-top:3px; font-weight:700; font-size:10pt;">RUANGAN: <span style="font-size:14pt; font-weight:900;">${roomNum}</span>${kelasBadge}</div></div>`
+                : `<div style="text-align:center; margin-bottom:6px;"><div class="denah-banner-title">${document.getElementById('title-denah').value}</div><br><div class="denah-room-pill"><span>RUANG UJIAN:</span><span style="font-size:13pt; font-weight:900;">${roomNum}</span><span>${kelasBadge}${countBadge}</span></div></div>`;
             const mejaPengawas = mode === 'denah' ? `<div class="denah-meja-pengawas">MEJA PENGAWAS</div>` : '';
-            return `<div class="dn-page dn-pp-${perPage}" style="${pageStyle}">${dnKop()}${headerJudul}${mejaPengawas}<div class="photo-grid" style="grid-template-columns: repeat(${cols}, 1fr);">${gridHtml}</div></div>`;
+            return `<div class="dn-page dn-pp-${scaleClass}" style="${pageStyle}">${dnKop()}${headerJudul}${mejaPengawas}<div class="photo-grid" style="grid-template-columns: repeat(${cols}, 1fr);">${gridHtml}</div></div>`;
         }
 
         function dnAbsen(chunk, perPage, pageIdx) {
@@ -5300,14 +5316,36 @@
             var el = document.getElementById('abs-kelas'), v = el ? el.value : 'all';
             return list.filter(function(s) { return kelasCocok(dnKelasOf(s), v); });
         }
-        window.dnKelasRefresh = function(want) {
-            var el = document.getElementById('abs-kelas'); if (!el) return;
-            var w = want != null ? want : (el.value && el.value !== '' ? el.value : (window.dnKelasWant || 'all'));
+        function dnFilterMainKelas(list) {
+            var el = document.getElementById('main-kelas'), v = el ? el.value : 'all';
+            if (!v || v === 'all') return list;
+            return list.filter(function(s) { return kelasCocok(dnKelasOf(s), v); });
+        }
+        window.dnKelasRefresh = function(want, wantMain) {
             var list = dnEnsureStudents();
-            var pick = kelasBangunOpsi(el, list, dnKelasOf, w, true);
-            window.dnKelasWant = pick;
-            var info = document.getElementById('abs-kelas-info');
-            if (info) info.textContent = list.length ? (kelasUnik(list.map(dnKelasOf)).length ? '' : 'Kolom Kelas belum terisi. Isi kolom Kelas di Data Siswa lalu klik \"Ambil dari Data Siswa\", atau pakai Template Excel terbaru (kolom ke-4).') : 'Belum ada data peserta.';
+            var el = document.getElementById('abs-kelas');
+            if (el) {
+                var w = want != null ? want : (el.value && el.value !== '' ? el.value : (window.dnKelasWant || 'all'));
+                var pick = kelasBangunOpsi(el, list, dnKelasOf, w, true);
+                window.dnKelasWant = pick;
+                var info = document.getElementById('abs-kelas-info');
+                if (info) info.textContent = list.length ? (kelasUnik(list.map(dnKelasOf)).length ? '' : 'Kolom Kelas belum terisi. Isi kolom Kelas di Data Siswa lalu klik \"Ambil dari Data Siswa\", atau pakai Template Excel terbaru (kolom ke-4).') : 'Belum ada data peserta.';
+            }
+            var elMain = document.getElementById('main-kelas');
+            if (elMain) {
+                var wMain = wantMain != null ? wantMain : (elMain.value && elMain.value !== '' ? elMain.value : (window.dnMainKelasWant || 'all'));
+                var pickMain = kelasBangunOpsi(elMain, list, dnKelasOf, wMain, true);
+                window.dnMainKelasWant = pickMain;
+                var infoMain = document.getElementById('main-kelas-info');
+                if (infoMain) {
+                    var filteredCount = dnFilterMainKelas(list).length;
+                    infoMain.textContent = list.length
+                        ? (kelasUnik(list.map(dnKelasOf)).length
+                            ? ('Menampilkan ' + filteredCount + ' siswa' + (pickMain !== 'all' ? ' (' + kelasLabel(pickMain) + ')' : ''))
+                            : 'Kolom Kelas belum terisi di Data Siswa.')
+                        : 'Belum ada data peserta.';
+                }
+            }
             return list;
         };
         function dnWaktuKelasRow() {
