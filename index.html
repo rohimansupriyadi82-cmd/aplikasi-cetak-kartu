@@ -751,6 +751,10 @@
         .kartu-b2.kt-emas { --kt1:#1b2540; --kt2:#3b4a78; --kta:#c9a24b; --kts:#f7f1de; }
         .kartu-b2.kt-oranye { --kt1:#b34700; --kt2:#f08a24; --kta:#ffd166; --kts:#fff1e0; }
         .kartu-b2.kt-tosca { --kt1:#0b5f66; --kt2:#1fb5b0; --kta:#ffb703; --kts:#e0f7f6; }
+        .kartu-b2.kt-sage { --kt1:#536b5b; --kt2:#91a98d; --kta:#d8c99d; --kts:#edf2e9; }
+        .kartu-b2.kt-ocean { --kt1:#244b63; --kt2:#5f91a5; --kta:#c4d4d8; --kts:#eaf2f5; }
+        .kartu-b2.kt-lavender { --kt1:#68618a; --kt2:#a69fc5; --kta:#e0d7ef; --kts:#f2eff8; }
+        .kartu-b2.kt-sand { --kt1:#806b55; --kt2:#b99d7a; --kta:#e5d5b8; --kts:#f6f0e5; }
         .kartu-b2[class*="kt-"], .kartu-b2[class*="kt-"] * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
         .kartu-b2[class*="kt-"] { border:.3mm solid var(--kt1); border-radius:2.6mm;
             background:radial-gradient(circle at 100% 0, var(--kts) 0, transparent 40%), radial-gradient(circle at 0 100%, var(--kts) 0, transparent 34%),
@@ -795,6 +799,229 @@
         .kt-sw { width:24px; height:24px; border-radius:50%; border:2px solid #fff; padding:0; box-shadow:0 0 0 1px #cbd2e0; background:linear-gradient(135deg,var(--a),var(--b)); cursor:pointer; transition:.2s; }
         .kt-sw:hover { transform:scale(1.12); }
         .kt-sw.on { box-shadow:0 0 0 2px var(--gold),0 6px 12px -4px rgba(0,0,0,.45); transform:scale(1.18); }
+        /* ================= 6 DESAIN KARTU PESERTA UJIAN PREMIUM ================= */
+        .kt-design-picker {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            padding: 12px 14px;
+            background: linear-gradient(145deg, #ffffff, #f8f9fc);
+            border: 1px solid #d8dee9;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px -16px rgba(10, 17, 36, 0.45);
+        }
+        .kt-design-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            color: #0d1730;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+        }
+        .kt-design-heading i { color: #c9a24b; }
+        .kt-design-heading small {
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0;
+            color: #6a7488;
+        }
+        .kt-design-options {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(120px, 1fr));
+            gap: 8px;
+        }
+        @media (max-width: 1200px) { .kt-design-options { grid-template-columns: repeat(3, minmax(110px, 1fr)); } }
+        @media (max-width: 600px) { .kt-design-options { grid-template-columns: repeat(2, minmax(110px, 1fr)); } }
+
+        .kt-design-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 7px;
+            border: 2px solid #e2e8f0;
+            border-radius: 11px;
+            background: #ffffff;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .kt-design-option:hover {
+            transform: translateY(-2px);
+            border-color: #94a3b8;
+            box-shadow: 0 6px 14px -8px rgba(0, 0, 0, 0.25);
+        }
+        .kt-design-option.on {
+            border-color: #c9a24b;
+            background: #fffdf5;
+            box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.22);
+        }
+        .kt-design-option.on::after {
+            content: "✓ AKTIF";
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: #0d1730;
+            color: #ecd9a0;
+            font-size: 0.55rem;
+            font-weight: 800;
+            padding: 1px 5px;
+            border-radius: 6px;
+            z-index: 2;
+        }
+        .kt-thumb {
+            width: 100%;
+            height: 46px;
+            border-radius: 7px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 4px;
+        }
+        .kt-thumb-top { height: 11px; border-radius: 3px; width: 100%; }
+        .kt-thumb-mid { display: flex; gap: 4px; align-items: center; }
+        .kt-thumb-photo { width: 11px; height: 14px; border-radius: 2px; background: rgba(255,255,255,0.88); border: 1px solid rgba(0,0,0,0.22); }
+        .kt-thumb-lines { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+        .kt-thumb-lines span { height: 2.5px; border-radius: 2px; background: rgba(0,0,0,0.28); display: block; }
+        .kt-thumb-bot { height: 6px; border-radius: 2px; width: 100%; }
+        .kt-design-option b {
+            font-size: 0.68rem;
+            color: #1e293b;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* --- ELEMENT DEKORATIF KARTU (SVG & MOTIVASI) --- */
+        .kartu-b2 .kt-ornament-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .kartu-b2 .kt-motivasi {
+            font-size: 4.5pt;
+            font-weight: 700;
+            font-style: italic;
+            text-align: center;
+            padding: 1.2px 4px;
+            border-radius: 2mm;
+            margin-top: auto;
+            letter-spacing: 0.2px;
+        }
+        .kartu-b2.tanpa-jadwal .kt-motivasi { font-size: 5.4pt; }
+        .kartu-b2:not([class*="kt-"]) .kt-ornament-svg,
+        .kartu-b2:not([class*="kt-"]) .kt-motivasi { display: none; }
+
+        /* 1. ROYAL BLUE GOLD */
+        .kartu-b2.kt-royal-blue-gold {
+            --kt1: #0b1f4b; --kt2: #193b82; --kta: #d4af37; --kts: #f4f7fc;
+            border: 0.35mm solid #0b1f4b;
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5fc 65%, #e6eefc 100%);
+            box-shadow: inset 0 -1.3mm 0 #0b1f4b, inset 0 -1.8mm 0 #d4af37;
+        }
+        .kartu-b2.kt-royal-blue-gold .left-header {
+            background: linear-gradient(105deg, #09183a 0%, #16377a 70%, #0b1f4b 100%);
+            border-bottom: 0.5mm solid #d4af37;
+        }
+        .kartu-b2.kt-royal-blue-gold .kt-motivasi {
+            background: linear-gradient(90deg, #0b1f4b, #193b82);
+            color: #f7e39c;
+            border: 0.2mm solid #d4af37;
+        }
+
+        /* 2. EMERALD FRESH */
+        .kartu-b2.kt-emerald-fresh {
+            --kt1: #064e3b; --kt2: #10b981; --kta: #34d399; --kts: #ecfdf5;
+            border: 0.35mm solid #064e3b;
+            background: linear-gradient(150deg, #ffffff 0%, #ecfdf5 60%, #d1fae5 100%);
+            box-shadow: inset 0 -1.3mm 0 #064e3b, inset 0 -1.8mm 0 #10b981;
+        }
+        .kartu-b2.kt-emerald-fresh .left-header {
+            background: linear-gradient(100deg, #064e3b 0%, #059669 65%, #10b981 100%);
+            border-radius: 1.5mm 1.5mm 4mm 1.5mm;
+        }
+        .kartu-b2.kt-emerald-fresh .kt-motivasi {
+            background: #064e3b;
+            color: #a7f3d0;
+        }
+
+        /* 3. BLACK GOLD LUXURY */
+        .kartu-b2.kt-black-gold-luxury {
+            --kt1: #111111; --kt2: #2b261d; --kta: #d4af37; --kts: #faf6eb;
+            border: 0.4mm solid #111111;
+            background: radial-gradient(circle at top right, #fdf8ea 0%, #ffffff 55%, #f7f2e4 100%);
+            box-shadow: inset 0 0 0 0.45mm #d4af37, inset 0 -1.4mm 0 #111111;
+        }
+        .kartu-b2.kt-black-gold-luxury .left-header {
+            background: linear-gradient(110deg, #090909 0%, #242016 55%, #0d0d0d 100%);
+            border: 0.25mm solid #d4af37;
+        }
+        .kartu-b2.kt-black-gold-luxury .kop-nama { color: #f6df8b !important; }
+        .kartu-b2.kt-black-gold-luxury .judul-1 { color: #111111 !important; }
+        .kartu-b2.kt-black-gold-luxury .kt-motivasi {
+            background: linear-gradient(90deg, #111111, #2b2416, #111111);
+            color: #f6df8b;
+            border: 0.2mm solid #d4af37;
+        }
+
+        /* 4. GEOMETRIC BLUE */
+        .kartu-b2.kt-geometric-blue {
+            --kt1: #0c4a6e; --kt2: #0284c7; --kta: #38bdf8; --kts: #e0f2fe;
+            border: 0.35mm solid #0c4a6e;
+            background: linear-gradient(125deg, #ffffff 0%, #f0f9ff 65%, #e0f2fe 100%);
+            box-shadow: inset 0 -1.3mm 0 #0c4a6e, inset 0 -1.8mm 0 #38bdf8;
+        }
+        .kartu-b2.kt-geometric-blue .left-header {
+            background: linear-gradient(115deg, #082f49 0%, #0369a1 60%, #0ea5e9 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 86%, 0 100%);
+            padding-bottom: 3.5px;
+        }
+        .kartu-b2.kt-geometric-blue .kt-motivasi {
+            background: linear-gradient(90deg, #082f49, #0284c7);
+            color: #ffffff;
+        }
+
+        /* 5. BOTANICAL GREEN */
+        .kartu-b2.kt-botanical-green {
+            --kt1: #1e4620; --kt2: #4d7c0f; --kta: #84cc16; --kts: #f2f9ec;
+            border: 0.35mm solid #2d5a27;
+            background: linear-gradient(160deg, #ffffff 0%, #f4faef 65%, #e5f3d8 100%);
+            box-shadow: inset 0 -1.3mm 0 #2d5a27, inset 0 -1.8mm 0 #84cc16;
+        }
+        .kartu-b2.kt-botanical-green .left-header {
+            background: linear-gradient(100deg, #1e4620 0%, #3f6212 65%, #65a30d 100%);
+        }
+        .kartu-b2.kt-botanical-green .kt-motivasi {
+            background: #2d5a27;
+            color: #ecfccb;
+        }
+
+        /* 6. PURPLE ELEGANCE */
+        .kartu-b2.kt-purple-elegance {
+            --kt1: #4c1d95; --kt2: #7c3aed; --kta: #e0b15c; --kts: #f5f3ff;
+            border: 0.35mm solid #4c1d95;
+            background: linear-gradient(140deg, #ffffff 0%, #f7f4ff 60%, #ede9fe 100%);
+            box-shadow: inset 0 -1.3mm 0 #4c1d95, inset 0 -1.8mm 0 #e0b15c;
+        }
+        .kartu-b2.kt-purple-elegance .left-header {
+            background: linear-gradient(105deg, #3b0764 0%, #6d28d9 65%, #4c1d95 100%);
+            border-bottom: 0.45mm solid #e0b15c;
+        }
+        .kartu-b2.kt-purple-elegance .kt-motivasi {
+            background: linear-gradient(90deg, #3b0764, #6d28d9);
+            color: #fde68a;
+            border: 0.2mm solid #e0b15c;
+        }
+
 
         /* ===== mulai cepat & cadangan ===== */
         .step-card { display:flex; gap:14px; align-items:flex-start; background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; height:100%; cursor:pointer; transition:.25s; }
@@ -1461,7 +1688,7 @@
                 <div class="card border-0 shadow-sm rounded-4 mb-3 btn-print-action">
                     <div class="card-body p-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
                         <div>
-                            <h5 class="fw-bold mb-0">Preview Cetak ID Card (10,5 × 8,5 cm)</h5>
+                            <h5 class="fw-bold mb-0">Pratinjau Kartu Peserta (10,5 × 8,5 cm)</h5>
                             <small class="text-muted">Gunakan Kertas A4 Landscape (otomatis). Setting Margin: None, Scale: 100%.</small>
                         </div>
                         <div class="d-flex align-items-center gap-3 flex-wrap">
@@ -1481,7 +1708,62 @@
                             <div class="kt-filter" title="Pilih kelas yang akan dicetak"><i class="fa-solid fa-filter"></i><select id="filterKelasKartu" onchange="setFilterKelas(this.value)" aria-label="Filter kelas"><option value="all">Semua Kelas</option></select><small id="filterKelasInfo"></small></div>
                             <div class="kt-filter" title="Pilih jadwal ujian yang dicantumkan pada kartu"><i class="fa-solid fa-sun"></i><select id="filterShiftKartu" onchange="setFilterShiftKartu(this.value)" aria-label="Pilih kelas pagi atau siang"><option value="pagi">Jadwal Kelas Pagi</option><option value="siang">Jadwal Kelas Siang</option></select><small id="filterShiftInfo"></small></div>
                             <span class="kt-info" title="Pengaturan kertas saat mencetak"><i class="fa-solid fa-table-cells-large"></i> 4 kartu / halaman &middot; A4 Landscape &middot; Margin None</span>
-                            <div class="kt-swatches" id="kartuTemaBox" title="Warna kartu peserta"><small>Warna:</small><button type="button" class="kt-sw" data-t="" style="--a:#ffffff;--b:#555555" title="Klasik (hitam putih)" onclick="setTemaKartu('')"></button><button type="button" class="kt-sw" data-t="biru" style="--a:#0b3c8c;--b:#2f6fd0" title="Biru Samudra" onclick="setTemaKartu('biru')"></button><button type="button" class="kt-sw" data-t="hijau" style="--a:#0b5d3b;--b:#17a673" title="Hijau Zamrud" onclick="setTemaKartu('hijau')"></button><button type="button" class="kt-sw" data-t="merah" style="--a:#8f1d2c;--b:#d6453d" title="Merah Delima" onclick="setTemaKartu('merah')"></button><button type="button" class="kt-sw" data-t="ungu" style="--a:#4b2a8f;--b:#8a63d2" title="Ungu Elegan" onclick="setTemaKartu('ungu')"></button><button type="button" class="kt-sw" data-t="emas" style="--a:#1b2540;--b:#3b4a78" title="Navy & Emas Premium" onclick="setTemaKartu('emas')"></button><button type="button" class="kt-sw" data-t="oranye" style="--a:#b34700;--b:#f08a24" title="Oranye Senja" onclick="setTemaKartu('oranye')"></button><button type="button" class="kt-sw" data-t="tosca" style="--a:#0b5f66;--b:#1fb5b0" title="Tosca Modern" onclick="setTemaKartu('tosca')"></button></div>
+                            <div class="kt-design-picker" id="kartuTemaBox" aria-label="Pilih desain kartu peserta">
+                                <div class="kt-design-heading">
+                                    <span><i class="fa-solid fa-palette me-2"></i>PILIH DESAIN KARTU PESERTA</span>
+                                    <small>Klik desain untuk pratinjau langsung &amp; cetak otomatis (Ukuran tetap 10,5 &times; 8,5 cm)</small>
+                                </div>
+                                <div class="kt-design-options">
+                                    <button type="button" class="kt-design-option" data-t="royal-blue-gold" title="1. Royal Blue Gold" onclick="setTemaKartu('royal-blue-gold')">
+                                        <div class="kt-thumb" style="background:linear-gradient(135deg,#fff,#e6eefc);border-bottom:3px solid #d4af37;">
+                                            <div class="kt-thumb-top" style="background:linear-gradient(90deg,#0b1f4b,#193b82);"></div>
+                                            <div class="kt-thumb-mid"><div class="kt-thumb-photo"></div><div class="kt-thumb-lines"><span></span><span></span><span></span></div></div>
+                                            <div class="kt-thumb-bot" style="background:#0b1f4b;"></div>
+                                        </div>
+                                        <b>1. Royal Blue Gold</b>
+                                    </button>
+                                    <button type="button" class="kt-design-option" data-t="emerald-fresh" title="2. Emerald Fresh" onclick="setTemaKartu('emerald-fresh')">
+                                        <div class="kt-thumb" style="background:linear-gradient(135deg,#fff,#d1fae5);border-bottom:3px solid #10b981;">
+                                            <div class="kt-thumb-top" style="background:linear-gradient(90deg,#064e3b,#10b981);"></div>
+                                            <div class="kt-thumb-mid"><div class="kt-thumb-photo"></div><div class="kt-thumb-lines"><span></span><span></span><span></span></div></div>
+                                            <div class="kt-thumb-bot" style="background:#064e3b;"></div>
+                                        </div>
+                                        <b>2. Emerald Fresh</b>
+                                    </button>
+                                    <button type="button" class="kt-design-option" data-t="black-gold-luxury" title="3. Black Gold Luxury" onclick="setTemaKartu('black-gold-luxury')">
+                                        <div class="kt-thumb" style="background:linear-gradient(135deg,#fff,#f7f2e4);border:1.5px solid #d4af37;">
+                                            <div class="kt-thumb-top" style="background:linear-gradient(90deg,#090909,#2b2416);border-bottom:1px solid #d4af37;"></div>
+                                            <div class="kt-thumb-mid"><div class="kt-thumb-photo"></div><div class="kt-thumb-lines"><span></span><span></span><span></span></div></div>
+                                            <div class="kt-thumb-bot" style="background:#111111;"></div>
+                                        </div>
+                                        <b>3. Black Gold Luxury</b>
+                                    </button>
+                                    <button type="button" class="kt-design-option" data-t="geometric-blue" title="4. Geometric Blue" onclick="setTemaKartu('geometric-blue')">
+                                        <div class="kt-thumb" style="background:linear-gradient(135deg,#fff,#e0f2fe);border-bottom:3px solid #38bdf8;">
+                                            <div class="kt-thumb-top" style="background:linear-gradient(90deg,#082f49,#0ea5e9);"></div>
+                                            <div class="kt-thumb-mid"><div class="kt-thumb-photo"></div><div class="kt-thumb-lines"><span></span><span></span><span></span></div></div>
+                                            <div class="kt-thumb-bot" style="background:#0c4a6e;"></div>
+                                        </div>
+                                        <b>4. Geometric Blue</b>
+                                    </button>
+                                    <button type="button" class="kt-design-option" data-t="botanical-green" title="5. Botanical Green" onclick="setTemaKartu('botanical-green')">
+                                        <div class="kt-thumb" style="background:linear-gradient(135deg,#fff,#e5f3d8);border-bottom:3px solid #84cc16;">
+                                            <div class="kt-thumb-top" style="background:linear-gradient(90deg,#1e4620,#65a30d);"></div>
+                                            <div class="kt-thumb-mid"><div class="kt-thumb-photo"></div><div class="kt-thumb-lines"><span></span><span></span><span></span></div></div>
+                                            <div class="kt-thumb-bot" style="background:#2d5a27;"></div>
+                                        </div>
+                                        <b>5. Botanical Green</b>
+                                    </button>
+                                    <button type="button" class="kt-design-option" data-t="purple-elegance" title="6. Purple Elegance" onclick="setTemaKartu('purple-elegance')">
+                                        <div class="kt-thumb" style="background:linear-gradient(135deg,#fff,#ede9fe);border-bottom:3px solid #e0b15c;">
+                                            <div class="kt-thumb-top" style="background:linear-gradient(90deg,#3b0764,#7c3aed);"></div>
+                                            <div class="kt-thumb-mid"><div class="kt-thumb-photo"></div><div class="kt-thumb-lines"><span></span><span></span><span></span></div></div>
+                                            <div class="kt-thumb-bot" style="background:#4c1d95;"></div>
+                                        </div>
+                                        <b>6. Purple Elegance</b>
+                                    </button>
+                                </div>
+                            </div>
                             
                             <button class="btn btn-warning fw-bold px-4 py-2 shadow-sm" onclick="printKartu()">
                                 <i class="fa-solid fa-print"></i> CETAK KE PDF
@@ -2354,7 +2636,9 @@
             }).catch(function() {});
         })();
         var kartuKelas = localStorage.getItem('kartuKelas') || 'all';
-        var kartuTema = localStorage.getItem('kartuTema') === null ? 'biru' : localStorage.getItem('kartuTema');
+        var VALID_TEMAS = ['royal-blue-gold','emerald-fresh','black-gold-luxury','geometric-blue','botanical-green','purple-elegance'];
+        var savedTema = localStorage.getItem('kartuTema');
+        var kartuTema = VALID_TEMAS.indexOf(savedTema) !== -1 ? savedTema : 'royal-blue-gold';
         var modeJadwal = localStorage.getItem('modeJadwal') || 'dengan_jadwal';
 
         // Link logo presisi 
@@ -2868,13 +3152,13 @@
         };
 
         window.setTemaKartu = function(t) {
-            kartuTema = t || '';
+            kartuTema = (VALID_TEMAS.indexOf(t) !== -1) ? t : 'royal-blue-gold';
             localStorage.setItem('kartuTema', kartuTema);
             syncTemaUI();
             renderCetak();
         };
         function syncTemaUI() {
-            document.querySelectorAll('#kartuTemaBox .kt-sw').forEach(function(b) { b.classList.toggle('on', b.getAttribute('data-t') === kartuTema); });
+            document.querySelectorAll('#kartuTemaBox [data-t]').forEach(function(b) { b.classList.toggle('on', b.getAttribute('data-t') === kartuTema); b.setAttribute('aria-pressed', b.getAttribute('data-t') === kartuTema ? 'true' : 'false'); });
         }
 
         window.setModeKartu = function(v) {
@@ -3219,6 +3503,56 @@
         }
 
 
+        function getKartuOrnamentSVG(tema) {
+            if (tema === 'royal-blue-gold') {
+                return '<svg class="kt-ornament-svg" viewBox="0 0 400 320" preserveAspectRatio="none">' +
+                    '<path d="M0,250 Q120,210 240,275 T400,245 L400,320 L0,320 Z" fill="#0b1f4b" opacity="0.07"/>' +
+                    '<path d="M0,265 Q140,225 260,285 T400,260" fill="none" stroke="#d4af37" stroke-width="2" opacity="0.55"/>' +
+                    '<circle cx="375" cy="35" r="45" fill="none" stroke="#d4af37" stroke-width="1.2" opacity="0.3"/>' +
+                    '<g transform="translate(155,232)" opacity="0.15" fill="#0b1f4b"><polygon points="35,0 70,18 0,18"/><rect x="8" y="18" width="54" height="26"/><rect x="28" y="28" width="14" height="16" fill="#d4af37"/></g>' +
+                    '</svg>';
+            }
+            if (tema === 'emerald-fresh') {
+                return '<svg class="kt-ornament-svg" viewBox="0 0 400 320" preserveAspectRatio="none">' +
+                    '<polygon points="0,320 0,245 95,320" fill="#10b981" opacity="0.12"/>' +
+                    '<polygon points="400,0 315,0 400,85" fill="#059669" opacity="0.1"/>' +
+                    '<path d="M18,285 C30,260 55,260 65,285 C50,295 30,295 18,285 Z" fill="#10b981" opacity="0.18"/>' +
+                    '<circle cx="360" cy="285" r="24" fill="none" stroke="#064e3b" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.22"/>' +
+                    '</svg>';
+            }
+            if (tema === 'black-gold-luxury') {
+                return '<svg class="kt-ornament-svg" viewBox="0 0 400 320" preserveAspectRatio="none">' +
+                    '<path d="M6,26 L6,6 L26,6 M374,6 L394,6 L394,26 M6,294 L6,314 L26,314 M374,314 L394,314 L394,294" fill="none" stroke="#d4af37" stroke-width="2.2" opacity="0.7"/>' +
+                    '<polygon points="200,70 235,105 200,140 165,105" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.2"/>' +
+                    '<path d="M0,305 L400,275 L400,320 L0,320 Z" fill="#111111" opacity="0.06"/>' +
+                    '</svg>';
+            }
+            if (tema === 'geometric-blue') {
+                return '<svg class="kt-ornament-svg" viewBox="0 0 400 320" preserveAspectRatio="none">' +
+                    '<polygon points="0,235 150,320 0,320" fill="#0284c7" opacity="0.12"/>' +
+                    '<polygon points="60,320 210,255 280,320" fill="#38bdf8" opacity="0.14"/>' +
+                    '<polygon points="320,0 400,0 400,95" fill="#0c4a6e" opacity="0.09"/>' +
+                    '<line x1="0" y1="235" x2="150" y2="320" stroke="#0284c7" stroke-width="1.5" opacity="0.35"/>' +
+                    '</svg>';
+            }
+            if (tema === 'botanical-green') {
+                return '<svg class="kt-ornament-svg" viewBox="0 0 400 320" preserveAspectRatio="none">' +
+                    '<path d="M0,275 Q90,245 185,280 T400,265 L400,320 L0,320 Z" fill="#65a30d" opacity="0.11"/>' +
+                    '<path d="M12,305 Q28,265 55,258 Q45,292 12,305 Z" fill="#3f6212" opacity="0.2"/>' +
+                    '<path d="M385,295 Q365,255 338,252 Q350,286 385,295 Z" fill="#65a30d" opacity="0.22"/>' +
+                    '<circle cx="42" cy="252" r="5" fill="#84cc16" opacity="0.25"/>' +
+                    '</svg>';
+            }
+            if (tema === 'purple-elegance') {
+                return '<svg class="kt-ornament-svg" viewBox="0 0 400 320" preserveAspectRatio="none">' +
+                    '<path d="M0,260 C110,220 220,305 400,250 L400,320 L0,320 Z" fill="#7c3aed" opacity="0.09"/>' +
+                    '<path d="M0,268 C115,230 225,310 400,258" fill="none" stroke="#e0b15c" stroke-width="1.8" opacity="0.6"/>' +
+                    '<circle cx="28" cy="288" r="18" fill="none" stroke="#7c3aed" stroke-width="1.2" opacity="0.2"/>' +
+                    '</svg>';
+            }
+            return '';
+        }
+
         function renderCetak() {
             var c = document.getElementById('cetakContainer');
             if(!dbSiswa || dbSiswa.length === 0) { c.innerHTML = '<div class="alert alert-warning">Data Siswa Kosong.</div>'; return; }
@@ -3280,7 +3614,7 @@
                     
                     var cardClass = 'kartu-b2' + (noFoto ? ' tanpa-foto' : '') + (noJadwal ? ' tanpa-jadwal' : '') + (kartuTema ? ' kt-' + kartuTema : '');
 
-                    html += '<div class="'+cardClass+'">'+wmHtml+'<div class="card-left"><div class="left-header"><div class="left-logo">'+logoHtml+'</div><div class="left-kop"><div class="kop-instansi">'+escapeHTML(s.instansi)+'</div><div class="kop-dinas">'+escapeHTML(s.dinas)+'</div><div class="kop-nama">'+escapeHTML(s.nama)+'</div><div class="kop-alamat">'+escapeHTML(s.alamat)+'</div></div><div class="left-barcode"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data='+encodeURIComponent(siswa.nisn)+'"></div></div>' +
+                    html += '<div class="'+cardClass+'">'+wmHtml+getKartuOrnamentSVG(kartuTema)+'<div class="card-left"><div class="left-header"><div class="left-logo">'+logoHtml+'</div><div class="left-kop"><div class="kop-instansi">'+escapeHTML(s.instansi)+'</div><div class="kop-dinas">'+escapeHTML(s.dinas)+'</div><div class="kop-nama">'+escapeHTML(s.nama)+'</div><div class="kop-alamat">'+escapeHTML(s.alamat)+'</div></div><div class="left-barcode"><img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data='+encodeURIComponent(siswa.nisn)+'"></div></div>' +
                         '<div class="left-title"><div class="judul-1">'+escapeHTML(s.judul1)+'</div><div class="judul-2">'+escapeHTML(s.judul2)+'</div><div class="judul-3">'+escapeHTML(s.judul3)+'</div></div>' +
                         '<div class="left-bio">' +
                         '<div class="bio-row"><div class="bio-label">No. Peserta</div><div class="bio-colon">:</div><div class="bio-value">'+escapeHTML(siswa.no_peserta)+'</div></div>' +
@@ -3288,7 +3622,7 @@
                         '<div class="bio-row"><div class="bio-label">Tempat, Tgl Lahir</div><div class="bio-colon">:</div><div class="bio-value">'+fullTTL+'</div></div>' +
                         '<div class="bio-row"><div class="bio-label">NISN</div><div class="bio-colon">:</div><div class="bio-value">'+escapeHTML(siswa.nisn)+'</div></div>' +
                         '<div class="bio-row"><div class="bio-label">Kelas</div><div class="bio-colon">:</div><div class="bio-value">'+escapeHTML(siswa.kelas)+'</div></div>' + noteHtml + '</div>' +
-                        '<div class="left-bottom">'+photoBlock+'<div class="sign-box"><div>'+escapeHTML(s.tempat_tgl_ttd)+'</div><div>Kepala Sekolah</div><div class="sign-area">'+stempelHtml+ttdHtml+'</div><div class="sign-name">'+escapeHTML(s.nama_kepsek)+'</div><div class="sign-nip">NIP '+escapeHTML(s.nip_kepsek)+'</div></div></div></div>' + rightSideHtml + '</div>';
+                        '<div class="left-bottom">'+photoBlock+'<div class="sign-box"><div>'+escapeHTML(s.tempat_tgl_ttd)+'</div><div>Kepala Sekolah</div><div class="sign-area">'+stempelHtml+ttdHtml+'</div><div class="sign-name">'+escapeHTML(s.nama_kepsek)+'</div><div class="sign-nip">NIP '+escapeHTML(s.nip_kepsek)+'</div></div></div><div class="kt-motivasi">Semangat &amp; Sukses Dalam Mengikuti Ujian</div></div>' + rightSideHtml + '</div>';
                 }
                 html += '</div>';
             }
