@@ -2545,12 +2545,7 @@
                 <div class="dn-acc">
                     <div class="dn-acc-h active" onclick="dnAcc(this)"><i>🖼️ SETTING ALBUM & DENAH</i><span>▼</span></div>
                     <div class="dn-acc-c show">
-                        <button class="dn-btn dn-btn-main" onclick="dnSave()">💾 SIMPAN KONFIGURASI PATEN</button>
-                        <button class="dn-btn dn-btn-out" onclick="dnFromSiswa()">👥 Ambil dari Data Siswa</button>
-                        <button class="dn-btn dn-btn-out" onclick="dnTemplate()">📥 Template Excel</button>
-                        <div class="dn-fg"><label>1. Upload Excel</label><input type="file" id="import-excel" accept=".xlsx, .xls"></div>
-                        <div class="dn-fg"><label>2. Upload ZIP/File Foto</label><input type="file" id="import-photos" multiple accept="image/*, .zip"></div>
-                        <hr style="border: 0.5px solid rgba(255,255,255,0.1);">
+                        <div style="font-size:10.5px;opacity:.85;margin-bottom:12px;line-height:1.5;">ℹ️ Data peserta &amp; foto diambil otomatis dari menu <b>Data Siswa</b>. Pengaturan tersimpan otomatis.</div>
                         <div class="dn-fg"><label>Judul Album Foto</label><input type="text" id="title-album" value="ALBUM FOTO PENILAIAN SUMATIF AKHIR JENJANG (PSAJ)" oninput="dnSave()"></div>
                         <div class="dn-fg"><label>Judul Denah Tempat Duduk</label><input type="text" id="title-denah" value="DENAH TEMPAT DUDUK PENILAIAN SUMATIF AKHIR JENJANG (PSAJ)" oninput="dnSave()"></div>
                         <div class="dn-fg"><label>Pilih Kelas</label><select id="main-kelas" onchange="window.dnMainKelasWant=this.value; dnSave()"><option value="all">Semua Kelas</option></select><div id="main-kelas-info" style="font-size:10px;opacity:.85;margin-top:4px;"></div></div><div class="dn-fg"><label>Mode Dokumen</label><select id="in-mode" onchange="dnSave()"><option value="album">Album Foto Peserta</option><option value="denah">Denah Kursi Peserta (Tanpa Foto)</option></select></div>
@@ -5016,65 +5011,6 @@
             return `<div class="dn-page">${dnKop()}<div style="text-align:center; font-weight:800; font-size:12pt; margin-bottom:15px; text-transform:uppercase;">${document.getElementById('title-pengawas').value}</div><div style="margin-left: 20px; margin-bottom: 15px; font-weight: 700; font-size: 10pt;"><table><tr><td width="150">Mata Pelajaran</td><td>: ${document.getElementById('p-mapel').value}</td></tr><tr><td>Hari/Tanggal</td><td>: ${document.getElementById('p-date').value}</td></tr><tr><td>Waktu</td><td>: ${document.getElementById('p-time').value}</td></tr></table></div><table class="abs-table"><thead><tr><th width="50">No.</th><th>Nama Pengawas</th><th width="80">Ruang</th><th width="220">Tanda Tangan</th></tr></thead><tbody>${rowsHtml}</tbody></table><div class="footer-sig"><div class="sig-box">${city}, ${dateOnly}<br>Ketua Panitia Pelaksana<br><br><br><br><br><u><b>${document.getElementById('p-ketua').value}</b></u><br>NIP. ${document.getElementById('p-nip').value}</div></div></div>`;
         }
 
-        document.getElementById('import-excel').addEventListener('change', function(e) {
-            const file = e.target.files[0]; if(!file) return;
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const data = new Uint8Array(event.target.result);
-                const workbook = XLSX.read(data, {type: 'array'});
-                const json = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], {header: 1});
-                dnStudents = json.slice(1).filter(r => r.some(c => String(c == null ? '' : c).trim() !== '')).map(r => ({ no: String(r[0] == null ? '' : r[0]).trim(), nisn: String(r[1] == null ? '' : r[1]).trim(), nama: String(r[2] == null ? '' : r[2]).trim(), kelas: String(r[3] == null ? '' : r[3]).trim() }));
-                dnSave();
-                dnNote('Import Berhasil', dnStudents.length + ' peserta diimpor.');
-            };
-            reader.readAsArrayBuffer(file);
-        });
-
-        document.getElementById('import-photos').addEventListener('change', async function(e) {
-            const files = Array.from(e.target.files || []);
-            if (!files.length) return;
-            try {
-                showFullPageLoading('Memproses foto...');
-                let count = 0;
-                for (let f of files) {
-                    if (f.name.toLowerCase().endsWith('.zip')) {
-                        if (typeof JSZip === 'undefined') continue;
-                        const zip = await JSZip.loadAsync(f);
-                        const zipEntries = [];
-                        zip.forEach(function(filename, fileData) {
-                            if (!fileData.dir && !isIgnoredZipEntry(filename) && /\.(jpe?g|png|webp|bmp)$/i.test(filename)) {
-                                zipEntries.push({ filename: filename, fileData: fileData });
-                            }
-                        });
-                        for (let item of zipEntries) {
-                            const b64 = await item.fileData.async("base64");
-                            const key = item.filename.split('/').pop().replace(/\.[^/.]+$/, '').trim();
-                            const mime = /\.png$/i.test(item.filename) ? "image/png" : (/\.webp$/i.test(item.filename) ? "image/webp" : "image/jpeg");
-                            dnPhotos[key] = await compressImageDataUrl("data:" + mime + ";base64," + b64, 300, 400, 0.82);
-                            count++;
-                        }
-                    } else if (/^image\//.test(f.type)) {
-                        const dataUrl = await new Promise(function(resolve, reject) {
-                            const reader = new FileReader();
-                            reader.onload = function(ev) { resolve(ev.target.result); };
-                            reader.onerror = reject;
-                            reader.readAsDataURL(f);
-                        });
-                        const keySingle = f.name.replace(/\.[^/.]+$/, '').trim();
-                        dnPhotos[keySingle] = await compressImageDataUrl(dataUrl, 300, 400, 0.82);
-                        count++;
-                    }
-                }
-                dnSave();
-                dnNote('Foto Berhasil Diproses', count + ' foto berhasil diunggah (' + Object.keys(dnPhotos).length + ' total tersimpan).');
-            } catch (err) {
-                dnNote('Gagal Memproses Foto', err && err.message ? err.message : 'Terjadi kesalahan saat membaca file.', 'error');
-            } finally {
-                hideFullPageLoading();
-                e.target.value = '';
-            }
-        });
-
         function dnTemplate() {
             if (typeof XLSX === 'undefined') return dnNote('Error', 'Library Excel belum termuat.', 'error');
             const wb = XLSX.utils.book_new(); const ws = XLSX.utils.aoa_to_sheet([["No Peserta", "NISN", "Nama Peserta", "Kelas"], ["24-01-01-001", "1234567890", "NAMA PESERTA", "1 A"]]);
@@ -5269,13 +5205,9 @@
         }
         function dnEnsureStudents() {
             if (!Array.isArray(dnStudents)) dnStudents = [];
-            if (dnStudents.length) {
-                dnStudents = dnStudents.map(dnNormalizeStudent);
-                return dnStudents;
-            }
             try {
-                // Pada mode lokal, baca storage langsung agar tidak bergantung
-                // pada apakah menu Data Siswa pernah dibuka pada sesi ini.
+                // Sumber tunggal: Data Siswa (Data Master). Denah, album foto, dan daftar hadir
+                // selalu mengikuti data terbaru tanpa import terpisah.
                 if (!isGAS()) {
                     if (typeof ensureSiswa === 'function') ensureSiswa();
                     if ((!Array.isArray(dbSiswa) || !dbSiswa.length) && localStorage.getItem('dbSiswa')) {
@@ -5285,16 +5217,21 @@
                 }
                 var source = Array.isArray(dbSiswa) ? dbSiswa : [];
                 if (source.length) {
+                    var photos = {};
                     dnStudents = source.map(function(s) {
                         var row = dnNormalizeStudent(s);
                         if (s && s.foto) {
-                            if (row.nisn) dnPhotos[row.nisn] = s.foto;
-                            if (row.no) dnPhotos[row.no] = s.foto;
+                            if (row.nisn) photos[row.nisn] = s.foto;
+                            if (row.no) photos[row.no] = s.foto;
                         }
                         return row;
                     });
+                    dnPhotos = photos;
+                    return dnStudents;
                 }
-            } catch (err) { console.warn('Fallback data siswa untuk denah gagal:', err); }
+            } catch (err) { console.warn('Sinkron data siswa untuk denah gagal:', err); }
+            // Data Siswa kosong: pakai salinan terakhir yang tersimpan (jika ada)
+            dnStudents = dnStudents.map(dnNormalizeStudent);
             return dnStudents;
         }
         function dnKelasOf(s) {
@@ -5329,7 +5266,7 @@
                 var pick = kelasBangunOpsi(el, list, dnKelasOf, w, true);
                 window.dnKelasWant = pick;
                 var info = document.getElementById('abs-kelas-info');
-                if (info) info.textContent = list.length ? (kelasUnik(list.map(dnKelasOf)).length ? '' : 'Kolom Kelas belum terisi. Isi kolom Kelas di Data Siswa lalu klik \"Ambil dari Data Siswa\", atau pakai Template Excel terbaru (kolom ke-4).') : 'Belum ada data peserta.';
+                if (info) info.textContent = list.length ? (kelasUnik(list.map(dnKelasOf)).length ? '' : 'Kolom Kelas belum terisi. Isi kolom Kelas di menu Data Siswa (atau impor ulang Excel di Data Siswa).') : 'Belum ada data peserta. Impor data di menu Data Siswa.';
             }
             var elMain = document.getElementById('main-kelas');
             if (elMain) {
