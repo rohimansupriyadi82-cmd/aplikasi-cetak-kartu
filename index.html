@@ -218,10 +218,10 @@
         .left-barcode img { width: 100%; height: 100%; object-fit: contain; }
 
         .left-kop { text-align: center; line-height: 1.1; }
-        .kop-instansi { font-family: Arial, sans-serif; font-size: 6pt; }
-        .kop-dinas { font-family: Arial, sans-serif; font-size: 6.5pt; }
-        .kop-nama { font-family: Arial, sans-serif; font-size: 9pt; font-weight: bold; }
-        .kop-alamat { font-style: italic; font-size: 5.5pt; }
+        .kop-instansi { font-family: 'Times New Roman', Times, serif; font-size: 6.5pt; }
+        .kop-dinas { font-family: 'Times New Roman', Times, serif; font-size: 7pt; font-weight: bold; }
+        .kop-nama { font-family: 'Times New Roman', Times, serif; font-size: 9.5pt; font-weight: bold; }
+        .kop-alamat { font-family: 'Times New Roman', Times, serif; font-style: italic; font-size: 6pt; }
 
         .left-title { text-align: center; margin-bottom: 4px; line-height: 1.2; }
         .judul-1 { font-size: 7.5pt; font-weight: bold; }
@@ -286,10 +286,10 @@
         .sk-header-container { display: flex; align-items: center; border-bottom: 4px solid #000; padding-bottom: 2px; margin-bottom: 2px; position: relative; }
         .sk-header-container::after { content: ''; position: absolute; left: 0; right: 0; bottom: -3px; border-bottom: 1px solid #000; }
         .sk-logo { width: 25mm; height: 28mm; object-fit: contain; margin-right: 4mm; }
-        .sk-kop-text { flex-grow: 1; text-align: center; line-height: 1.1; }
+        .sk-kop-text { flex-grow: 1; text-align: center; line-height: 1.1; font-family: 'Times New Roman', Times, serif; }
         .sk-kop-1 { font-size: 14pt; }
         .sk-kop-2 { font-size: 16pt; font-weight: bold; }
-        .sk-kop-3 { font-size: 26pt; font-weight: bold; font-family: Impact, 'Arial Black', sans-serif; transform: scaleY(1.1); margin: 2px 0; }
+        .sk-kop-3 { font-size: 26pt; font-weight: bold; font-family: 'Times New Roman', Times, serif; margin: 2px 0; }
         .sk-kop-4 { font-size: 14pt; }
         .sk-kop-5 { font-size: 11pt; }
         .sk-kop-6 { font-size: 11pt; color: blue; font-weight: bold; }
@@ -729,6 +729,33 @@
         #page-cetak-denah .dn-pp-35 .abs-table td{height:5.6mm;font-size:8pt;padding:1px 6px;}
         #page-cetak-denah .dn-pp-35 .abs-table th{padding:3px 4px;}
         #page-cetak-denah .dn-pp-35 .zigzag-ttd{font-size:8pt;}
+
+        /* DENAH DENGAN FOTO */
+        #page-cetak-denah .dn-foto-mode .photo-grid{ row-gap: 3.5mm; }
+        #page-cetak-denah .denah-card.dn-foto{ height: 46mm; }
+        #page-cetak-denah .dn-pp-25 .denah-card.dn-foto{ height: 44mm; }
+        #page-cetak-denah .dn-pp-30 .denah-card.dn-foto{ height: 41mm; }
+        #page-cetak-denah .dn-pp-35 .denah-card.dn-foto{ height: 38mm; }
+        #page-cetak-denah .denah-photo-wrap{ position: relative; flex: 1 1 0; min-height: 0; background: var(--dn-soft-bg, #f8fafc) !important; }
+        #page-cetak-denah .denah-photo-wrap img,
+        #page-cetak-denah .denah-photo-ph{
+            position: absolute; top: 1.2mm; left: 50%; transform: translateX(-50%);
+            height: calc(100% - 2.4mm); width: auto; max-width: 96%; aspect-ratio: 3 / 4;
+            object-fit: cover; object-position: center top;
+            border: 1pt solid var(--dn-border, #1e3a8a); border-radius: 2px; background: #fff !important;
+        }
+        #page-cetak-denah .denah-photo-ph{ display: flex; align-items: center; justify-content: center; font-size: 6.5pt; font-weight: 800; color: #94a3b8; }
+        #page-cetak-denah .denah-card.dn-foto .denah-no-peserta{ flex: none; font-size: 9.5pt; padding: 2px 3px; }
+        #page-cetak-denah .denah-card.dn-foto .denah-name-only{ flex: none; min-height: 8mm; padding: 2px 4px; }
+        #page-cetak-denah .dn-pp-25 .denah-card.dn-foto .denah-no-peserta{ font-size: 8.5pt; }
+        #page-cetak-denah .dn-pp-30 .denah-card.dn-foto .denah-no-peserta{ font-size: 7.5pt; }
+        #page-cetak-denah .dn-pp-35 .denah-card.dn-foto .denah-no-peserta{ font-size: 6.5pt; }
+        #page-cetak-denah .dn-pp-35 .denah-card.dn-foto .denah-name-only{ min-height: 7.5mm; }
+
+        /* KOP SEKOLAH: TIMES NEW ROMAN */
+        #page-cetak-denah .dn-header, #page-cetak-denah .dn-header * { font-family: 'Times New Roman', Times, serif !important; }
+        #page-cetak-denah .dn-header p { font-size: 10pt; }
+        #page-cetak-denah .dn-header p[style] { font-size: 9pt !important; }
         /* ===== END DENAH ===== */
         
         /* ===== panel kartu panitia ===== */
@@ -877,7 +904,7 @@
         .kartu-b2 .card-left { width:54%; } .kartu-b2 .card-right { width:46%; }
         .kartu-b2.tanpa-jadwal .card-left { width:100%; }
         .kartu-b2 .left-logo, .kartu-b2 .left-barcode { width:9mm; height:9mm; }
-        .kartu-b2 .kop-instansi { font-size:4.8pt; } .kartu-b2 .kop-dinas { font-size:5.2pt; } .kartu-b2 .kop-nama { font-size:6.8pt; } .kartu-b2 .kop-alamat { font-size:4.4pt; }
+        .kartu-b2 .kop-instansi { font-family:'Times New Roman', Times, serif; font-size:5.1pt; } .kartu-b2 .kop-dinas { font-family:'Times New Roman', Times, serif; font-size:5.7pt; font-weight:bold; } .kartu-b2 .kop-nama { font-family:'Times New Roman', Times, serif; font-size:7.4pt; font-weight:bold; } .kartu-b2 .kop-alamat { font-family:'Times New Roman', Times, serif; font-size:4.8pt; }
         .kartu-b2 .judul-1 { font-size:7.2pt; } .kartu-b2 .judul-2, .kartu-b2 .judul-3 { font-size:6.6pt; }
         .kartu-b2 .bio-label, .kartu-b2 .bio-colon, .kartu-b2 .bio-value { font-size:5.8pt; }
         .kartu-b2 .bio-label { width:16mm; }
@@ -2548,8 +2575,8 @@
                         <div style="font-size:10.5px;opacity:.85;margin-bottom:12px;line-height:1.5;">ℹ️ Data peserta &amp; foto diambil otomatis dari menu <b>Data Siswa</b>. Pengaturan tersimpan otomatis.</div>
                         <div class="dn-fg"><label>Judul Album Foto</label><input type="text" id="title-album" value="ALBUM FOTO PENILAIAN SUMATIF AKHIR JENJANG (PSAJ)" oninput="dnSave()"></div>
                         <div class="dn-fg"><label>Judul Denah Tempat Duduk</label><input type="text" id="title-denah" value="DENAH TEMPAT DUDUK PENILAIAN SUMATIF AKHIR JENJANG (PSAJ)" oninput="dnSave()"></div>
-                        <div class="dn-fg"><label>Pilih Kelas</label><select id="main-kelas" onchange="window.dnMainKelasWant=this.value; dnSave()"><option value="all">Semua Kelas</option></select><div id="main-kelas-info" style="font-size:10px;opacity:.85;margin-top:4px;"></div></div><div class="dn-fg"><label>Mode Dokumen</label><select id="in-mode" onchange="dnSave()"><option value="album">Album Foto Peserta</option><option value="denah">Denah Kursi Peserta (Tanpa Foto)</option></select></div>
-                        <div class="dn-fg"><label>Tema Warna Denah</label><select id="in-denah-theme" onchange="dnSave()"><option value="multi" selected>🎨 Multi-Warna Ceria (Modern)</option><option value="navy">🔵 Royal Navy &amp; Gold</option><option value="emerald">🟢 Emerald Mint Segar</option><option value="ocean">🩵 Ocean Teal</option><option value="purple">🟣 Royal Purple</option><option value="sunset">🟠 Sunset Coral</option></select></div>
+                        <div class="dn-fg"><label>Pilih Kelas</label><select id="main-kelas" onchange="window.dnMainKelasWant=this.value; dnSave()"><option value="all">Semua Kelas</option></select><div id="main-kelas-info" style="font-size:10px;opacity:.85;margin-top:4px;"></div></div><div class="dn-fg"><label>Mode Dokumen</label><select id="in-mode" onchange="dnSave()"><option value="album">Album Foto Peserta</option><option value="denah">Denah Kursi Peserta (Tanpa Foto)</option><option value="denah_foto">Denah Kursi Peserta (Dengan Foto)</option></select></div>
+                        <div class="dn-fg"><label>Tema Warna Denah</label><select id="in-denah-theme" onchange="dnSave()"><option value="multi" selected>🎨 Multi-Warna Ceria (Modern)</option><option value="navy">🔵 Royal Navy &amp; Gold</option><option value="emerald">🟢 Emerald Mint Segar</option><option value="ocean">🩵 Ocean Teal</option><option value="purple">🟣 Royal Purple</option><option value="sunset">🟠 Sunset Coral</option><option value="rose">🌸 Rose Pink Elegan</option><option value="graphite">⚫ Graphite &amp; Cyan</option><option value="aurora">🌈 Aurora (Biru-Ungu-Pink)</option></select></div>
                         <div class="dn-fg"><label>Tata Letak (Urutan)</label><select id="in-layout" onchange="dnSave()"><option value="zigzag">Zigzag (U-Turn)</option><option value="vertical">Vertical (Kolom)</option></select></div>
                         <div class="dn-fg"><label>Siswa Per Halaman</label><select id="in-perpage" onchange="dnSave()"><option value="15">15 Siswa (3 Kolom)</option><option value="20" selected>20 Siswa (4 Kolom)</option><option value="25">25 Siswa (5 Kolom)</option><option value="30">30 Siswa (6 Kolom)</option><option value="35">35 Siswa (7 Kolom)</option></select></div>
                         <div class="dn-fg"><label>Ruangan Mulai</label><input type="number" id="in-room" value="1" oninput="dnSave()"></div>
@@ -4855,6 +4882,8 @@
 
         function dnMain(chunk, perPage, pageIdx) {
             const mode = document.getElementById('in-mode').value;
+            const isDenah = (mode === 'denah' || mode === 'denah_foto');
+            const withFoto = (mode === 'denah_foto');
             const layout = document.getElementById('in-layout').value;
             const themeKey = (document.getElementById('in-denah-theme') || {}).value || 'multi';
             const roomNum = (parseInt(document.getElementById('in-room').value) + pageIdx).toString().padStart(3, '0');
@@ -4862,16 +4891,16 @@
 
             const n = chunk.length;
             let cols = Math.max(3, Math.round(perPage / 5));
-            if (mode === 'denah' && n > 0) {
+            if (isDenah && n > 0) {
                 if (n <= 12) cols = 3;
                 else if (n <= 20) cols = 4;
                 else if (n <= 25) cols = 5;
                 else if (n <= 30) cols = 6;
                 else cols = 7;
             }
-            const rows = (mode === 'denah' && n > 0) ? Math.max(1, Math.ceil(n / cols)) : Math.max(1, Math.ceil(perPage / cols));
+            const rows = (isDenah && n > 0) ? Math.max(1, Math.ceil(n / cols)) : Math.max(1, Math.ceil(perPage / cols));
             const slotCount = rows * cols;
-            const scaleClass = (mode === 'denah' && n > 0) ? (n <= 20 ? '20' : (n <= 25 ? '25' : (n <= 30 ? '30' : '35'))) : String(perPage);
+            const scaleClass = (isDenah && n > 0) ? (n <= 20 ? '20' : (n <= 25 ? '25' : (n <= 30 ? '30' : '35'))) : String(perPage);
 
             const DN_THEMES = {
                 navy:    [{ head:'linear-gradient(135deg,#0f172a,#1e3a8a)', soft:'#eff6ff', border:'#1e3a8a', text:'#0f172a', strip:'#eab308' }],
@@ -4879,6 +4908,15 @@
                 ocean:   [{ head:'linear-gradient(135deg,#0c4a6e,#0284c7)', soft:'#f0f9ff', border:'#0369a1', text:'#0c4a6e', strip:'#38bdf8' }],
                 purple:  [{ head:'linear-gradient(135deg,#3b0764,#7c3aed)', soft:'#f5f3ff', border:'#6d28d9', text:'#3b0764', strip:'#f59e0b' }],
                 sunset:  [{ head:'linear-gradient(135deg,#9a3412,#ea580c)', soft:'#fff7ed', border:'#c2410c', text:'#7c2d12', strip:'#facc15' }],
+                rose:    [{ head:'linear-gradient(135deg,#9d174d,#ec4899)', soft:'#fdf2f8', border:'#be185d', text:'#831843', strip:'#f59e0b' }],
+                graphite:[{ head:'linear-gradient(135deg,#111827,#475569)', soft:'#f1f5f9', border:'#334155', text:'#0f172a', strip:'#06b6d4' }],
+                aurora: [
+                    { head:'linear-gradient(135deg,#1d4ed8,#3b82f6)', soft:'#eff6ff', border:'#2563eb', text:'#1e3a8a', strip:'#ec4899' },
+                    { head:'linear-gradient(135deg,#5b21b6,#8b5cf6)', soft:'#f5f3ff', border:'#7c3aed', text:'#4c1d95', strip:'#3b82f6' },
+                    { head:'linear-gradient(135deg,#be185d,#ec4899)', soft:'#fdf2f8', border:'#db2777', text:'#831843', strip:'#8b5cf6' },
+                    { head:'linear-gradient(135deg,#4338ca,#6366f1)', soft:'#eef2ff', border:'#4f46e5', text:'#312e81', strip:'#f472b6' },
+                    { head:'linear-gradient(135deg,#a21caf,#d946ef)', soft:'#fdf4ff', border:'#c026d3', text:'#701a75', strip:'#60a5fa' }
+                ],
                 multi: [
                     { head:'linear-gradient(135deg,#1e3a8a,#2563eb)', soft:'#eff6ff', border:'#1d4ed8', text:'#1e3a8a', strip:'#f59e0b' },
                     { head:'linear-gradient(135deg,#065f46,#10b981)', soft:'#ecfdf5', border:'#059669', text:'#065f46', strip:'#fbbf24' },
@@ -4928,8 +4966,13 @@
                     const colIdx = idx % cols;
                     const pal = palette[colIdx % palette.length];
                     const seatStyle = `--dn-head-bg:${pal.head};--dn-soft-bg:${pal.soft};--dn-border:${pal.border};--dn-accent-text:${pal.text};--dn-strip:${pal.strip};`;
-                    gridHtml += `<div class="denah-card" style="${seatStyle}">` +
+                    const fotoSrc = withFoto ? (dnPhotos[s.nisn] || dnPhotos[s.no] || "") : "";
+                    const fotoHtml = withFoto
+                        ? `<div class="denah-photo-wrap">${fotoSrc ? `<img src="${fotoSrc}" alt="">` : `<div class="denah-photo-ph">FOTO</div>`}</div>`
+                        : '';
+                    gridHtml += `<div class="denah-card${withFoto ? ' dn-foto' : ''}" style="${seatStyle}">` +
                         `<div class="denah-card-top"><span class="denah-seat-badge">NO. PESERTA</span><span class="denah-seat-no">KURSI ${String(item.urut).padStart(2,'0')}</span></div>` +
+                        fotoHtml +
                         `<div class="denah-no-peserta">${s.no}</div>` +
                         `<div class="denah-name-only">${s.nama}</div>` +
                     `</div>`;
@@ -4939,13 +4982,13 @@
             const kelasBadge = (selectedKelas && selectedKelas !== 'all' && selectedKelas !== 'lain')
                 ? ` &bull; ${escapeHTML(kelasLabel(selectedKelas).toUpperCase())}`
                 : '';
-            const countBadge = (mode === 'denah' && n > 0) ? ` (${n} SISWA)` : '';
+            const countBadge = (isDenah && n > 0) ? ` (${n} SISWA)` : '';
             const pageStyle = `--dn-head-bg:${pageBase.head};--dn-soft-bg:${pageBase.soft};--dn-border:${pageBase.border};--dn-accent-text:${pageBase.text};--dn-desk-bg:linear-gradient(135deg,#f59e0b,#d97706);`;
             const headerJudul = mode === 'album'
                 ? `<div style="text-align:center; margin-bottom:5px;"><div style="display:inline-block; padding:3px 15px; font-weight:800; font-size:12pt; text-transform:uppercase;">${document.getElementById('title-album').value}</div><div style="margin-top:3px; font-weight:700; font-size:10pt;">RUANGAN: <span style="font-size:14pt; font-weight:900;">${roomNum}</span>${kelasBadge}</div></div>`
                 : `<div style="text-align:center; margin-bottom:6px;"><div class="denah-banner-title">${document.getElementById('title-denah').value}</div><br><div class="denah-room-pill"><span>RUANG UJIAN:</span><span style="font-size:13pt; font-weight:900;">${roomNum}</span><span>${kelasBadge}${countBadge}</span></div></div>`;
-            const mejaPengawas = mode === 'denah' ? `<div class="denah-meja-pengawas">MEJA PENGAWAS</div>` : '';
-            return `<div class="dn-page dn-pp-${scaleClass}" style="${pageStyle}">${dnKop()}${headerJudul}${mejaPengawas}<div class="photo-grid" style="grid-template-columns: repeat(${cols}, 1fr);">${gridHtml}</div></div>`;
+            const mejaPengawas = isDenah ? `<div class="denah-meja-pengawas">MEJA PENGAWAS</div>` : '';
+            return `<div class="dn-page dn-pp-${scaleClass}${withFoto ? ' dn-foto-mode' : ''}" style="${pageStyle}">${dnKop()}${headerJudul}${mejaPengawas}<div class="photo-grid" style="grid-template-columns: repeat(${cols}, 1fr);">${gridHtml}</div></div>`;
         }
 
         function dnAbsen(chunk, perPage, pageIdx) {
