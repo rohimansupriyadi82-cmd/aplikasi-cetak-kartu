@@ -3455,6 +3455,48 @@
             return false;
         }
 
+        /* ===== Akun mandiri (tanpa server): hash PBKDF2-SHA256 + garam acak, tersimpan di browser ===== */
+        function b64enc(buf) { return btoa(String.fromCharCode.apply(null, new Uint8Array(buf))); }
+        function b64dec(s) { return Uint8Array.from(atob(s), function(c) { return c.charCodeAt(0); }); }
+        function hashPw(pw, salt, iter) {
+            if (!window.crypto || !crypto.subtle) return Promise.reject(new Error('no-crypto'));
+            return crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveBits']).then(function(k) {
+                return crypto.subtle.deriveBits({ name: 'PBKDF2', salt: salt, iterations: iter, hash: 'SHA-256' }, k, 256);
+            }).then(b64enc);
+        }
+        function localLogin(u, p) {
+            var cred = null; try { cred = JSON.parse(localStorage.getItem('localCred') || 'null'); } catch (e) {}
+            if (!cred || !cred.h) return Promise.resolve(u === 'admin' && p === 'bismillah' ? { ok: true, first: true } : { ok: false });
+            if (u !== cred.u) return Promise.resolve({ ok: false });
+            return hashPw(p, b64dec(cred.s), cred.i).then(function(h) { return { ok: h === cred.h }; });
+        }
+        function forceSetupLocalAccount() {
+            if (!window.crypto || !crypto.subtle) { Swal.fire('Peringatan', 'Browser ini tidak mendukung penyimpanan password aman. Gunakan browser terbaru.', 'warning'); return; }
+            Swal.fire({
+                title: 'Buat akun admin Anda',
+                html: '<p class="small text-muted mb-2">Password bawaan harus diganti sebelum aplikasi dipakai.</p>' +
+                    '<input id="np_u" class="swal2-input" placeholder="Username baru" autocomplete="username" maxlength="60">' +
+                    '<input id="np_p" type="password" class="swal2-input" placeholder="Password baru (min. 8 karakter)" autocomplete="new-password" maxlength="128">' +
+                    '<input id="np_p2" type="password" class="swal2-input" placeholder="Ulangi password" autocomplete="new-password" maxlength="128">',
+                allowOutsideClick: false, allowEscapeKey: false, confirmButtonText: 'Simpan Akun',
+                preConfirm: function() {
+                    var u = document.getElementById('np_u').value.trim(), p1 = document.getElementById('np_p').value, p2 = document.getElementById('np_p2').value;
+                    if (!/^[A-Za-z0-9._-]{3,60}$/.test(u)) return Swal.showValidationMessage('Username 3-60 karakter (huruf, angka, titik, strip).');
+                    if (p1.length < 8) return Swal.showValidationMessage('Password minimal 8 karakter.');
+                    if (p1 === 'bismillah' || p1.toLowerCase() === u.toLowerCase()) return Swal.showValidationMessage('Password terlalu mudah ditebak.');
+                    if (p1 !== p2) return Swal.showValidationMessage('Ulangi password tidak sama.');
+                    var salt = crypto.getRandomValues(new Uint8Array(16)), iter = 150000;
+                    return hashPw(p1, salt, iter).then(function(h) { return { u: u, s: b64enc(salt), i: iter, h: h }; });
+                }
+            }).then(function(r) {
+                if (!r.isConfirmed || !r.value) return forceSetupLocalAccount();
+                localStorage.setItem('localCred', JSON.stringify(r.value));
+                currentUser = { username: r.value.u, fullname: 'Tukang Input Data', role: 'Admin' };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                Swal.fire('Akun tersimpan', 'Gunakan username dan password baru saat login berikutnya.', 'success');
+            });
+        }
+
         window.handleLogin = function() {
             var u = document.getElementById('username').value.trim();
             var p = document.getElementById('password').value.trim();
@@ -3464,21 +3506,18 @@
 
             showFullPageLoading('Logging in...');
             if (typeof google === 'undefined') {
-                if (!isLocalDemo()) { hideFullPageLoading(); return Swal.fire('Server tidak terhubung', 'Aplikasi harus dijalankan melalui Google Apps Script agar login aman.', 'error'); }
-                setTimeout(function() {
-                    if (u === 'admin' && p === 'bismillah') {
-                        loginOk(); markSession();
-                        sessionToken = 'sim-token-admin';
-                        currentUser = { username: 'admin', fullname: 'Tukang Input Data', role: 'Admin' };
-                        localStorage.setItem('sessionToken', sessionToken);
-                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                        hideFullPageLoading();
-                        checkLoginState();
-                    } else {
-                        hideFullPageLoading(); loginFailed();
-                        Swal.fire('Error', 'Username/Password salah', 'error');
-                    }
-                }, 600);
+                /* Mode mandiri (GitHub Pages / tanpa Google Apps Script): akun disimpan sebagai hash PBKDF2 di browser */
+                localLogin(u, p).then(function(r) {
+                    hideFullPageLoading();
+                    if (!r.ok) { loginFailed(); return Swal.fire('Error', 'Username/Password salah', 'error'); }
+                    loginOk(); markSession();
+                    sessionToken = 'local-' + Date.now().toString(36) + Math.random().toString(36).slice(2);
+                    currentUser = { username: u, fullname: 'Tukang Input Data', role: 'Admin' };
+                    localStorage.setItem('sessionToken', sessionToken);
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    checkLoginState();
+                    if (r.first) forceSetupLocalAccount();
+                }).catch(function() { hideFullPageLoading(); Swal.fire('Error', 'Gagal memproses login di browser ini.', 'error'); });
             } else {
                 gasRun('loginUser', u, p).then(function(res) {
                     hideFullPageLoading();
@@ -6579,6 +6618,7 @@ function fitJadwal() {
                 ['sessionToken','currentUser','sessionStart','lastActive'].forEach(function(k) { try { localStorage.removeItem(k); } catch (e) {} });
             }
             checkLoginState();
+            if (sessionToken && typeof google === 'undefined' && !localStorage.getItem('localCred')) forceSetupLocalAccount();
             var lastTouch = 0;
             ['click', 'keydown', 'touchstart', 'scroll'].forEach(function(ev) {
                 document.addEventListener(ev, function() {
