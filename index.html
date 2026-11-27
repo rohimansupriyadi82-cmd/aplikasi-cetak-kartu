@@ -2065,6 +2065,67 @@
 .kt-desain-imut2 .d2-sch,.kt-desain-imut2 .d2-sg,.kt-desain-imut2 .d2-sgn,.kt-desain-imut2 .d2-note,.kt-desain-imut2 .d2-pill{font-family:'Inter','Segoe UI','Roboto','Helvetica Neue',Arial,sans-serif}
 </style>
 
+<style id="login-poster-style">
+/* ===== LOGIN: tampilan poster "ID Card & SK App" =====
+   Gambar poster jadi latar penuh; kolom username, password, dan tombol MASUK asli dipasang tepat di atas gambar.
+   Semua ukuran dihitung dari poster 1672 x 941 px (1 unit --u = 1 px poster). */
+#loginPage.lp-login{--poster:none;--lp-w:min(100vw,calc(100vh * 1.77683316));--u:calc(var(--lp-w) / 1672);position:fixed;inset:0;z-index:50;overflow:hidden;margin:0;padding:0;background:#1f6fe0;font-family:'Plus Jakarta Sans','Poppins','Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+#loginPage.lp-login:not(.lp-card-mode)::before{content:"";position:absolute;inset:-40px;background:var(--poster) center/cover no-repeat,linear-gradient(135deg,#1f6fe0,#49b4f5);filter:blur(28px) brightness(1.12) saturate(1.15);z-index:0}
+#loginPage .lp-stage{background-image:var(--poster),linear-gradient(135deg,#0a49c4,#1b8bea)}
+#loginPage .lp-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#loginPage .lp-in{appearance:none;-webkit-appearance:none;border:0;outline:0;box-shadow:none;border-radius:0;margin:0;background:transparent;color:#1d2f66;caret-color:#0b3bbc;font-family:'Plus Jakarta Sans','Poppins',sans-serif;font-weight:500;line-height:1.2}
+#loginPage .lp-in:-webkit-autofill{-webkit-text-fill-color:#1d2f66;box-shadow:0 0 0 1000px #fbfcfd inset;transition:background-color 99999s}
+#loginPage .lp-in::-ms-reveal,#loginPage .lp-in::-ms-clear{display:none}
+#loginPage .lp-mbrand,#loginPage .lp-mhead,#loginPage .lp-mfoot{display:none}
+
+/* --- Mode poster (desktop / tablet) --- */
+#loginPage:not(.lp-card-mode) .lp-stage{image-rendering:auto;position:absolute;z-index:1;left:calc((100% - var(--lp-w)) / 2);top:calc((100% - var(--lp-w) / 1.77683316) / 2);width:var(--lp-w);aspect-ratio:1672 / 941;background-size:100% 100%,cover;background-repeat:no-repeat;box-shadow:0 18px 60px rgba(5,30,110,.35)}
+#loginPage:not(.lp-card-mode) .lp-card,#loginPage:not(.lp-card-mode) #loginForm{display:contents}
+#loginPage:not(.lp-card-mode) .lp-ico,#loginPage:not(.lp-card-mode) .lp-btn-txt{display:none}
+#loginPage:not(.lp-card-mode) .lp-field{position:absolute;left:calc(var(--u) * 1154);width:calc(var(--u) * 448);margin:0;border-radius:999px;cursor:text;transition:box-shadow .15s}
+#loginPage:not(.lp-card-mode) .lp-f-user{top:calc(var(--u) * 396);height:calc(var(--u) * 70)}
+#loginPage:not(.lp-card-mode) .lp-f-pass{top:calc(var(--u) * 491);height:calc(var(--u) * 71)}
+#loginPage:not(.lp-card-mode) .lp-field:focus-within{box-shadow:0 0 0 calc(var(--u) * 4) rgba(0,102,255,.38),0 0 calc(var(--u) * 18) rgba(0,102,255,.35)}
+#loginPage:not(.lp-card-mode) .lp-in{position:absolute;left:calc(var(--u) * 91);width:calc(var(--u) * 285);top:calc(var(--u) * 3);bottom:calc(var(--u) * 3);padding:0 calc(var(--u) * 6);font-size:calc(var(--u) * 25)}
+/* placeholder asli sudah ada di gambar; baru ditutup saat kolom diisi / difokus */
+#loginPage:not(.lp-card-mode) .lp-in::placeholder{color:transparent}
+#loginPage:not(.lp-card-mode) .lp-in:focus,#loginPage:not(.lp-card-mode) .lp-in:not(:placeholder-shown){background:#fbfcfd}
+#loginPage:not(.lp-card-mode) .lp-eye{position:absolute;left:calc(var(--u) * 379.5);top:calc(var(--u) * 14.5);width:calc(var(--u) * 52);height:calc(var(--u) * 44);padding:0;border:0;border-radius:50%;background:#fbfcfd;color:#46629f;font-size:calc(var(--u) * 30);display:grid;place-items:center;cursor:pointer}
+#loginPage:not(.lp-card-mode) .lp-btn{position:absolute;left:calc(var(--u) * 1154);top:calc(var(--u) * 590);width:calc(var(--u) * 450);height:calc(var(--u) * 80);padding:0;border:0;border-radius:999px;background:transparent;cursor:pointer;transition:background .15s,box-shadow .15s}
+#loginPage:not(.lp-card-mode) .lp-btn:hover{background:rgba(255,255,255,.10);box-shadow:0 0 calc(var(--u) * 22) rgba(255,214,90,.55)}
+#loginPage:not(.lp-card-mode) .lp-btn:active{background:rgba(0,10,60,.14)}
+#loginPage:not(.lp-card-mode) .lp-btn:focus-visible,#loginPage:not(.lp-card-mode) .lp-eye:focus-visible{outline:3px solid #ffd54a;outline-offset:2px}
+
+/* --- Mode kartu (HP / layar sempit / gambar gagal dimuat) --- */
+#loginPage.lp-card-mode{overflow-y:auto;overflow-x:hidden}
+#loginPage.lp-card-mode .lp-stage{position:relative;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:22px 14px 26px;background-size:cover,cover;background-position:34% 50%,center;background-repeat:no-repeat}
+#loginPage.lp-card-mode .lp-stage::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,30,110,.40),rgba(5,30,110,.05) 42%,rgba(5,30,110,.45));pointer-events:none}
+#loginPage.lp-card-mode .lp-stage>*{position:relative;z-index:1}
+#loginPage.lp-card-mode .lp-sr{position:absolute}
+#loginPage.lp-card-mode .lp-mbrand{display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff;text-shadow:0 2px 10px rgba(0,20,90,.55)}
+#loginPage .lp-mlogo{--S:78px;display:block;width:var(--S);height:var(--S);margin-bottom:8px;border-radius:50%;background-color:#eaf3ff;background-image:var(--poster,none);background-repeat:no-repeat;background-size:calc(var(--S) * 1672 / 160) auto;background-position:calc(var(--S) * -1291 / 160) calc(var(--S) * -107 / 160);box-shadow:0 8px 22px -6px rgba(0,20,90,.6)}
+#loginPage .lp-mtitle{font-weight:800;font-size:1.75rem;line-height:1.1}
+#loginPage .lp-mtitle i{font-style:normal;color:#ffcf33}
+#loginPage .lp-msub{font-style:italic;font-size:.95rem;margin-top:2px}
+#loginPage .lp-mhero{margin-top:10px;font-weight:800;font-size:1.05rem}
+#loginPage .lp-mhero b{color:#ffd54a}
+#loginPage.lp-card-mode .lp-card{display:block;width:min(100%,420px);padding:26px 22px 20px;border-radius:30px;background:linear-gradient(160deg,rgba(255,255,255,.97),rgba(228,241,255,.95));box-shadow:0 28px 60px -18px rgba(0,25,110,.6),0 0 0 3px rgba(255,255,255,.55)}
+#loginPage.lp-card-mode #loginForm{display:block}
+#loginPage.lp-card-mode .lp-mhead{display:block;text-align:center;margin-bottom:18px}
+#loginPage .lp-mhead h2{margin:0;font:800 1.55rem/1.15 'Plus Jakarta Sans','Poppins',sans-serif;color:#0f348f}
+#loginPage .lp-mhead p{margin:6px 0 0;display:flex;align-items:center;gap:10px;color:#1d3fa0;font-style:italic;font-weight:600;font-size:.92rem}
+#loginPage .lp-mhead p::before,#loginPage .lp-mhead p::after{content:"";flex:1;height:2px;background:#1d3fa0;opacity:.85}
+#loginPage.lp-card-mode .lp-field{position:relative;display:flex;align-items:center;gap:12px;height:58px;margin:0 0 14px;padding:0 18px;border-radius:999px;background:#fbfcfd;border:1px solid #d6e3f8;box-shadow:0 10px 20px -14px rgba(10,50,150,.55);cursor:text}
+#loginPage.lp-card-mode .lp-field:focus-within{border-color:#1a6bff;box-shadow:0 0 0 3px rgba(26,107,255,.28)}
+#loginPage.lp-card-mode .lp-ico{color:#0b3bbc;font-size:1.25rem;width:24px;text-align:center}
+#loginPage.lp-card-mode .lp-in{flex:1;min-width:0;height:100%;padding:0;font-size:1rem;font-weight:600}
+#loginPage.lp-card-mode .lp-in::placeholder{color:#5a6d9c;opacity:1;font-weight:600}
+#loginPage.lp-card-mode .lp-eye{border:0;background:transparent;color:#46629f;font-size:1.2rem;padding:6px;cursor:pointer}
+#loginPage.lp-card-mode .lp-btn{display:flex;align-items:center;justify-content:center;width:100%;height:58px;margin-top:6px;padding:0;border:0;border-radius:999px;color:#fff;font-weight:800;font-size:1.1rem;letter-spacing:.06em;background:linear-gradient(180deg,#1f7bff,#0046cf);box-shadow:0 0 0 3px #ffcf4d,0 0 0 5px rgba(255,255,255,.75),0 14px 26px -10px rgba(0,60,200,.8);cursor:pointer}
+#loginPage.lp-card-mode .lp-btn:active{transform:translateY(1px)}
+#loginPage.lp-card-mode .lp-btn-txt{display:inline-flex;align-items:center;gap:10px}
+#loginPage.lp-card-mode .lp-mfoot{display:block;color:#fff;font-size:.78rem;text-shadow:0 1px 6px rgba(0,20,90,.7)}
+</style>
 </head>
 <body>
     <noscript><div style="padding:24px;text-align:center;font-family:sans-serif">Aplikasi ini membutuhkan JavaScript. Silakan aktifkan JavaScript pada browser Anda.</div></noscript>
@@ -2077,60 +2138,79 @@
 
     <div id="previewLoginInfo" class="d-none position-fixed bottom-0 start-0 m-3 badge bg-warning text-dark shadow px-3 py-2" style="z-index: 9998;"></div>
 
-    <!-- LOGIN PAGE -->
-    <div id="loginPage" class="container-fluid vh-100 p-0">
-        <div class="row g-0 h-100">
-            <div class="col-lg-7 col-md-6 d-none d-md-flex login-hero">
-                <div class="hero-brand"><span class="brand-logo"><img src="https://iili.io/oKGMU5Q.png" alt="Logo Kabupaten Bekasi" onerror="this.parentNode.innerHTML='<i class=&quot;fas fa-id-badge&quot;></i>'"></span><span>ID Card & SK App</span></div>
-                <div class="hero-copy">
-                    <h1>Kartu ujian siap cetak dalam hitungan menit.</h1>
-                    <p>Susun data peserta, jadwal, dan kop sekolah di satu tempat, lalu cetak langsung ke kertas A4. Lengkap dengan fitur cetak SK Kepanitiaan.</p>
-                    <ul class="hero-points">
-                        <li><i class="fa-solid fa-circle-check"></i>Impor peserta dari file Excel</li>
-                        <li><i class="fa-solid fa-circle-check"></i>Foto cocok otomatis lewat NISN</li>
-                        <li><i class="fa-solid fa-circle-check"></i>Pengaturan desain kartu fleksibel</li>
-                        <li><i class="fa-solid fa-circle-check"></i>Cetak Surat Keputusan (SK) Panitia</li>
-                    </ul>
-                </div>
-                <small class="hero-foot">Hak Cipta &copy; 2026 Rohiman Supriyadi</small>
-                <div class="mini-stack" aria-hidden="true">
-                    <div class="mini-card back"></div>
-                    <div class="mini-card">
-                        <div class="mc-top"><span class="mc-logo"></span><div><i></i><i></i></div></div>
-                        <div class="mc-body"><span class="mc-photo"></span><div class="mc-lines"><i></i><i></i><i></i></div></div>
-                    </div>
-                </div>
+    <!-- LOGIN PAGE (tampilan poster "ID Card & SK App") -->
+    <div id="loginPage" class="lp-login">
+        <div class="lp-stage">
+            <h1 class="lp-sr">ID Card &amp; SK App - Masuk ke akun Anda</h1>
+
+            <!-- Header ini hanya muncul di layar HP (mode kartu); di desktop sudah ada di gambar poster -->
+            <div class="lp-mbrand">
+                <span class="lp-mlogo" aria-hidden="true"></span>
+                <div class="lp-mtitle">ID Card <i>&amp;</i> SK App</div>
+                <div class="lp-msub">Digitalisasi Administrasi Sekolah</div>
+                <div class="lp-mhero">Kartu ujian <b>siap cetak</b> dalam hitungan menit.</div>
             </div>
-            <div class="col-lg-5 col-md-6 d-flex align-items-center justify-content-center login-panel shadow-lg">
-                <div class="login-card">
-                    <div class="mb-4">
-                        <h3 class="mb-1">Masuk ke akun Anda</h3>
-                        <p class="text-muted mb-0">Generator kartu ujian &amp; SK</p>
-                    </div>
-                    <form id="loginForm" onsubmit="event.preventDefault(); handleLogin();">
-                        <div class="mb-3">
-                            <label class="form-label small">Username</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-                                <input type="text" id="username" class="form-control form-control-lg" placeholder="Masukkan username" required autocomplete="username" maxlength="60" autocapitalize="off" spellcheck="false">
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label small">Password</label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
-                                <input type="password" id="password" class="form-control form-control-lg" placeholder="Masukkan password" required autocomplete="current-password" maxlength="128">
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 py-3 fw-bold" style="font-size: 1.05rem;">Masuk</button>
-                    </form>
-                    <div class="text-center mt-5">
-                        <small class="text-muted">Hak Cipta &copy; 2026 Rohiman Supriyadi</small>
-                    </div>
+
+            <div class="lp-card">
+                <div class="lp-mhead">
+                    <h2>Masuk ke akun Anda</h2>
+                    <p><span>Generator kartu ujian &amp; SK</span></p>
                 </div>
+                <form id="loginForm" onsubmit="event.preventDefault(); handleLogin();">
+                    <label class="lp-field lp-f-user">
+                        <i class="fa-solid fa-user lp-ico" aria-hidden="true"></i>
+                        <input type="text" id="username" class="lp-in" placeholder="Masukkan username" aria-label="Username" required autocomplete="username" maxlength="60" autocapitalize="off" spellcheck="false">
+                    </label>
+                    <label class="lp-field lp-f-pass">
+                        <i class="fa-solid fa-lock lp-ico" aria-hidden="true"></i>
+                        <input type="password" id="password" class="lp-in" placeholder="Masukkan password" aria-label="Password" required autocomplete="current-password" maxlength="128">
+                        <button type="button" class="lp-eye" id="lpEye" aria-label="Tampilkan password" title="Tampilkan / sembunyikan password"><i class="fa-solid fa-eye-slash"></i></button>
+                    </label>
+                    <button type="submit" class="lp-btn" id="btnLogin" aria-label="Masuk"><span class="lp-btn-txt"><i class="fa-solid fa-right-to-bracket"></i> MASUK</span></button>
+                </form>
             </div>
+
+            <div class="lp-mfoot">Hak Cipta &copy; 2026 Rohiman Supriyadi</div>
         </div>
     </div>
+    <script>
+    (function () {
+        /* Gambar login ditarik dari link ini saja (tidak disimpan di dalam file HTML). Ganti di sini jika ingin pakai gambar lain. */
+        var POSTER_FULL = 'https://iili.io/oqmvG4a.png';
+        var POSTER_URL = 'https://iili.io/oqmvG4a.md.png';
+        var el = document.getElementById('loginPage');
+        if (!el) return;
+        el.style.setProperty('--poster', 'url("' + POSTER_URL + '")');
+        var failed = false;
+        function mode() {
+            var w = window.innerWidth, h = window.innerHeight;
+            /* HP / layar sempit / gambar gagal dimuat -> tampilan kartu; selain itu -> poster persis */
+            el.classList.toggle('lp-card-mode', failed || w < 768 || (w / h) < 1.05);
+        }
+        function tryLoad(url, next) {
+            var p = new Image();
+            p.onload = function () { el.style.setProperty('--poster', 'url("' + url + '")'); failed = false; mode(); };
+            p.onerror = function () { if (next) { next(); } else { failed = true; mode(); } };
+            p.src = url;
+        }
+        /* Urutan pemuatan gambar: file GitHub/lokal (login-poster.png) -> link raw GitHub (opsional) -> iili resolusi penuh -> iili medium */
+        var POSTER_LOCAL = 'login-poster.png';   /* file di folder yang sama dengan index.html di GitHub */
+        var POSTER_GITHUB_RAW = '';              /* opsional: isi mis. 'https://raw.githubusercontent.com/USERNAME/REPO/main/login-poster.png' */
+        var list = [POSTER_LOCAL, POSTER_GITHUB_RAW, POSTER_FULL, POSTER_URL].filter(Boolean);
+        (function next(i) { tryLoad(list[i], i + 1 < list.length ? function () { next(i + 1); } : null); })(0);
+        window.addEventListener('resize', mode);
+        mode();
+
+        var pw = document.getElementById('password'), eye = document.getElementById('lpEye');
+        function setEye(show) {
+            pw.type = show ? 'text' : 'password';
+            eye.firstElementChild.className = 'fa-solid ' + (show ? 'fa-eye' : 'fa-eye-slash');
+            eye.setAttribute('aria-label', show ? 'Sembunyikan password' : 'Tampilkan password');
+        }
+        eye.addEventListener('click', function (e) { e.preventDefault(); setEye(pw.type === 'password'); pw.focus(); });
+        document.getElementById('loginForm').addEventListener('submit', function () { setEye(false); });
+    })();
+    </script>
 
     <!-- MAIN APP -->
     <div id="mainApp" class="wrapper d-none">
